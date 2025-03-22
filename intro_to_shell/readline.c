@@ -4,7 +4,7 @@ void handler_SIGINT(int sig)
 {
     (void)sig;
     printf("\n");
-    rl_replace_line("", 0); // hadi kima glt ma3ndha tachi dawr flhayat
+    rl_replace_line("", 0);
     rl_on_new_line();
     rl_redisplay();
 }
@@ -18,6 +18,7 @@ void handler_SIGQUIT(int sig)
 int main()
 {
     char *line;
+    t_token *token;
 
     signal(SIGINT, handler_SIGINT);
     signal(SIGQUIT, handler_SIGQUIT);
@@ -27,6 +28,7 @@ int main()
         if (!line || !strcmp(line, "exit"))
             break;
         printf("This is what you wrote:: %s\n", line);
+        token = tokenize(line);
         add_history(line);
         free(line);
     }
