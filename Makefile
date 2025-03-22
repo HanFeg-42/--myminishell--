@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 RLFLAG = -lreadline
 
-SRC = src/parsing/intro_to_shell/readline.c
+SRC = intro_to_shell/readline.c
 
 OBJ = ${SRC:.c=.o}
 

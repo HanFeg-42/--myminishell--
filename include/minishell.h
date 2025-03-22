@@ -14,7 +14,47 @@
 # define BUFFER_SIZE 10
 #endif
 
+// About token
+typedef enum e_token_type
+{
+	WORD,
+	// FILE,
+	AND,
+	OR,
+	PIPE,
+	INPUT_RED,
+	OUTPUT_RED,
+	APPEND,
+	HERE_DOC,
+	DQUOTE,
+	SQUOTE,
+	EQUALS,
+	OPAREN,
+	CPAREN,
+	OBRACE,
+	CBRACE,
+	EXPANSION,
+	SUBSHELL,
+	COMMENT,
+	STRING
+}						t_token_type;
+
+//token
+typedef struct s_token
+{
+	char				*value;
+	t_token_type		type;
+	struct s_token		*next;
+	struct s_token		*prev;
+}						t_token;
+
 // ABOUT tree
+typedef struct s_tree
+{
+	t_token				*node;
+	struct s_tree		*left;
+	struct s_tree		*right;
+}						t_tree;
 
 
 #endif
