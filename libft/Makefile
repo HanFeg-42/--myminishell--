@@ -6,7 +6,7 @@
 #    By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/30 17:35:22 by hfegrach          #+#    #+#              #
-#    Updated: 2024/11/11 14:31:19 by hfegrach         ###   ########.fr        #
+#    Updated: 2025/03/23 01:58:20 by hfegrach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS	=	ft_isalpha.c \
 			ft_isalnum.c \
 			ft_isascii.c \
 			ft_isprint.c \
+			ft_isspace.c \
 			ft_strlen.c \
 			ft_memset.c \
 			ft_bzero.c \

@@ -48,6 +48,14 @@ typedef struct s_token
 	struct s_token		*prev;
 }						t_token;
 
+typedef struct s_lexer
+{
+	char				*line;
+	char				c;
+	int 				i;
+}						t_lexer;
+
+
 // ABOUT tree
 typedef struct s_tree
 {
@@ -55,6 +63,8 @@ typedef struct s_tree
 	struct s_tree		*left;
 	struct s_tree		*right;
 }						t_tree;
+
+
 
 
 #endif
