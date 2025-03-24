@@ -35,8 +35,7 @@ typedef enum e_token_type
 	CBRACE,
 	EXPANSION,
 	SUBSHELL,
-	COMMENT,
-	STRING
+	COMMENT
 }						t_token_type;
 
 //token
@@ -68,6 +67,22 @@ typedef struct s_tree
 // lexer
 t_token *tokenize(char *line);
 t_token *init_token(char *value, int type);
+
+t_lexer *init_lexer(char *line);
+void lexer_advance(t_lexer *lexer);
+void lexer_skip_whitespaces(t_lexer *lexer);
+t_token *lexer_get_word(t_lexer *lexer);
+t_token *lexer_get_heredoc(t_lexer *lexer);
+int get_q_size(t_lexer *lexer);
+t_token *lexer_advance_current(t_lexer *lexer, int type);
+t_token *lexer_advance_with2(t_lexer *lexer, t_token *token);
+t_token *lexer_advance_with(t_lexer *lexer, t_token *token);
+t_token *lexer_get_squote(t_lexer *lexer);
+t_token *lexer_get_expansion(t_lexer *lexer);
+t_token *lexer_get_dquote(t_lexer *lexer);
+void clean_exit(t_lexer *lexer, t_token *token);
+t_token *lexer_skip_comment(t_lexer *lexer);
+t_token *lexer_next_token(t_lexer *lexer);
 
 
 

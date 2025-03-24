@@ -18,7 +18,7 @@ void handler_SIGQUIT(int sig)
 int main()
 {
     char *line;
-    // t_token *token;
+    t_token *token;
 
     signal(SIGINT, handler_SIGINT);
     signal(SIGQUIT, handler_SIGQUIT);
@@ -28,7 +28,7 @@ int main()
         if (!line || !strcmp(line, "exit"))
             break;
         printf("This is what you wrote: %s\n", line);
-        // token = tokenize(line);
+        token = tokenize(line);
         add_history(line);
         free(line);
     }
