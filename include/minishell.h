@@ -53,6 +53,7 @@ typedef struct s_lexer
 	char				*line;
 	char				c;
 	int 				i;
+	int					line_size;
 }						t_lexer;
 
 
@@ -64,6 +65,9 @@ typedef struct s_tree
 	struct s_tree		*right;
 }						t_tree;
 
+// lexer
+t_token *tokenize(char *line);
+t_token *init_token(char *value, int type);
 
 
 
