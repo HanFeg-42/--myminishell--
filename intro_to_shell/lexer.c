@@ -36,17 +36,19 @@ t_token *lexer_get_word(t_lexer *lexer)
     i = 0;
     while (ft_isalnum(lexer->line[lexer->i + i]))
         i++;
+    printf("hh %d\n", i);
     word = malloc((i + 1 )* sizeof(char) );
     if (!word)
         return (NULL); // al marjo t freeyi w t exit in a clean
-    i = 0;
-    while (ft_isalnum(lexer->c))
+    int j = 0;
+    while (ft_isalnum(lexer->c) && j < i)
     {
-        word[i] = lexer->c;
+        printf("hh %d\n", j);
+        word[j] = lexer->c;
         lexer_advance(lexer);
-        i++;
+        j++;
     }
-    word[i] = '\0';
+    word[j] = '\0';
     return (init_token(word, WORD));
 }
 

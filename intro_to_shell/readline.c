@@ -31,6 +31,7 @@ int main()
         token = tokenize(line);
         add_history(line);
         free(line);
+        free(token);
     }
     return (0);
 }
