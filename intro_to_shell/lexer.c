@@ -1,5 +1,15 @@
 #include "../include/minishell.h"
 
+
+int is_special(int c)
+{
+	if (ft_issapce(c) || c == '$' || c == '*' || c == '&' || c == '|'
+        || c == '>' || c == '<' || c == 34 || c == 39
+        || c == '(' || c == ')' || c == '{' || c == '}')
+		return (1);
+	return (0);
+}
+
 t_lexer *init_lexer(char *line)
 {
     t_lexer *lexer;
@@ -35,22 +45,19 @@ t_token *lexer_get_word(t_lexer *lexer)
     int i;
 
     i = 0;
-    while (ft_isalnum(lexer->line[lexer->i + i]))
+    while (!is_special(lexer->line[lexer->i + i]))
         i++;
-    // printf("hh %d\n", i);
     word = malloc((i + 1 )* sizeof(char) );
     if (!word)
         return (NULL); // al marjo t freeyi w t exit in a clean
     int j = 0;
-    while (ft_isalnum(lexer->c) && j < i)
+    while (j < i)
     {
-        // printf("hh %d\n", j);
         word[j] = lexer->c;
         lexer_advance(lexer);
         j++;
     }
     word[j] = '\0';
-    // printf("word : %s\n", word);
     return (init_token(word, WORD));
 }
 
@@ -290,19 +297,24 @@ t_token *lexer_skip_comment(t_lexer *lexer)
     comment[i] = '0';
     return (init_token(comment, COMMENT));
 }
+void exit_error()
+{
+    exit(1);
+}
 
 t_token *lexer_next_token(t_lexer *lexer)
 {
     while (lexer->c)
     {
         lexer_skip_whitespaces(lexer);
-        if (ft_isalnum(lexer->c))
-            return (lexer_advance_with(lexer, lexer_get_word(lexer)));
         if (lexer->c == '*')
             return (lexer_advance_current(lexer, STAR));
         if (lexer->c == '&')
+        {
             if (lexer->line[lexer->i + 1] == '&')
                 return (lexer_advance_with2(lexer, init_token("&&", AND)));
+            exit_error();
+        }
         if (lexer->c == '|')
         {
             if (lexer->line[lexer->i + 1] == '|')
@@ -324,16 +336,26 @@ t_token *lexer_next_token(t_lexer *lexer)
             return (lexer_advance_current(lexer, INPUT_RED));
         }
         if (lexer->c == '"')
-            return (lexer_advance_with(lexer, lexer_get_dquote(lexer)));
+            return (lexer_advance_current(lexer, DQUOTE));
         if (lexer->c == '\'')
-            return (lexer_advance_with(lexer, lexer_get_squote(lexer)));
+            return (lexer_advance_current(lexer, SQUOTE));
+        if (lexer->c == '(')
+            return (lexer_advance_current(lexer, OPAREN));
+        if (lexer->c == ')')
+            return (lexer_advance_current(lexer, CPAREN));
+        if (lexer->c == '{')
+            return (lexer_advance_current(lexer, OBRACE));
+        if (lexer->c == '}')
+            return (lexer_advance_current(lexer, CBRACE));
         if (lexer->c == '$')
             return (lexer_advance_with(lexer, lexer_get_expansion(lexer)));
         if (lexer->c == '#')
             return (lexer_advance_with(lexer, lexer_skip_comment(lexer)));
+        if (!is_special(lexer->c))
+            return (lexer_advance_with(lexer, lexer_get_word(lexer)));
         if (lexer->i == lexer->line_size - 1)
             return (NULL);
-        lexer_advance(lexer);
+        // lexer_advance(lexer);
     }
     return (NULL);
 }

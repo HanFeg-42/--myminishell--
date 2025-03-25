@@ -19,7 +19,7 @@ typedef enum e_token_type
 	ID,			//0
 	WORD,		//1
 	STAR,		//2
-	FILE,		//3
+	FILE_,		//3
 	AND,		//4
 	OR,			//5
 	PIPE,		//6
@@ -85,6 +85,7 @@ void clean_exit(t_lexer *lexer, t_token *token);
 t_token *lexer_skip_comment(t_lexer *lexer);
 t_token *lexer_next_token(t_lexer *lexer);
 
-
+// " => 34
+// ' => 39
 
 #endif
