@@ -8,7 +8,6 @@
 #include <readline/history.h>
 #include <signal.h>
 #include "../libft/libft.h"
-#include "../ft_printf/ft_printf.h"
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 10
@@ -17,25 +16,27 @@
 // About token
 typedef enum e_token_type
 {
-	WORD,
-	// FILE,
-	AND,
-	OR,
-	PIPE,
-	INPUT_RED,
-	OUTPUT_RED,
-	APPEND,
-	HERE_DOC,
-	DQUOTE,
-	SQUOTE,
-	EQUALS,
-	OPAREN,
-	CPAREN,
-	OBRACE,
-	CBRACE,
-	EXPANSION,
-	SUBSHELL,
-	COMMENT
+	ID,			//0
+	WORD,		//1
+	STAR,		//2
+	FILE,		//3
+	AND,		//4
+	OR,			//5
+	PIPE,		//6
+	INPUT_RED,	//7
+	OUTPUT_RED,	//8
+	APPEND,		//9
+	HERE_DOC,	//10
+	DQUOTE,		//11
+	SQUOTE,		//12
+	EQUALS,		//13
+	OPAREN,		//14
+	CPAREN,		//15
+	OBRACE,		//16
+	CBRACE,		//17
+	EXPANSION,	//18
+	SUBSHELL,	//19
+	COMMENT		//20
 }						t_token_type;
 
 //token

@@ -10,12 +10,13 @@ t_lexer *init_lexer(char *line)
     lexer->line = ft_strdup(line);
     lexer->i = 0;
     lexer->c = line[0];
+    lexer->line_size = ft_strlen(line);
     return (lexer);
 }
 
 void lexer_advance(t_lexer *lexer)
 {
-    if (lexer && lexer->c && lexer->line[lexer->i + 1])
+    if (lexer && lexer->c) // && lexer->line[lexer->i + 1])
     {
         lexer->i++;
         lexer->c = lexer->line[lexer->i];
@@ -36,19 +37,20 @@ t_token *lexer_get_word(t_lexer *lexer)
     i = 0;
     while (ft_isalnum(lexer->line[lexer->i + i]))
         i++;
-    printf("hh %d\n", i);
+    // printf("hh %d\n", i);
     word = malloc((i + 1 )* sizeof(char) );
     if (!word)
         return (NULL); // al marjo t freeyi w t exit in a clean
     int j = 0;
     while (ft_isalnum(lexer->c) && j < i)
     {
-        printf("hh %d\n", j);
+        // printf("hh %d\n", j);
         word[j] = lexer->c;
         lexer_advance(lexer);
         j++;
     }
     word[j] = '\0';
+    // printf("word : %s\n", word);
     return (init_token(word, WORD));
 }
 
@@ -296,6 +298,8 @@ t_token *lexer_next_token(t_lexer *lexer)
         lexer_skip_whitespaces(lexer);
         if (ft_isalnum(lexer->c))
             return (lexer_advance_with(lexer, lexer_get_word(lexer)));
+        if (lexer->c == '*')
+            return (lexer_advance_current(lexer, STAR));
         if (lexer->c == '&')
             if (lexer->line[lexer->i + 1] == '&')
                 return (lexer_advance_with2(lexer, init_token("&&", AND)));
@@ -315,11 +319,10 @@ t_token *lexer_next_token(t_lexer *lexer)
         }
         if (lexer->c == '<')
         {
-                        if (lexer->line[lexer->i + 1] == '<')
+            if (lexer->line[lexer->i + 1] == '<')
                 return (lexer_advance_with(lexer, lexer_get_heredoc(lexer)));
             return (lexer_advance_current(lexer, INPUT_RED));
         }
-
         if (lexer->c == '"')
             return (lexer_advance_with(lexer, lexer_get_dquote(lexer)));
         if (lexer->c == '\'')
@@ -328,6 +331,8 @@ t_token *lexer_next_token(t_lexer *lexer)
             return (lexer_advance_with(lexer, lexer_get_expansion(lexer)));
         if (lexer->c == '#')
             return (lexer_advance_with(lexer, lexer_skip_comment(lexer)));
+        if (lexer->i == lexer->line_size - 1)
+            return (NULL);
         lexer_advance(lexer);
     }
     return (NULL);

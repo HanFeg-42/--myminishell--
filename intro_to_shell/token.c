@@ -17,13 +17,24 @@ t_token *tokenize(char *line)
     t_lexer *lexer;
     t_token *token;
 
-    if (!line)
-        exit(0);
+    // if (!line)
+    //     exit(0);
     lexer = init_lexer(line);
     token = NULL;
-    while ((token = lexer_next_token(lexer))->type)
+    while ((token = lexer_next_token(lexer)))
     {
-        ft_printf("token : %s type : %d\n", token->value, token->type);
+        printf("token : %s \ttype : %d\n", token->value, token->type);
     }
     return (token);
 }
+
+// void print_tokens(t_token *token)
+// {
+//     t_token *tmp;
+
+//     tmp = token;
+//     while (condition)
+//     {
+//         /* code */
+//     }
+// }

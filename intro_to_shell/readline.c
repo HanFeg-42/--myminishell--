@@ -20,6 +20,7 @@ int main()
     char *line;
     t_token *token;
 
+    token = NULL;
     signal(SIGINT, handler_SIGINT);
     signal(SIGQUIT, handler_SIGQUIT);
     while (1)
