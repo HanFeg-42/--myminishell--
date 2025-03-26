@@ -47,7 +47,7 @@ t_token *lexer_get_word(t_lexer *lexer)
     i = 0;
     while (!is_special(lexer->line[lexer->i + i]))
         i++;
-    word = malloc((i + 1 )* sizeof(char) );
+    word = malloc((i + 1 ) * sizeof(char) );
     if (!word)
         return (NULL); // al marjo t freeyi w t exit in a clean
     int j = 0;

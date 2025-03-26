@@ -1,0 +1,41 @@
+TODO = 
+Minishell > echo hi |ls {salam} $USER [mama] (agadir) \l3id; |bslama|bye bye!
+This is what you wrote: echo hi |ls {salam} $USER [mama] (agadir) \l3id; |bslama|bye bye!
+token : echo 	type : 1
+token : hi 	type : 1
+token : | 	type : 6
+token : ls 	type : 1
+token : { 	type : 16
+token : salam 	type : 1 ****************
+token : hfegrach 	type : 1
+token : [mama] 	type : 1
+token : ( 	type : 14
+token : agadir 	type : 1 ****************
+token : \l3id; 	type : 1
+token : | 	type : 6
+token : bslama 	type : 1 ****************
+token : bye 	type : 1
+token : bye! 	type : 1
+
+
+CPAREN 
+CBRACE
+|
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+token : | 	type : 6
+token : bslama 	type : 1
+token : bye 	type : 1
+==597649== Invalid read of size 1
+==597649==    at 0x4015E7: lexer_get_word (in /home/hfegrach/Desktop/fake_minishell/minishell)
+==597649==    by 0x40203A: lexer_next_token (in /home/hfegrach/Desktop/fake_minishell/minishell)
+==597649==    by 0x4013A9: tokenize (in /home/hfegrach/Desktop/fake_minishell/minishell)
+==597649==    by 0x4012E6: main (in /home/hfegrach/Desktop/fake_minishell/minishell)
+==597649==  Address 0x4b60a62 is 0 bytes after a block of size 66 alloc'd
+==597649==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==597649==    by 0x402194: ft_strdup (in /home/hfegrach/Desktop/fake_minishell/minishell)
+==597649==    by 0x4014DA: init_lexer (in /home/hfegrach/Desktop/fake_minishell/minishell)
+==597649==    by 0x401394: tokenize (in /home/hfegrach/Desktop/fake_minishell/minishell)
+==597649==    by 0x4012E6: main (in /home/hfegrach/Desktop/fake_minishell/minishell)
+==597649== 
+token : bye! 	type : 1
