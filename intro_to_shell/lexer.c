@@ -72,7 +72,8 @@ t_token *lexer_get_heredoc(t_lexer *lexer)
     lexer_advance(lexer);
     lexer_skip_whitespaces(lexer);
     i = 0;
-    while (ft_isalnum(lexer->line[lexer->i + i]))
+    // while (ft_isalnum(lexer->line[lexer->i + i]))
+    while (!is_special(lexer->line[lexer->i + i]))
         i++;
     herdoc = malloc(i * sizeof(char) + 1 + 3); // ghi popur l'instant
     if (!herdoc)
@@ -81,7 +82,8 @@ t_token *lexer_get_heredoc(t_lexer *lexer)
     herdoc[i++] = '<';
     herdoc[i++] = '<';
     herdoc[i++] = ' ';
-    while (ft_isalnum(lexer->c))
+    // while (ft_isalnum(lexer->c))
+    while (!is_special(lexer->c))
     {
         herdoc[i] = lexer->c;
         lexer_advance(lexer);
@@ -286,13 +288,14 @@ t_token *lexer_skip_comment(t_lexer *lexer)
     if (!comment)
         clean_exit(lexer, NULL);
     i = 0;
-    while (lexer->c)
+    // while (lexer->c)
+    while (lexer->i != lexer->line_size - 1)
     {
         comment[i] = lexer->c;
         lexer_advance(lexer);
         i++;
     }
-    comment[i] = '0';
+    comment[i] = '\0';
     return (init_token(comment, COMMENT));
 }
 void exit_error()
@@ -311,20 +314,20 @@ t_token *lexer_next_token(t_lexer *lexer)
         if (lexer->c == '&')
         {
             if (lexer->line[lexer->i + 1] == '&')
-                return (lexer_advance_with2(lexer, init_token("&&", AND)));
+                return (lexer_advance_with2(lexer, init_token(ft_strdup("&&"), AND)));
             exit_error();
         }
         if (lexer->c == '|')
         {
             if (lexer->line[lexer->i + 1] == '|')
-                return (lexer_advance_with2(lexer, init_token("||", OR)));
+                return (lexer_advance_with2(lexer, init_token(ft_strdup("||"), OR)));
             return (lexer_advance_current(lexer, PIPE));
 
         }
         if (lexer->c == '>')
         {
             if (lexer->line[lexer->i + 1] == '>')
-                return (lexer_advance_with2(lexer, init_token(">>", APPEND)));
+                return (lexer_advance_with2(lexer, init_token(ft_strdup(">>"), APPEND)));
             return (lexer_advance_current(lexer, OUTPUT_RED));
 
         }

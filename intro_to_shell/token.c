@@ -16,31 +16,21 @@ t_token *tokenize(char *line)
 {
     t_lexer *lexer;
     t_token *token;
-    // int hard_code;
+    int hard_code;
 
-    // if (!line)
-    //     exit(0);
     lexer = init_lexer(line);
     token = NULL;
-    // hard_code = 0;
+    hard_code = 0;
     while ((token = lexer_next_token(lexer)))
     {
         printf("token : %s \ttype : %d\n", token->value, token->type);
-        // free(token->value);
-        // free(token);
-        // if (!hard_code)
-        //     token->prev = NULL;
+        if (!hard_code)
+            token->prev = NULL;
+        if (token->value)
+            free(token->value);
+        free(token);
     }
+    free(lexer->line);
+    free(lexer);
     return (NULL);
 }
-
-// void print_tokens(t_token *token)
-// {
-//     t_token *tmp;
-
-//     tmp = token;
-//     while (condition)
-//     {
-//         /* code */
-//     }
-// }
