@@ -93,42 +93,6 @@ t_token *lexer_get_heredoc(t_lexer *lexer)
     return (init_token(herdoc, HERE_DOC));
 }
 
-// t_token *lexer_get_dquote(t_lexer *lexer)
-// {
-//     char *quote;
-//     char *env_var;
-//     int quote_size;
-//     char **var;
-//     int i;
-//     int j;
-//     lexer_advance(lexer);
-//     // var
-//     quote_size = get_q_size(lexer);
-//     quote = malloc(quote_size * sizeof(char) + 1);
-//     if (!quote)
-//         clean_exit(lexer, NULL); // al marjo t freeyi w t exit in a clean way
-//     i = 0;
-//     while (lexer->c != '"')
-//     {
-//         if (lexer->c == '$')
-//         {
-//             env_var = getenv(get_env_var(lexer));
-//             quote = ft_strjoin(quote, env_var);// tkhrbiq
-//             // j = 0;
-//             // while (env_var[j])
-//             // {
-//             //     quote[i + j] = env_var[j];
-//             //     j++;
-//             // }
-//         }
-//         quote[i] = lexer->c;
-//         lexer_advance(lexer);
-//         i++;
-//     }
-//     quote[i] = '\0';
-//     return (init_token(quote, WORD));
-// }
-
 int get_q_size(t_lexer *lexer)
 {
     int i;
@@ -136,41 +100,10 @@ int get_q_size(t_lexer *lexer)
     i = 0;
     while (lexer->line[lexer->i + i] != '"')
     {
-        // if (lexer->line[lexer->i + i] == '$')
-        // {
-        //     j = 0;
-        //     while (ft_isalnum(lexer->line[lexer->i + i + j]))
-        //     {
-        //         j++;
-        //     }
-        // }
         i++;
     }
     return (i);
 }
-
-// char *get_env_var(t_lexer *lexer)
-// {
-//     char *var;
-//     int size;
-//     int i;
-//     lexer_advance(lexer);
-//     size = 0;
-//     while (ft_isalnum(lexer->line[lexer->i + size]))
-//         size++;
-//     var = malloc(size * sizeof(char) + 1);
-//     if (!var)
-//         clean_exit(lexer, NULL);
-//     i = 0;
-//     while (ft_isalnum(lexer->c))
-//     {
-//         var[i] = lexer->c;
-//         lexer_advance(lexer);
-//         i++;
-//     }
-//     var[i] = '\0';
-//     return (var);
-// }
 
 t_token *lexer_advance_current(t_lexer *lexer, int type)
 {
@@ -288,7 +221,6 @@ t_token *lexer_skip_comment(t_lexer *lexer)
     if (!comment)
         clean_exit(lexer, NULL);
     i = 0;
-    // while (lexer->i != lexer->line_size - 1)
     while (lexer->c)
     {
         comment[i] = lexer->c;
