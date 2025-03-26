@@ -3,7 +3,8 @@
 
 int is_special(int c)
 {
-	if (ft_issapce(c) || c == '$' || c == '*' || c == '&' || c == '|'
+	if (c == '\0' || ft_issapce(c)
+        || c == '$' || c == '*' || c == '&' || c == '|'
         || c == '>' || c == '<' || c == 34 || c == 39
         || c == '(' || c == ')' || c == '{' || c == '}')
 		return (1);
@@ -54,8 +55,9 @@ t_token *lexer_get_word(t_lexer *lexer)
     while (j < i)
     {
         word[j] = lexer->c;
-        lexer_advance(lexer);
         j++;
+        if (j < i)
+            lexer_advance(lexer);
     }
     word[j] = '\0';
     return (init_token(word, WORD));
@@ -97,10 +99,7 @@ t_token *lexer_get_heredoc(t_lexer *lexer)
 //     char **var;
 //     int i;
 //     int j;
-
 //     lexer_advance(lexer);
-
-
 //     // var
 //     quote_size = get_q_size(lexer);
 //     quote = malloc(quote_size * sizeof(char) + 1);
@@ -153,7 +152,6 @@ int get_q_size(t_lexer *lexer)
 //     char *var;
 //     int size;
 //     int i;
-
 //     lexer_advance(lexer);
 //     size = 0;
 //     while (ft_isalnum(lexer->line[lexer->i + size]))
@@ -299,7 +297,8 @@ t_token *lexer_skip_comment(t_lexer *lexer)
 }
 void exit_error()
 {
-    exit(1);
+    printf("ERROR\n");
+    // exit(1);
 }
 
 t_token *lexer_next_token(t_lexer *lexer)
