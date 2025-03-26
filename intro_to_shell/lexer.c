@@ -288,8 +288,8 @@ t_token *lexer_skip_comment(t_lexer *lexer)
     if (!comment)
         clean_exit(lexer, NULL);
     i = 0;
-    // while (lexer->c)
-    while (lexer->i != lexer->line_size - 1)
+    // while (lexer->i != lexer->line_size - 1)
+    while (lexer->c)
     {
         comment[i] = lexer->c;
         lexer_advance(lexer);
