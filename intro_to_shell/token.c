@@ -26,11 +26,14 @@ t_token *tokenize(char *line)
         printf("token : %s \ttype : %d\n", token->value, token->type);
         if (!hard_code)
             token->prev = NULL;
-        if (token->value)
+        if (token->value && token->type != EXPANSION)
             free(token->value);
-        free(token);
+        if (token)
+            free(token);
     }
-    free(lexer->line);
-    free(lexer);
+    if (lexer->line)
+        free(lexer->line);
+    if (lexer)
+        free(lexer);
     return (NULL);
 }

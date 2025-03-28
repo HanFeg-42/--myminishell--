@@ -159,6 +159,7 @@ t_token *lexer_get_squote(t_lexer *lexer)
 t_token *lexer_get_expansion(t_lexer *lexer)
 {
     char *var;
+    char *env_v;
     int size;
     int i;
 
@@ -177,7 +178,9 @@ t_token *lexer_get_expansion(t_lexer *lexer)
         i++;
     }
     var[i] = '\0';
-    return (init_token(getenv(var), WORD));
+    env_v = getenv(var);
+    free(var);
+    return (init_token(env_v, EXPANSION));
 }
 
 t_token *lexer_get_dquote(t_lexer *lexer)
