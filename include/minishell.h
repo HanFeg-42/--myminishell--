@@ -90,6 +90,9 @@ t_token *lexer_next_token(t_lexer *lexer);
 
 //token
 void token_addback(t_token **tok_head, t_token *token);
+t_token *token_last(t_token *tok_head);
+void token_print(t_token *tok);
+void token_free_list(t_token *tok);
 
 
 #endif

@@ -30,6 +30,7 @@ int main()
             break;
         printf("This is what you wrote: %s\n", line);
         token = tokenize(line);
+        printf("\n");
         add_history(line);
         free(line);
         free(token);

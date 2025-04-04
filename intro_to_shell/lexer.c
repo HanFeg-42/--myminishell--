@@ -251,6 +251,7 @@ t_token *lexer_next_token(t_lexer *lexer)
             if (lexer->line[lexer->i + 1] == '&')
                 return (lexer_advance_with2(lexer, init_token(ft_strdup("&&"), AND)));
             exit_error();
+            break;
         }
         if (lexer->c == '|')
         {
