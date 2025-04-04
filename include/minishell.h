@@ -88,4 +88,8 @@ t_token *lexer_next_token(t_lexer *lexer);
 // " => 34
 // ' => 39
 
+//token
+void token_addback(t_token **tok_head, t_token *token);
+
+
 #endif
