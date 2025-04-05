@@ -33,7 +33,7 @@ int main()
         printf("\n");
         add_history(line);
         free(line);
-        free(token);
+        free_all();
     }
     return (0);
 }

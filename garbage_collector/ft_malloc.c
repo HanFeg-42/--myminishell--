@@ -15,12 +15,14 @@ t_gc *gc_new(void *content)
 {
     t_gc *new;
 
+    new = malloc(sizeof(t_gc));
     new->addr = content;
     new->next = NULL;
     new->prev = NULL;
+    return (new);
 }
 
-void *gc_addback(t_gc **head, t_gc *new)
+void gc_addback(t_gc **head, t_gc *new)
 {
     t_gc *last;
 

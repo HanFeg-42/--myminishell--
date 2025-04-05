@@ -38,6 +38,20 @@ int is_special(int c)
 	return (0);
 }
 
+int is_operator(int c)
+{
+	if (c == '|' || c == '&')
+		return (1);
+	return (0);
+}
+
+int is_redirection(int c)
+{
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
+}
+
 int get_q_size(t_lexer *lexer)
 {
     int i;

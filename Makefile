@@ -10,7 +10,15 @@ RLFLAG = -lreadline
 
 SRC = intro_to_shell/readline.c \
 		intro_to_shell/token.c \
-		intro_to_shell/lexer.c
+		intro_to_shell/lexer.c \
+		intro_to_shell/lexer_advancer.c \
+		intro_to_shell/lexer_getter.c \
+		intro_to_shell/lexer_skipper.c \
+		intro_to_shell/get_next_line.c \
+		intro_to_shell/cleanup.c \
+		garbage_collector/clean_up.c \
+		garbage_collector/ft_malloc.c \
+		garbage_collector/getter.c
 
 OBJ = ${SRC:.c=.o}
 
