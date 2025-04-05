@@ -65,34 +65,44 @@ typedef struct s_tree
 	struct s_tree		*right;
 }						t_tree;
 
-// lexer
-t_token *tokenize(char *line);
-t_token *init_token(char *value, int type);
+// garbage collector
+typedef struct s_gc
+{
+	void				*addr;
+	struct s_gc			*next;
+	struct s_gc			*prev;
+}						t_gc;
 
-t_lexer *init_lexer(char *line);
-void lexer_advance(t_lexer *lexer);
-void lexer_skip_whitespaces(t_lexer *lexer);
-t_token *lexer_get_word(t_lexer *lexer);
-t_token *lexer_get_heredoc(t_lexer *lexer);
-int get_q_size(t_lexer *lexer);
-t_token *lexer_advance_current(t_lexer *lexer, int type);
-t_token *lexer_advance_with2(t_lexer *lexer, t_token *token);
-t_token *lexer_advance_with(t_lexer *lexer, t_token *token);
-t_token *lexer_get_squote(t_lexer *lexer);
-t_token *lexer_get_expansion(t_lexer *lexer);
-t_token *lexer_get_dquote(t_lexer *lexer);
-void clean_exit(t_lexer *lexer, t_token *token);
-t_token *lexer_skip_comment(t_lexer *lexer);
-t_token *lexer_next_token(t_lexer *lexer);
+
+// lexer
+t_token			*tokenize(char *line);
+t_token			*init_token(char *value, int type);
+t_lexer			*init_lexer(char *line);
+void			lexer_advance(t_lexer *lexer);
+void			lexer_skip_whitespaces(t_lexer *lexer);
+t_token			*lexer_get_word(t_lexer *lexer);
+t_token			*lexer_get_heredoc(t_lexer *lexer);
+int				get_q_size(t_lexer *lexer);
+t_token			*lexer_advance_current(t_lexer *lexer, int type);
+t_token			*lexer_advance_with2(t_lexer *lexer, t_token *token);
+t_token			*lexer_advance_with(t_lexer *lexer, t_token *token);
+t_token			*lexer_get_squote(t_lexer *lexer);
+t_token			*lexer_get_expansion(t_lexer *lexer);
+t_token			*lexer_get_dquote(t_lexer *lexer);
+void			clean_exit(t_lexer *lexer, t_token *token);
+t_token			*lexer_skip_comment(t_lexer *lexer);
+t_token			*lexer_next_token(t_lexer *lexer);
 
 // " => 34
 // ' => 39
 
 //token
-void token_addback(t_token **tok_head, t_token *token);
-t_token *token_last(t_token *tok_head);
-void token_print(t_token *tok);
-void token_free_list(t_token *tok);
+void			token_addback(t_token **tok_head, t_token *token);
+t_token			*token_last(t_token *tok_head);
+void			token_print(t_token *tok);
+void			token_free_list(t_token *tok);
 
+// gc
+t_gc			**get_gc_head(void);
 
 #endif

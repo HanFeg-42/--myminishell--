@@ -18,20 +18,14 @@ t_token *tokenize(char *line)
 {
     t_lexer *lexer;
     t_token *token;
-    static t_token *tok_head;
+    t_token *tok_head;
 
     lexer = init_lexer(line);
-    tok_head = lexer_next_token(lexer);
-    // printf("token : %s \ttype : %d\n", tok_head->value, tok_head->type);
+    tok_head = NULL;
     token = NULL;
     while ((token = lexer_next_token(lexer)))
     {
-        // printf("token : %s \ttype : %d\n", token->value, token->type);
         token_addback(&tok_head, token);
-        // if (token->value && token->type != EXPANSION)
-        //     free(token->value);
-        // if (token)
-        //     free(token);
     }
     token_print(tok_head);
     token_free_list(tok_head);
