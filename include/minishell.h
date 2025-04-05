@@ -103,6 +103,15 @@ void			token_print(t_token *tok);
 void			token_free_list(t_token *tok);
 
 // gc
+void			*ft_malloc(size_t size);
 t_gc			**get_gc_head(void);
+t_gc			*gc_new(void *content);
+void			*gc_addback(t_gc **head, t_gc *new);
+t_gc			*gc_last(t_gc *head);
+void			free_one(void *addr);
+void			free_head(void);
+void			free_last(void);
+void			free_middle(t_gc *element);
+void			free_all(void);
 
 #endif

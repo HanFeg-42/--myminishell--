@@ -4,8 +4,6 @@ void free_one(void *addr)
 {
 	t_gc **gc_head;
 	t_gc *current;
-	t_gc *next;
-	t_gc *prev;
 
 	gc_head = get_gc_head();
 	if (!addr || !gc_head)
@@ -15,16 +13,49 @@ void free_one(void *addr)
 	{
 		if (current->addr == addr)
 		{
-			next = current->next;
-			prev = current->prev;
-			free(current->addr);
-			prev->next = next;
-			next->prev = prev;
+			if (*gc_head == current)
+				free_head();
+			else if (!current->next)
+				free_last();
+			else
+				free_middle(current);
 			return ;
 		}
 		current = current->next;
 	}
 }
+
+void free_head(void)
+{
+	t_gc *gc_head;
+
+	gc_head = *get_gc_head();
+	gc_head = gc_head->next;
+	free(gc_head->prev->addr);
+	gc_head->prev = NULL;
+}
+
+void free_last(void)
+{
+	t_gc	*last;
+
+	last = gc_last(*get_gc_head);
+	last->prev->next = NULL;
+	free(last->addr);
+}
+
+void free_middle(t_gc *element)
+{
+	t_gc *next;
+	t_gc *prev;
+
+	next = element->next;
+	prev = element->prev;
+	free(element->addr);
+	prev->next = next;
+	next->prev = prev;
+}
+
 
 void free_all(void)
 {

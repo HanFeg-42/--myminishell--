@@ -3,13 +3,11 @@
 void *ft_malloc(size_t size)
 {
     void *ret;
-    t_gc **gc_head;
 
     ret = malloc(size);
     if (!ret)
         return (NULL);
-    *gc_head = get_gc_head();
-    gc_addback(gc_head, gc_new(ret));
+    gc_addback(get_gc_head(), gc_new(ret));
     return (ret);
 }
 
