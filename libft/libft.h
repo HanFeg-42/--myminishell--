@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:35:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/03/23 01:58:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/04/06 17:32:46 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <limits.h>
 # include <stdint.h>
 # include <fcntl.h>
+# include "../include/minishell.h"
 
 typedef struct s_list
 {

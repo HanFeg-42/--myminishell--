@@ -16,6 +16,8 @@ t_gc *gc_new(void *content)
     t_gc *new;
 
     new = malloc(sizeof(t_gc));
+    if (!new)
+        return (NULL);
     new->addr = content;
     new->next = NULL;
     new->prev = NULL;
@@ -45,4 +47,13 @@ t_gc *gc_last(t_gc *head)
     while (head->next)
         head = head->next;
     return (head);
+}
+
+void gc_print(t_gc *head)
+{
+    while (head)
+    {
+        printf("node = %p\tvalue = %p\tnext = %p\tprev = %p\n", head, head->addr, head->next, head->prev);
+        head = head->next;
+    }
 }

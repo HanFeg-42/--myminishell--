@@ -98,7 +98,8 @@ t_token *lexer_get_expansion(t_lexer *lexer)
     }
     var[i] = '\0';
     env_v = getenv(var);
-    free(var);
+    // free(var);
+    free_one(var);
     return (init_token(env_v, EXPANSION));
 }
 
