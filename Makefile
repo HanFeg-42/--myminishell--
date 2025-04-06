@@ -16,7 +16,8 @@ SRC = intro_to_shell/readline.c \
 		intro_to_shell/lexer_skipper.c \
 		intro_to_shell/get_next_line.c \
 		intro_to_shell/cleanup.c \
-		garbage_collector/clean_up.c \
+		garbage_collector/free_address.c \
+		garbage_collector/free_all.c \
 		garbage_collector/ft_malloc.c \
 		garbage_collector/getter.c
 
