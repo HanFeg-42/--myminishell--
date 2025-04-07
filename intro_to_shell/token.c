@@ -24,15 +24,8 @@ t_token *tokenize(char *line)
     tok_head = NULL;
     token = NULL;
     while ((token = lexer_next_token(lexer)))
-    {
         token_addback(&tok_head, token);
-    }
     token_print(tok_head);
-    // token_free_list(tok_head);
-    // if (lexer->line)
-    //     free(lexer->line);
-    // if (lexer)
-    //     free(lexer);
     return (NULL);
 }
 

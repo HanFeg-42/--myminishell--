@@ -32,8 +32,6 @@ typedef enum e_token_type
 	EQUALS,		//13
 	OPAREN,		//14
 	CPAREN,		//15
-	OBRACE,		//16
-	CBRACE,		//17
 	EXPANSION,	//18
 	SUBSHELL,	//19
 	COMMENT		//20
@@ -55,6 +53,8 @@ typedef struct s_lexer
 	int 				i;
 	int					line_size;
 }						t_lexer;
+
+
 
 
 // ABOUT tree
