@@ -31,7 +31,7 @@ int main()
         printf("This is what you wrote: %s\n", line);
         token = tokenize(line);
         printf("\n");
-        gc_print(*get_gc_head());
+        // gc_print(*get_gc_head());
         printf("\n");
         add_history(line);
         free(line);

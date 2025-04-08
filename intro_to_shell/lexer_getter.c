@@ -51,6 +51,35 @@ t_token *lexer_get_heredoc(t_lexer *lexer)
     return (init_token(herdoc, HERE_DOC));
 }
 
+t_token *lexer_get_expansion(t_lexer *lexer)
+{
+    char *var;
+    // char *env_v;
+    int size;
+    int i;
+
+    lexer_advance(lexer);
+    size = 0;
+    while (ft_isalnum(lexer->line[lexer->i + size]))
+        size++;
+    var = ft_malloc(size * sizeof(char) + 1);
+    if (!var)
+        clean_exit(lexer, NULL);
+    i = 0;
+    while (ft_isalnum(lexer->c))
+    {
+        var[i] = lexer->c;
+        lexer_advance(lexer);
+        i++;
+    }
+    var[i] = '\0';
+    // env_v = getenv(var);
+    // free(var);
+    // free_one(var);
+    return (init_token(var, EXPANSION));
+    // return (init_token(env_v, EXPANSION));
+}
+
 t_token *lexer_get_squote(t_lexer *lexer)
 {
     char *squote;
@@ -75,34 +104,6 @@ t_token *lexer_get_squote(t_lexer *lexer)
     return (init_token(squote, SQUOTE));
 }
 
-t_token *lexer_get_expansion(t_lexer *lexer)
-{
-    char *var;
-    char *env_v;
-    int size;
-    int i;
-
-    lexer_advance(lexer);
-    size = 0;
-    while (ft_isalnum(lexer->line[lexer->i + size]))
-        size++;
-    var = ft_malloc(size * sizeof(char) + 1);
-    if (!var)
-        clean_exit(lexer, NULL);
-    i = 0;
-    while (ft_isalnum(lexer->c))
-    {
-        var[i] = lexer->c;
-        lexer_advance(lexer);
-        i++;
-    }
-    var[i] = '\0';
-    env_v = getenv(var);
-    // free(var);
-    free_one(var);
-    return (init_token(env_v, EXPANSION));
-}
-
 t_token *lexer_get_dquote(t_lexer *lexer)
 {
     char *quote;
@@ -110,17 +111,24 @@ t_token *lexer_get_dquote(t_lexer *lexer)
     int i;
 
     lexer_advance(lexer);
-    quote_size = get_q_size(lexer);
-    quote = ft_malloc(quote_size * sizeof(char) + 1);
+    // quote_size = get_q_size(lexer);
+    i =0;
+    while (lexer->line[lexer->i + i] != '"')
+        i++;
+    quote_size = i;
+    quote = ft_malloc((quote_size + 1) * sizeof(char));
     if (!quote)
         clean_exit(lexer, NULL); // al marjo t freeyi w t exit in a clean way
-    i = 0;
-    while (lexer->c != '"')
+    int j = 0;
+    printf("hh%d\n", i);
+    while (j < i)
     {
-        quote[i] = lexer->c;
+        quote[j] = lexer->c;
         lexer_advance(lexer);
-        i++;
+        // printf("%d\n", j);
+        j++;
     }
-    quote[i] = '\0';
+    lexer_advance(lexer);
+    quote[j] = '\0';
     return (init_token(quote, DQUOTE));
 }
