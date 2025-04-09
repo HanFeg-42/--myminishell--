@@ -62,22 +62,22 @@ t_token *lexer_redirection(t_lexer *lexer)
 t_token *lexer_quote_or_paren(t_lexer *lexer)
 {
 	if (lexer->c == '"')
-		return (lexer_get_dquote(lexer));
+	return (lexer_advance_current(lexer, DQUOTE));
 	if (lexer->c == '\'')
-		return (lexer_get_squote(lexer));
+	return (lexer_advance_current(lexer, SQUOTE));
 	if (lexer->c == '(')
-		return (lexer_advance_current(lexer, OPAREN));
+	return (lexer_advance_current(lexer, OPAREN));
 	if (lexer->c == ')')
-		return (lexer_advance_current(lexer, CPAREN));
+	return (lexer_advance_current(lexer, CPAREN));
 	return (NULL);
 }
 
 // t_token *lexer_quote_or_paren(t_lexer *lexer)
 // {
 // 	if (lexer->c == '"')
-// 		return (lexer_advance_current(lexer, DQUOTE));
+// 		return (lexer_get_dquote(lexer));
 // 	if (lexer->c == '\'')
-// 		return (lexer_advance_current(lexer, SQUOTE));
+// 		return (lexer_get_squote(lexer));
 // 	if (lexer->c == '(')
 // 		return (lexer_advance_current(lexer, OPAREN));
 // 	if (lexer->c == ')')

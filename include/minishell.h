@@ -124,7 +124,7 @@ int is_redirection(int c);
 
 
 // unwanted function
-int				get_q_size(t_lexer *lexer);
+int				get_dq_size(t_lexer *lexer);
 void			clean_exit(t_lexer *lexer, t_token *token);
 void throw_error(char *err);
 

@@ -64,7 +64,7 @@ void token_print(t_token *tok)
     head = tok;
     while (tok)
     {
-        printf("%s \t===>", tok->value);
+        printf("%s \t->-", tok->value);
         tok = tok->next;
     }
 }

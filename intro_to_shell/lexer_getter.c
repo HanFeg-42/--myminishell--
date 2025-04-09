@@ -108,27 +108,20 @@ t_token *lexer_get_dquote(t_lexer *lexer)
 {
     char *quote;
     int quote_size;
-    int i;
 
     lexer_advance(lexer);
-    // quote_size = get_q_size(lexer);
-    i =0;
-    while (lexer->line[lexer->i + i] != '"')
-        i++;
-    quote_size = i;
+    quote_size = get_dq_size(lexer);
     quote = ft_malloc((quote_size + 1) * sizeof(char));
     if (!quote)
         clean_exit(lexer, NULL); // al marjo t freeyi w t exit in a clean way
     int j = 0;
-    printf("hh%d\n", i);
-    while (j < i)
+    while (j < quote_size)
     {
         quote[j] = lexer->c;
         lexer_advance(lexer);
-        // printf("%d\n", j);
         j++;
     }
-    lexer_advance(lexer);
     quote[j] = '\0';
+    lexer_advance(lexer);
     return (init_token(quote, DQUOTE));
 }
