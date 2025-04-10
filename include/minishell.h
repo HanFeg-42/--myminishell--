@@ -37,6 +37,12 @@ typedef enum e_token_type
 	COMMENT		//20
 }						t_token_type;
 
+typedef enum e_cmd_type
+{
+	COMMAND,
+	ARG
+}						t_cmd_type;
+
 //token
 typedef struct s_token
 {
@@ -54,7 +60,12 @@ typedef struct s_lexer
 	int					line_size;
 }						t_lexer;
 
-
+typedef struct s_file
+{
+	t_token_type		file_type;
+	char				*name;
+	struct s_file		*next;
+}						t_file;
 
 
 // ABOUT tree
@@ -65,6 +76,16 @@ typedef struct s_tree
 	struct s_tree		*right;
 }						t_tree;
 
+typedef struct s_AST
+{
+	t_token_type		node_type;
+	char				*value;
+	char				**arg;
+	t_file				*file;
+	struct s_tree		*left;
+	struct s_tree		*right;
+}				t_AST;
+
 // garbage collector
 typedef struct s_gc
 {
@@ -74,7 +95,7 @@ typedef struct s_gc
 }						t_gc;
 
 
-// lexer
+// ==================--------lexer-------=============================
 t_lexer			*init_lexer(char *line);
 void			lexer_advance(t_lexer *lexer);
 void			lexer_skip_whitespaces(t_lexer *lexer);
@@ -92,18 +113,20 @@ t_token			*lexer_operator(t_lexer *lexer);
 t_token			*lexer_redirection(t_lexer *lexer);
 t_token			*lexer_quote_or_paren(t_lexer *lexer);
 
-// " => 34
-// ' => 39
-
-// token
-t_token			*tokenize(char *line);
+// ==================--------token-------=============================
+t_token			*tokenizer(char *line);
 t_token			*init_token(char *value, int type);
 void			token_addback(t_token **tok_head, t_token *token);
 t_token			*token_last(t_token *tok_head);
 void			token_print(t_token *tok);
 void			token_free_list(t_token *tok);
 
-// gc
+// ==================--------parser-------=============================
+void	parser(t_token *tok);
+
+// ==================-------expander--------=============================
+
+// ==================---------gc---------=============================
 void			*ft_malloc(size_t size);
 t_gc			**get_gc_head(void);
 t_gc			*gc_new(void *content);
@@ -118,15 +141,17 @@ void			free_last_node(t_gc *node);
 void			free_lonley_node(t_gc *node);
 
 // checkers
-int is_special(int c);
-int is_operator(int c);
-int is_redirection(int c);
-
+int				is_special(int c);
+int				is_operator(int c);
+int				is_redirection(int c);
 
 // unwanted function
 int				get_dq_size(t_lexer *lexer);
 void			clean_exit(t_lexer *lexer, t_token *token);
-void throw_error(char *err);
+void 			throw_error(char *err);
+void 			finish(char *line);
 
+// " => 34
+// ' => 39
 
 #endif

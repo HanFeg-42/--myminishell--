@@ -66,15 +66,15 @@ t_token *lexer_get_expansion(t_lexer *lexer)
     if (!var)
         clean_exit(lexer, NULL);
     i = 0;
-    while (ft_isalnum(lexer->c))
+    while (i < size)
     {
         var[i] = lexer->c;
-        lexer_advance(lexer);
         i++;
+        if (i < size)
+            lexer_advance(lexer);
     }
     var[i] = '\0';
     // env_v = getenv(var);
-    // free(var);
     // free_one(var);
     return (init_token(var, EXPANSION));
     // return (init_token(env_v, EXPANSION));

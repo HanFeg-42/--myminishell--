@@ -14,7 +14,7 @@ t_token *init_token(char *value, int type)
     return (tok);
 }
 
-t_token *tokenize(char *line)
+t_token *tokenizer(char *line)
 {
     t_lexer *lexer;
     t_token *token;
@@ -25,8 +25,8 @@ t_token *tokenize(char *line)
     token = NULL;
     while ((token = lexer_next_token(lexer)))
         token_addback(&tok_head, token);
-    token_print(tok_head);
-    return (NULL);
+    // token_print(tok_head);
+    return (tok_head);
 }
 
 void token_addback(t_token **tok_head, t_token *token)
@@ -69,17 +69,17 @@ void token_print(t_token *tok)
     }
 }
 
-void token_free_list(t_token *tok)
-{
-    t_token *next;
+// void token_free_list(t_token *tok)
+// {
+//     t_token *next;
 
-    while (tok)
-    {
-        next = tok->next;
-        if (tok->value && tok->type != EXPANSION)
-            free(tok->value);
-        if (tok)
-            free(tok);
-        tok = next;
-    }
-}
+//     while (tok)
+//     {
+//         next = tok->next;
+//         if (tok->value && tok->type != EXPANSION)
+//             free(tok->value);
+//         if (tok)
+//             free(tok);
+//         tok = next;
+//     }
+// }
