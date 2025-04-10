@@ -127,7 +127,7 @@ void			token_free_list(t_token *tok);
 // ==================--------parser-------=============================
 void	parser(t_token *tok);
 void	parse_quotes(t_token *tok);
-void	parse_dquote(t_token *tok, t_token_type quote);
+void	parse_parentheses(t_token *tok);
 
 // ==================-------expander--------=============================
 

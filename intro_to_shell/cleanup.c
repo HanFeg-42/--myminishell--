@@ -21,4 +21,6 @@ void throw_error(char *err)
     rl_on_new_line(); // kat3yt l readline 3awtani walakin makat affichiha ta kanpressi chi key
     // rl_redisplay(); // hai kataffichi lia dek lmsg li 3atya l readline once the signal ddar
     // exit(1);
+	*get_parser_check() = false;
+
 }
