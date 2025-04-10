@@ -36,11 +36,12 @@ int main()
 		line = readline("\033[38;2;255;105;180mMinishell > \033[0m");
 		if (!line || !strcmp(line, "exit"))
 			break;
-		printf("This is what you wrote: %s\n", line);
+		// printf("This is what you wrote: %s\n", line);
 		token = tokenizer(line);
 		parser(token);
-		printf("\n");
-		token_print(token);
+		// printf("\n");
+		*get_parser_check() = true;
+		// token_print(token);
 		// gc_print(*get_gc_head());
 		finish(line);
 	}

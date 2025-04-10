@@ -1,4 +1,5 @@
-#include "../include/minishell.h"
+#include "gc.h"
+// #include "../include/minishell.h"
 
 void free_one(void *addr)
 {

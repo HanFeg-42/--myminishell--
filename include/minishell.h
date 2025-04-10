@@ -7,7 +7,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
+#include <stdbool.h>
 #include "../libft/libft.h"
+#include "../garbage_collector/gc.h"
+
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 10
@@ -87,12 +90,12 @@ typedef struct s_AST
 }				t_AST;
 
 // garbage collector
-typedef struct s_gc
-{
-	void				*addr;
-	struct s_gc			*next;
-	struct s_gc			*prev;
-}						t_gc;
+// typedef struct s_gc
+// {
+// 	void				*addr;
+// 	struct s_gc			*next;
+// 	struct s_gc			*prev;
+// }						t_gc;
 
 
 // ==================--------lexer-------=============================
@@ -123,22 +126,27 @@ void			token_free_list(t_token *tok);
 
 // ==================--------parser-------=============================
 void	parser(t_token *tok);
+void	parse_quotes(t_token *tok);
+void	parse_dquote(t_token *tok, t_token_type quote);
 
 // ==================-------expander--------=============================
 
+// ------------------------getters------------------
+int *get_parser_check(void);
+
 // ==================---------gc---------=============================
-void			*ft_malloc(size_t size);
-t_gc			**get_gc_head(void);
-t_gc			*gc_new(void *content);
-void			gc_addback(t_gc **head, t_gc *new);
-t_gc			*gc_last(t_gc *head);
-void			gc_print(t_gc *head);
-void			free_one(void *addr);
-void			free_all(void);
-void			free_mid_node(t_gc *node);
-void			free_first_node(t_gc *node);
-void			free_last_node(t_gc *node);
-void			free_lonley_node(t_gc *node);
+// void			*ft_malloc(size_t size);
+// t_gc			**get_gc_head(void);
+// t_gc			*gc_new(void *content);
+// void			gc_addback(t_gc **head, t_gc *new);
+// t_gc			*gc_last(t_gc *head);
+// void			gc_print(t_gc *head);
+// void			free_one(void *addr);
+// void			free_all(void);
+// void			free_mid_node(t_gc *node);
+// void			free_first_node(t_gc *node);
+// void			free_last_node(t_gc *node);
+// void			free_lonley_node(t_gc *node);
 
 // checkers
 int				is_special(int c);

@@ -20,7 +20,8 @@ SRC = intro_to_shell/readline.c \
 		garbage_collector/free_all.c \
 		garbage_collector/ft_malloc.c \
 		garbage_collector/getter.c \
-		intro_to_shell/parser.c
+		intro_to_shell/parser.c \
+		intro_to_shell/getters.c
 
 OBJ = ${SRC:.c=.o}
 
