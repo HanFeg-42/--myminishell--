@@ -71,13 +71,13 @@ typedef struct s_file
 }						t_file;
 
 
-// ABOUT tree
-typedef struct s_tree
-{
-	t_token				*node;
-	struct s_tree		*left;
-	struct s_tree		*right;
-}						t_tree;
+// // ABOUT tree
+// typedef struct s_tree
+// {
+// 	t_token				*node;
+// 	struct s_tree		*left;
+// 	struct s_tree		*right;
+// }						t_tree;
 
 typedef struct s_AST
 {
