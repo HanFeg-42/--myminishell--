@@ -30,6 +30,7 @@ void	parse_quotes(t_token *tok)
 	if (!d_stat || !s_stat)
 		throw_error("unclosed quotes");
 }
+
 void	parse_parentheses(t_token *tok)
 {
 	int check;
@@ -41,6 +42,11 @@ void	parse_parentheses(t_token *tok)
 	p_count = 0;
 	while (tok)
 	{
+		if (tok->next && tok->type == OPAREN && tok->next->type == CPAREN)
+		{
+			throw_error("syntax error ()");
+			return ;
+		}
 		if (tok->type == CPAREN && p_count <= 0)
 		{
 			check = 1;

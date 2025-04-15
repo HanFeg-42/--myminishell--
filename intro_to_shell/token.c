@@ -59,9 +59,6 @@ t_token *token_last(t_token *tok_head)
 
 void token_print(t_token *tok)
 {
-    t_token *head;
-
-    head = tok;
     while (tok)
     {
         printf("%s \t->-", tok->value);
