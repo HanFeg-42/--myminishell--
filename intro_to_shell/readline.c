@@ -38,9 +38,9 @@ int main()
 			break;
 		// printf("This is what you wrote: %s\n", line);
 		token = tokenizer(line);
-		parser(token);
+		// parser(token);
 		*get_parser_check() = true;
-		// token_print(token);
+		token_print(token);
 		// gc_print(*get_gc_head());
 		finish(line);
 	}

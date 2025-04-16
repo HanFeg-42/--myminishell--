@@ -83,17 +83,17 @@ t_token *lexer_get_expansion(t_lexer *lexer)
 t_token *lexer_get_squote(t_lexer *lexer)
 {
     char *squote;
-    int i;
+    int quote_size;
 
     lexer_advance(lexer);
-    i = 0;
-    while (lexer->line[lexer->i + i] != '\'')
-        i++;
-    squote = ft_malloc(i * sizeof(char) + 1);
+    quote_size = get_q_size(lexer, 39);
+    if (!(*get_parser_check()))
+        return (lexer_error_advance(lexer));
+    squote = ft_malloc(quote_size * sizeof(char) + 1);
     if (!squote)
         clean_exit(lexer, NULL); // al marjo t freeyi w t exit in a clean
-    i = 0;
-    while (lexer->c != '\'')
+    int i = 0;
+    while (i < quote_size)
     {
         squote[i] = lexer->c;
         lexer_advance(lexer);
@@ -110,7 +110,9 @@ t_token *lexer_get_dquote(t_lexer *lexer)
     int quote_size;
 
     lexer_advance(lexer);
-    quote_size = get_dq_size(lexer);
+    quote_size = get_q_size(lexer, '"');
+    if (!(*get_parser_check()))
+        return (lexer_error_advance(lexer));
     quote = ft_malloc((quote_size + 1) * sizeof(char));
     if (!quote)
         clean_exit(lexer, NULL); // al marjo t freeyi w t exit in a clean way
@@ -124,4 +126,15 @@ t_token *lexer_get_dquote(t_lexer *lexer)
     quote[j] = '\0';
     lexer_advance(lexer);
     return (init_token(quote, DQUOTE));
+}
+
+t_token *lexer_error_advance(t_lexer *lexer)
+{
+    while (lexer->c)
+    {
+        if (lexer->i == lexer->line_size - 1)
+            break;
+        lexer_advance(lexer);
+    }
+    return (NULL);
 }

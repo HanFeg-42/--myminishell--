@@ -52,16 +52,16 @@ int is_redirection(int c)
 	return (0);
 }
 
-int get_dq_size(t_lexer *lexer)
+int get_q_size(t_lexer *lexer, int quote)
 {
     int i;
 
     i = 0;
-    while (lexer->line[lexer->i + i] && lexer->line[lexer->i + i] != '"')
+    while (lexer->line[lexer->i + i] && lexer->line[lexer->i + i] != quote)
     {
-        i++;
-		if (lexer->i + i == lexer->line_size - 1)
+        if (lexer->i + i == lexer->line_size - 1)
             throw_error("unclosed quotes!");
+        i++;
     }
     return (i);
 }

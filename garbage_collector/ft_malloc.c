@@ -8,7 +8,7 @@ void *ft_malloc(size_t size)
     ret = malloc(size);
     if (!ret)
         return (NULL);
-    gc_addback(get_gc_head(), gc_new(ret));
+    gc_addback(gc_new(ret));
     return (ret);
 }
 
@@ -25,10 +25,12 @@ t_gc *gc_new(void *content)
     return (new);
 }
 
-void gc_addback(t_gc **head, t_gc *new)
+void gc_addback(t_gc *new)
 {
     t_gc *last;
+    t_gc **head;
 
+    head = get_gc_head();
     if (!head || !new)
         return ;
     if (!(*head))

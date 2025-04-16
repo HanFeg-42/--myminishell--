@@ -79,7 +79,7 @@ typedef struct s_file
 // 	struct s_tree		*right;
 // }						t_tree;
 
-typedef struct s_AST
+typedef struct s_tree
 {
 	t_token_type		node_type;
 	char				*value;
@@ -87,7 +87,7 @@ typedef struct s_AST
 	t_file				*file;
 	struct s_tree		*left;
 	struct s_tree		*right;
-}				t_AST;
+}				t_tree;
 
 // garbage collector
 // typedef struct s_gc
@@ -110,6 +110,7 @@ t_token			*lexer_advance_with(t_lexer *lexer, t_token *token);
 t_token			*lexer_get_squote(t_lexer *lexer);
 t_token			*lexer_get_expansion(t_lexer *lexer);
 t_token			*lexer_get_dquote(t_lexer *lexer);
+t_token			*lexer_error_advance(t_lexer *lexer);
 t_token			*lexer_skip_comment(t_lexer *lexer);
 t_token			*lexer_next_token(t_lexer *lexer);
 t_token			*lexer_operator(t_lexer *lexer);
@@ -154,7 +155,7 @@ int				is_operator(int c);
 int				is_redirection(int c);
 
 // unwanted function
-int				get_dq_size(t_lexer *lexer);
+int				get_q_size(t_lexer *lexer, int quote);
 void			clean_exit(t_lexer *lexer, t_token *token);
 void 			throw_error(char *err);
 void 			finish(char *line);
