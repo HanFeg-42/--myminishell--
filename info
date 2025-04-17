@@ -1,0 +1,27 @@
+command_list     : compound_command command_list
+                 | compound_command
+                 ;
+compound_command : pipeline '&&'  compound_command
+                 | pipeline '||'  compound_command
+                 | pipeline
+                 ;
+pipeline         : command '|'  pipeline
+                 | command
+                 ;
+command          : subshell
+                 | simple_command
+                 ;
+subshell         : '(' command_list ')' redirect_list*
+                 ;
+simple_command   : io_redirect simple_command
+                 | io_redirect
+                 | WORD        simple_command
+                 | WORD
+                 ;
+redirect_list    : io_redirect redirect_list*
+                 ;
+io_redirect      : '<'     WORD(filename) 
+                 | '>'     WORD(filename)
+                 | '>>'    WORD(filename)
+                 | '<<'    WORD
+                 ;
