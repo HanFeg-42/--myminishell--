@@ -5,17 +5,11 @@ t_token *lexer_next_token(t_lexer *lexer)
 	while (lexer->c)
 	{
 		lexer_skip_whitespaces(lexer);
-		if (lexer->c == '*')
-			return (lexer_advance_current(lexer, STAR));
 		if (is_operator(lexer->c))
 			return (lexer_operator(lexer));
 		if (is_redirection(lexer->c))
 			return (lexer_redirection(lexer));
-		if (ft_strchr("\"\'()", lexer->c))
-			return (lexer_quote_or_paren(lexer));
-		if (lexer->c == '$')
-			return (lexer_advance_with(lexer, lexer_get_expansion(lexer)));
-		if (lexer->c == '#')
+		if (lexer->c == '#') // should advance all next characters without saving it as a token
 			return (lexer_advance_with(lexer, lexer_skip_comment(lexer)));
 		if (!is_special(lexer->c))
 			return (lexer_advance_with(lexer, lexer_get_word(lexer)));
@@ -36,9 +30,13 @@ t_token *lexer_operator(t_lexer *lexer)
 	if (lexer->c == '|')
 	{
 		if (lexer->line[lexer->i + 1] == '|')
-			return (lexer_advance_with2(lexer, init_token(ft_strdup("||"), OR)));
+		return (lexer_advance_with2(lexer, init_token(ft_strdup("||"), OR)));
 		return (lexer_advance_current(lexer, PIPE));
 	}
+	if (lexer->c == '(')
+		return (lexer_advance_current(lexer, OPAREN));
+	if (lexer->c == ')')
+		return (lexer_advance_current(lexer, CPAREN));
 	return (NULL);
 }
 
@@ -53,7 +51,7 @@ t_token *lexer_redirection(t_lexer *lexer)
 	if (lexer->c == '<')
 	{
 		if (lexer->line[lexer->i + 1] == '<')
-			return (lexer_advance_with(lexer, lexer_get_heredoc(lexer)));
+			return (lexer_advance_with(lexer, init_token(ft_strdup("<<"), HERE_DOC)));
 		return (lexer_advance_current(lexer, INPUT_RED));
 	}
 	return (NULL);

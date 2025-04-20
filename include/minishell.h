@@ -35,10 +35,20 @@ typedef enum e_token_type
 	EQUALS,		//13
 	OPAREN,		//14
 	CPAREN,		//15
-	EXPANSION,	//18
-	SUBSHELL,	//19
-	COMMENT		//20
+	EXPANSION,	//16
+	SUBSHELL,	//17
+	COMMENT,	//18
+	TOKEN_EOI	//19
 }						t_token_type;
+
+// typedef enum e_token_type
+// {
+// 	ID,
+// 	OPERATOR,
+// 	EXPANSION,
+// 	WORD,
+// 	TOKEN_EOI
+// }						t_token_type;
 
 typedef enum e_cmd_type
 {

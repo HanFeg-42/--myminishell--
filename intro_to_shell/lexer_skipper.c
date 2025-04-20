@@ -31,16 +31,17 @@ void lexer_skip_whitespaces(t_lexer *lexer)
 int is_special(int c)
 {
 	if (c == '\0' || ft_issapce(c)
-        || c == '$' || c == '*' || c == '&' || c == '|'
-        || c == '>' || c == '<' || c == 34 || c == 39
-        || c == '(' || c == ')' || c == '{' || c == '}')
+        || c == '&' || c == '|'
+        || c == '>' || c == '<'
+        || c == '(' || c == ')'
+        || c == '#')
 		return (1);
 	return (0);
 }
 
 int is_operator(int c)
 {
-	if (c == '|' || c == '&')
+	if (c == '|' || c == '&' || c == '(' || c == ')')
 		return (1);
 	return (0);
 }
