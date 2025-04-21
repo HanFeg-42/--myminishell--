@@ -25,7 +25,6 @@ t_token *tokenizer(char *line)
     token = NULL;
     while ((token = lexer_next_token(lexer)))
         token_addback(&tok_head, token);
-    // token_print(tok_head);
     return (tok_head);
 }
 
@@ -61,7 +60,7 @@ void token_print(t_token *tok)
 {
     while (tok)
     {
-        printf("%s \t-- ", tok->value);
+        printf("%s \t-- its type : %d | ", tok->value, tok->type);
         tok = tok->next;
     }
 }

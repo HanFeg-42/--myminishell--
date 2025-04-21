@@ -169,6 +169,9 @@ int				get_q_size(t_lexer *lexer, int quote);
 void			clean_exit(t_lexer *lexer, t_token *token);
 void 			throw_error(char *err);
 void 			finish(char *line);
+int				get_word_size(t_lexer *lexer);
+void			advance_to_next_quote(t_lexer *lexer, int *i, int quote);
+
 
 // " => 34
 // ' => 39

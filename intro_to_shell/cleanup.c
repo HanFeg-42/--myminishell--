@@ -24,3 +24,10 @@ void throw_error(char *err)
 	*get_parser_check() = false;
 
 }
+
+void lexer_throw_error(t_lexer *lexer, char *err)
+{
+    throw_error(err);
+    while (lexer->c)
+        lexer_advance(lexer);
+}

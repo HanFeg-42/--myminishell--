@@ -2,6 +2,8 @@
 
 t_token *lexer_next_token(t_lexer *lexer)
 {
+	if (*get_parser_check() == false)
+		return (NULL);
 	while (lexer->c)
 	{
 		lexer_skip_whitespaces(lexer);
@@ -51,7 +53,7 @@ t_token *lexer_redirection(t_lexer *lexer)
 	if (lexer->c == '<')
 	{
 		if (lexer->line[lexer->i + 1] == '<')
-			return (lexer_advance_with(lexer, init_token(ft_strdup("<<"), HERE_DOC)));
+			return (lexer_advance_with2(lexer, init_token(ft_strdup("<<"), HERE_DOC)));
 		return (lexer_advance_current(lexer, INPUT_RED));
 	}
 	return (NULL);
@@ -70,18 +72,18 @@ t_token *lexer_redirection(t_lexer *lexer)
 // 	return (NULL);
 // }
 
-t_token *lexer_quote_or_paren(t_lexer *lexer)
-{
-	if (lexer->c == '"')
-		return (lexer_get_dquote(lexer));
-	if (lexer->c == '\'')
-		return (lexer_get_squote(lexer));
-	if (lexer->c == '(')
-		return (lexer_advance_current(lexer, OPAREN));
-	if (lexer->c == ')')
-		return (lexer_advance_current(lexer, CPAREN));
-	return (NULL);
-}
+// t_token *lexer_quote_or_paren(t_lexer *lexer)
+// {
+// 	if (lexer->c == '"')
+// 		return (lexer_get_dquote(lexer));
+// 	if (lexer->c == '\'')
+// 		return (lexer_get_squote(lexer));
+// 	if (lexer->c == '(')
+// 		return (lexer_advance_current(lexer, OPAREN));
+// 	if (lexer->c == ')')
+// 		return (lexer_advance_current(lexer, CPAREN));
+// 	return (NULL);
+// }
 
 // TO_DO : is_operator ---------------------------------------[ ]
 // TO_DO : lexer_operator ------------------------------------[ ]
