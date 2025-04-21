@@ -10,8 +10,8 @@ t_token *lexer_next_token(t_lexer *lexer)
 		if (is_redirection(lexer->c))
 			return (lexer_redirection(lexer));
 		if (lexer->c == '#') // should advance all next characters without saving it as a token
-			return (lexer_advance_with(lexer, lexer_skip_comment(lexer)));
-		if (!is_special(lexer->c))
+			return (lexer_advance_with(lexer, lexer_skip_comment(lexer))); // eroooooooooooooooooooooooooooooooooooor
+		if (!is_special(lexer->c)) // is_metacharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
 			return (lexer_advance_with(lexer, lexer_get_word(lexer)));
 		if (lexer->i == lexer->line_size - 1)
 			return (NULL);

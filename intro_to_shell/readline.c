@@ -29,8 +29,8 @@ int main()
 	t_token *token;
 
 	token = NULL;
-	signal(SIGINT, handler_SIGINT);
-	signal(SIGQUIT, handler_SIGQUIT);
+	// signal(SIGINT, handler_SIGINT);
+	// signal(SIGQUIT, handler_SIGQUIT);
 	while (1)
 	{
 		line = readline("\033[38;2;255;105;180mMinishell > \033[0m");

@@ -71,3 +71,15 @@ int get_q_size(t_lexer *lexer, int quote)
     }
     return (i);
 }
+int get_word_size(t_lexer *lexer)
+{
+    int i;
+
+    i = 0;
+    while (!is_special(lexer->line[lexer->i + i]))
+    {
+        if (lexer->line[lexer->i + i] == '"')
+            
+    }
+    
+}

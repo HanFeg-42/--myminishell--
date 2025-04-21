@@ -1,25 +1,47 @@
 #include "../include/minishell.h"
 
+// t_token *lexer_get_word(t_lexer *lexer)
+// {
+//     char *word;
+//     int i;
+
+//     i = 0;
+//     while (!is_special(lexer->line[lexer->i + i]))
+//         i++;
+//     word = ft_malloc((i + 1 ) * sizeof(char) );
+//     if (!word)
+//         return (NULL); // al marjo t freeyi w t exit in a clean
+//     int j = 0;
+//     while (j < i)
+//     {
+//         word[j] = lexer->c;
+//         j++;
+//         if (j < i)
+//             lexer_advance(lexer);
+//     }
+//     word[j] = '\0';
+//     return (init_token(word, WORD));
+// }
+
 t_token *lexer_get_word(t_lexer *lexer)
 {
     char *word;
+    int word_size;
     int i;
 
-    i = 0;
-    while (!is_special(lexer->line[lexer->i + i]))
-        i++;
-    word = ft_malloc((i + 1 ) * sizeof(char) );
+    word_size = get_word_size(lexer);
+    word = ft_malloc((word_size + 1 ) * sizeof(char) );
     if (!word)
         return (NULL); // al marjo t freeyi w t exit in a clean
-    int j = 0;
-    while (j < i)
+    i = 0;
+    while (i < word_size)
     {
-        word[j] = lexer->c;
-        j++;
-        if (j < i)
+        word[i] = lexer->c;
+        i++;
+        if (i < word_size)
             lexer_advance(lexer);
     }
-    word[j] = '\0';
+    word[i] = '\0';
     return (init_token(word, WORD));
 }
 
