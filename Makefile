@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 RLFLAG = -lreadline
 
-SRC = intro_to_shell/readline.c \
+SRC = intro_to_shell/main.c \
 		intro_to_shell/token.c \
 		intro_to_shell/lexer.c \
 		intro_to_shell/lexer_advancer.c \

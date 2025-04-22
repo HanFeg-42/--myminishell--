@@ -41,21 +41,6 @@ typedef enum e_token_type
 	TOKEN_EOI	//19
 }						t_token_type;
 
-// typedef enum e_token_type
-// {
-// 	ID,
-// 	OPERATOR,
-// 	EXPANSION,
-// 	WORD,
-// 	TOKEN_EOI
-// }						t_token_type;
-
-typedef enum e_cmd_type
-{
-	COMMAND,
-	ARG
-}						t_cmd_type;
-
 //token
 typedef struct s_token
 {
@@ -73,59 +58,18 @@ typedef struct s_lexer
 	int					line_size;
 }						t_lexer;
 
-typedef struct s_file
-{
-	t_token_type		file_type;
-	char				*name;
-	struct s_file		*next;
-}						t_file;
-
-
-// // ABOUT tree
-// typedef struct s_tree
-// {
-// 	t_token				*node;
-// 	struct s_tree		*left;
-// 	struct s_tree		*right;
-// }						t_tree;
-
-typedef struct s_tree
-{
-	t_token_type		node_type;
-	char				*value;
-	char				**arg;
-	t_file				*file;
-	struct s_tree		*left;
-	struct s_tree		*right;
-}				t_tree;
-
-// garbage collector
-// typedef struct s_gc
-// {
-// 	void				*addr;
-// 	struct s_gc			*next;
-// 	struct s_gc			*prev;
-// }						t_gc;
-
-
 // ==================--------lexer-------=============================
 t_lexer			*init_lexer(char *line);
 void			lexer_advance(t_lexer *lexer);
 void			lexer_skip_whitespaces(t_lexer *lexer);
 t_token			*lexer_get_word(t_lexer *lexer);
-t_token			*lexer_get_heredoc(t_lexer *lexer);
 t_token			*lexer_advance_current(t_lexer *lexer, int type);
 t_token			*lexer_advance_with2(t_lexer *lexer, t_token *token);
 t_token			*lexer_advance_with(t_lexer *lexer, t_token *token);
-t_token			*lexer_get_squote(t_lexer *lexer);
-t_token			*lexer_get_expansion(t_lexer *lexer);
-t_token			*lexer_get_dquote(t_lexer *lexer);
-t_token			*lexer_error_advance(t_lexer *lexer);
 t_token			*lexer_skip_comment(t_lexer *lexer);
 t_token			*lexer_next_token(t_lexer *lexer);
 t_token			*lexer_operator(t_lexer *lexer);
 t_token			*lexer_redirection(t_lexer *lexer);
-t_token			*lexer_quote_or_paren(t_lexer *lexer);
 
 // ==================--------token-------=============================
 t_token			*tokenizer(char *line);
@@ -144,20 +88,6 @@ void	parse_parentheses(t_token *tok);
 
 // ------------------------getters------------------
 int *get_parser_check(void);
-
-// ==================---------gc---------=============================
-// void			*ft_malloc(size_t size);
-// t_gc			**get_gc_head(void);
-// t_gc			*gc_new(void *content);
-// void			gc_addback(t_gc **head, t_gc *new);
-// t_gc			*gc_last(t_gc *head);
-// void			gc_print(t_gc *head);
-// void			free_one(void *addr);
-// void			free_all(void);
-// void			free_mid_node(t_gc *node);
-// void			free_first_node(t_gc *node);
-// void			free_last_node(t_gc *node);
-// void			free_lonley_node(t_gc *node);
 
 // checkers
 int				is_special(int c);

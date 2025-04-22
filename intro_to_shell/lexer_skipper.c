@@ -37,22 +37,3 @@ int is_redirection(int c)
 		return (1);
 	return (0);
 }
-
-// int get_q_size(t_lexer *lexer, int quote)
-// {
-//     int i;
-
-//     i = 0;
-//     if (lexer->line[lexer->i] == '\0')
-//     {
-//         throw_error("unclosed quotes!");
-//         return (0);
-//     }
-//     while (lexer->line[lexer->i + i] && lexer->line[lexer->i + i] != quote)
-//     {
-//         if (lexer->i + i == lexer->line_size - 1)
-//             throw_error("unclosed quotes!");
-//         i++;
-//     }
-//     return (i);
-// }
