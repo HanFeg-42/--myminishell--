@@ -21,24 +21,15 @@ typedef enum e_token_type
 {
 	ID,			//0
 	WORD,		//1
-	STAR,		//2
-	FILE_,		//3
-	AND,		//4
-	OR,			//5
-	PIPE,		//6
-	INPUT_RED,	//7
-	OUTPUT_RED,	//8
-	APPEND,		//9
-	HERE_DOC,	//10
-	DQUOTE,		//11
-	SQUOTE,		//12
-	EQUALS,		//13
-	OPAREN,		//14
-	CPAREN,		//15
-	EXPANSION,	//16
-	SUBSHELL,	//17
-	COMMENT,	//18
-	TOKEN_EOI	//19
+	AND,		//2
+	OR,			//3
+	PIPE,		//4
+	INPUT_RED,	//5
+	OUTPUT_RED,	//6
+	APPEND,		//7
+	HERE_DOC,	//8
+	OPAREN,		//9
+	CPAREN,		//10
 }						t_token_type;
 
 //token
@@ -95,8 +86,6 @@ int				is_operator(int c);
 int				is_redirection(int c);
 
 // unwanted function
-int				get_q_size(t_lexer *lexer, int quote);
-void			clean_exit(t_lexer *lexer, t_token *token);
 void 			throw_error(char *err);
 void 			finish(char *line);
 int				get_word_size(t_lexer *lexer);
