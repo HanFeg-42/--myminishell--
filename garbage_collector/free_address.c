@@ -30,7 +30,8 @@ void free_one(void *addr)
 void free_mid_node(t_gc *node)
 {
 	node->prev->next = node->next;
-	node->next->prev = node->prev;
+	if (node->next)
+		node->next->prev = node->prev;
 	free(node->addr);
 	free(node);
 }

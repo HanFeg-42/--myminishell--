@@ -1,5 +1,4 @@
 #include "gc.h"
-// #include "../include/minishell.h"
 
 void free_all(void)
 {
