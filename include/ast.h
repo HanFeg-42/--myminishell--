@@ -1,0 +1,43 @@
+#ifndef AST_H
+#define AST_H
+
+#include "minishell.h"
+
+typedef enum e_ast_type
+{
+    AST_CMD_LIST,
+    AST_COMPOUND,
+    AST_PIPELINE,
+    AST_COMMANDD,
+    AST_SUBSHELL,
+    AST_SIMPLE_CMD,
+    AST_REDIRECT_LIST,
+    AST_IO_REDIRECT,
+    AST_AND,
+    AST_OR
+}               ast_type;
+
+typedef struct s_ast
+{
+    ast_type    type;
+    struct ast  *first_child;
+    struct ast  *next_sibling;
+    char        **args;
+    t_file      *redirect;
+}               t_ast;
+
+typedef struct s_file
+{
+    t_token_type type;
+    char *filename;
+    struct s_file *next;
+
+}               t_file;
+
+t_ast           *ast_create(ast_type type);
+void            ast_add(t_ast **head, t_ast *child);
+t_ast           *ast_last(t_ast *ast);
+void            token_advance(t_token **token);
+
+
+#endif

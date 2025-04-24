@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "../../../include/minishell.h"
 
 t_token *lexer_get_word(t_lexer *lexer)
 {

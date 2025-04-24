@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "../../../include/minishell.h"
 
 void throw_error(char *err)
 {
