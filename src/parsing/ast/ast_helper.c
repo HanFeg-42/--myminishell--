@@ -11,6 +11,7 @@ t_ast *ast_create(ast_type type)
     new->first_child = NULL;
     new->next_sibling = NULL;
     new->args = NULL;
+    new->i = 0;
     new->redirect = NULL;
     return (new);
 }

@@ -68,5 +68,83 @@ t_ast *command(t_token *tokens)
 
 t_ast *simple_command(t_token *tokens)
 {
-    
+    t_ast *simple_cmd;
+
+    simple_cmd = ast_create(AST_SIMPLE_CMD);
+    if (!simple_cmd)
+        return (NULL);
+    while (1)
+    {
+        if (is_token_redirect(tokens))
+        {
+            io_redirect(&tokens, simple_cmd);
+            if (!(*get_parser_check()))
+                return (NULL);
+        }
+        else if (tokens && tokens->type == WORD)
+            add_args(&tokens, simple_cmd);
+        else
+        {
+            if (is_arg_and_red_empty() && tokens)
+                return (syntax_error());
+            break;
+        }
+    }
+    return (simple_cmd);
+}
+
+void io_redirect(t_token **token, t_ast *simple_cmd)
+{
+    if (!(*token))
+        return ;
+    if ((*token)->next->type == WORD)
+    {
+        if ((*token)->type != HERE_DOC)
+        {
+            simple_cmd->redirect = redirect_create((*token)->type, (*token)->next->value);
+            token_advance(token);
+            token_advance(token);
+        }
+        else 
+            heredoc((*token)->next->value);
+    }
+    else
+        syntax_error();
+}
+t_file *redirect_create(int type, char *filename)
+{
+    t_file *redirect_file;
+
+    redirect_file = ft_malloc(sizeof(t_file));
+    if (!redirect_file)
+        return (NULL);
+    redirect_file->filename = ft_strdup(filename);
+    redirect_file->type = type;
+}
+
+int is_token_redirect(t_token *token)
+{
+    if (token->type == INPUT_RED
+        || token->type == OUTPUT_RED
+        || token->type == APPEND
+        || token->type == HERE_DOC)
+        return (1);
+    return (0);
+}
+void add_args(t_token **token, t_ast *simple_cmd)
+{
+    simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
+}
+
+t_ast *subshell(t_token *token)
+{
+    t_ast *subshell;
+    t_ast *compound;
+
+    subshell = ast_create(AST_SUBSHELL);
+    if (!subshell)
+        return (NULL);
+    compound = compound(token);
+    if (!compound)
+        
 }

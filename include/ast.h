@@ -23,6 +23,7 @@ typedef struct s_ast
     struct ast  *first_child;
     struct ast  *next_sibling;
     char        **args;
+    int         i;
     t_file      *redirect;
 }               t_ast;
 
@@ -35,7 +36,7 @@ typedef struct s_file
 }               t_file;
 
 t_ast           *ast_create(ast_type type);
-void            ast_add(t_ast **head, t_ast *child);
+void            ast_add(t_ast *head, t_ast *child);
 t_ast           *ast_last(t_ast *ast);
 void            token_advance(t_token **token);
 
