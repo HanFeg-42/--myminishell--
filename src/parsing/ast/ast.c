@@ -1,6 +1,6 @@
 #include "../../../include/ast.h"
 
-t_ast   *compound(t_token *tokens)
+t_ast   *ast_compound(t_token *tokens)
 {
     t_ast *ast_head;
     t_ast *pipeline;
@@ -11,7 +11,7 @@ t_ast   *compound(t_token *tokens)
         return (NULL);
     while (1)
     {
-        pipeline = pipeline(&tokens);
+        pipeline = ast_pipeline(&tokens);
         if (!pipeline)
             return (syntax_error());
         ast_add(ast_head,pipeline);
@@ -24,7 +24,7 @@ t_ast   *compound(t_token *tokens)
     return (ast_head);
 }
 
-t_ast *pipeline(t_token *tokens)
+t_ast *ast_pipeline(t_token *tokens)
 {
     t_ast *pipeline;
     t_ast *command;
@@ -34,7 +34,7 @@ t_ast *pipeline(t_token *tokens)
         return (NULL);
     while (1)
     {
-        command = command(&tokens);
+        command = ast_command(&tokens);
         if (!command)
             return (syntax_error());
         ast_add(pipeline, command);
@@ -45,7 +45,7 @@ t_ast *pipeline(t_token *tokens)
     return (pipeline);
 }
 
-t_ast *command(t_token *tokens)
+t_ast *ast_command(t_token *tokens)
 {
     t_ast *command;
     t_ast *result;
@@ -56,17 +56,17 @@ t_ast *command(t_token *tokens)
     if (tokens->type == OPAREN)
     {
         token_advance(&tokens);
-        result = subshell(tokens);
+        result = ast_subshell(tokens);
     }
     else
-        result = simple_command(tokens);
+        result = ast_simple_command(tokens);
     if (!result)
         return (syntax_error());
     ast_add(command, result);
     return (command);
 }
 
-t_ast *simple_command(t_token *tokens)
+t_ast *ast_simple_command(t_token *tokens)
 {
     t_ast *simple_cmd;
 
@@ -105,7 +105,7 @@ void io_redirect(t_token **token, t_ast *simple_cmd)
             token_advance(token);
             token_advance(token);
         }
-        else 
+        else
             heredoc((*token)->next->value);
     }
     else
@@ -136,7 +136,7 @@ void add_args(t_token **token, t_ast *simple_cmd)
     simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
 }
 
-t_ast *subshell(t_token *token)
+t_ast *ast_subshell(t_token *token)
 {
     t_ast *subshell;
     t_ast *compound;
@@ -144,7 +144,9 @@ t_ast *subshell(t_token *token)
     subshell = ast_create(AST_SUBSHELL);
     if (!subshell)
         return (NULL);
-    compound = compound(token);
+    compound = ast_compound(token);
     if (!compound)
-        
+        return (syntax_error());
+    ast_add(subshell, compound);
+    if () // we have to send the address of token from the begining
 }
