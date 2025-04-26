@@ -1,6 +1,6 @@
 #include "../../../include/ast.h"
 
-t_ast   *ast_compound(t_token *tokens)
+t_ast   *ast_compound(t_token **tokens)
 {
     t_ast *ast_head;
     t_ast *pipeline;
@@ -11,20 +11,20 @@ t_ast   *ast_compound(t_token *tokens)
         return (NULL);
     while (1)
     {
-        pipeline = ast_pipeline(&tokens);
+        pipeline = ast_pipeline(tokens);
         if (!pipeline)
-            return (syntax_error());
+            return (NULL);
         ast_add(ast_head,pipeline);
-        type = check_and_or_token(tokens);
+        type = check_and_or_token(*tokens);
         if (type < 0)
             break;
         ast_add(&ast_head, ast_create(type));
-        token_advance(&tokens);
+        token_advance(tokens);
     }
     return (ast_head);
 }
 
-t_ast *ast_pipeline(t_token *tokens)
+t_ast *ast_pipeline(t_token **tokens)
 {
     t_ast *pipeline;
     t_ast *command;
@@ -34,18 +34,18 @@ t_ast *ast_pipeline(t_token *tokens)
         return (NULL);
     while (1)
     {
-        command = ast_command(&tokens);
+        command = ast_command(tokens);
         if (!command)
-            return (syntax_error());
+            return (syntax_error(NULL));
         ast_add(pipeline, command);
-        if (!tokens || tokens->type != PIPE)
+        if (!(*tokens) || (*tokens)->type != PIPE)
             break ;
-        token_advance(&tokens);
+        token_advance(tokens);
     }
     return (pipeline);
 }
 
-t_ast *ast_command(t_token *tokens)
+t_ast *ast_command(t_token **tokens)
 {
     t_ast *command;
     t_ast *result;
@@ -53,20 +53,20 @@ t_ast *ast_command(t_token *tokens)
     command = ast_create(AST_COMMANDD);
     if (!command)
         return (NULL);
-    if (tokens->type == OPAREN)
+    if ((*tokens)->type == OPAREN)
     {
-        token_advance(&tokens);
+        token_advance(tokens);
         result = ast_subshell(tokens);
     }
     else
         result = ast_simple_command(tokens);
     if (!result)
-        return (syntax_error());
+        return (NULL);
     ast_add(command, result);
     return (command);
 }
 
-t_ast *ast_simple_command(t_token *tokens)
+t_ast *ast_simple_command(t_token **tokens)
 {
     t_ast *simple_cmd;
 
@@ -75,18 +75,18 @@ t_ast *ast_simple_command(t_token *tokens)
         return (NULL);
     while (1)
     {
-        if (is_token_redirect(tokens))
+        if (is_token_redirect(*tokens))
         {
-            io_redirect(&tokens, simple_cmd);
+            io_redirect(tokens, simple_cmd);
             if (!(*get_parser_check()))
                 return (NULL);
         }
-        else if (tokens && tokens->type == WORD)
-            add_args(&tokens, simple_cmd);
+        else if ((*tokens) && (*tokens)->type == WORD)
+            add_args(tokens, simple_cmd);
         else
         {
-            if (is_arg_and_red_empty() && tokens)
-                return (syntax_error());
+            if (is_arg_and_red_empty() && *tokens)
+                return (syntax_error(NULL));
             break;
         }
     }
@@ -106,10 +106,10 @@ void io_redirect(t_token **token, t_ast *simple_cmd)
             token_advance(token);
         }
         else
-            heredoc((*token)->next->value);
+            heredoc((*token)->next->value);  //  we have to open the heredoc file before executing
     }
     else
-        syntax_error();
+        syntax_error(NULL);
 }
 t_file *redirect_create(int type, char *filename)
 {
@@ -124,6 +124,8 @@ t_file *redirect_create(int type, char *filename)
 
 int is_token_redirect(t_token *token)
 {
+    if (!token)
+        return (0);
     if (token->type == INPUT_RED
         || token->type == OUTPUT_RED
         || token->type == APPEND
@@ -136,7 +138,7 @@ void add_args(t_token **token, t_ast *simple_cmd)
     simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
 }
 
-t_ast *ast_subshell(t_token *token)
+t_ast *ast_subshell(t_token **token)
 {
     t_ast *subshell;
     t_ast *compound;
@@ -146,7 +148,35 @@ t_ast *ast_subshell(t_token *token)
         return (NULL);
     compound = ast_compound(token);
     if (!compound)
-        return (syntax_error());
+        return (NULL);
     ast_add(subshell, compound);
-    if () // we have to send the address of token from the begining
+    if ((*token)->type == CPAREN)
+        token_advance(token);
+    else
+        return (syntax_error(NULL));
+    if (is_token_redirect(*token))
+        redirect_list(token, subshell);
+    else if ((*token) && (*token)->type == WORD)
+        return (syntax_error(NULL));
+    if (!(*get_parser_check()))
+        return (NULL);
+    return (subshell);
 }
+
+void redirect_list(t_token **token ,t_ast *subshell)
+{
+    while (is_token_redirect(*token))
+        io_redirect(token, subshell);
+}
+
+void *syntax_error(char *err)
+{
+    *(get_parser_check()) = false;
+    if (err)
+    {
+        ft_putstr_fd("syntax error near unexpected token ", 2);
+        ft_putstr_fd(err, 2);
+    }
+    return (NULL);
+}
+

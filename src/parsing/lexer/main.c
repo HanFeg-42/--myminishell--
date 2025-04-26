@@ -4,6 +4,7 @@ int main()
 {
 	char *line;
 	t_token *token;
+	t_ast *ast;
 	
 	token = NULL;
 	while (1)
@@ -13,7 +14,8 @@ int main()
 		break;
 		token = tokenizer(line);
 		*get_parser_check() = true;
-		token_print(token);
+		// token_print(token);
+		ast = parser(&token);
 		finish(line);
 	}
 	return (0);
