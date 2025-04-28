@@ -13,6 +13,7 @@ int main()
 		if (!line)
 		break;
 		token = tokenizer(line);
+		// token_print(token);
 		*get_parser_check() = true;
 		ast = parser(&token);
 		ast_print(ast);

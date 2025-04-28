@@ -16,7 +16,7 @@ t_token *lexer_next_token(t_lexer *lexer)
 		if (!is_special(lexer->c)) // is_metacharacterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
 			return (lexer_advance_with(lexer, lexer_get_word(lexer)));
 		if (lexer->i == lexer->line_size - 1)
-			return (NULL);
+			return (init_token(ft_strdup("newline"), EOI));
 	}
 	return (NULL);
 }

@@ -4,10 +4,13 @@
 t_ast *parser(t_token **token)
 {
     t_ast *ast;
-    
+
     ast = ast_compound(token);
     if (!ast)
-        syntax_error((*token)->value);
+    {
+        if ((*token))
+            syntax_error((*token)->value);
+    }
     return (ast);
 }
 
