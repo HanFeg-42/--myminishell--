@@ -19,6 +19,7 @@ t_ast *ast_create(ast_type type)
 void ast_add(t_ast *head, t_ast *child)
 {
     t_ast *last;
+
     if (!head || !child)
         return ;
     if (head->first_child == NULL)
@@ -50,13 +51,4 @@ void token_advance(t_token **token)
     *token = (*token)->next;
 }
 
-int check_and_or_token(t_token *token)
-{
-    if (!token)
-        return (-1);
-    if (token->type == AND)
-        return (AST_AND);
-    else if (token->type == OR)
-        return (AST_OR);
-    return (-1);
-}
+

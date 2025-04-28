@@ -19,7 +19,11 @@ SRC = src/parsing/lexer/main.c \
 		garbage_collector/free_address.c \
 		garbage_collector/free_all.c \
 		garbage_collector/ft_malloc.c \
-		garbage_collector/getter.c 
+		garbage_collector/getter.c  \
+		src/parsing/ast/ast.c \
+		src/parsing/ast/ast_helper.c \
+		src/parsing/ast/ast_helper2.c \
+		src/parsing/ast/parser.c
 
 OBJ = ${SRC:.c=.o}
 

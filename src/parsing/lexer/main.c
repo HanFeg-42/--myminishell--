@@ -14,8 +14,8 @@ int main()
 		break;
 		token = tokenizer(line);
 		*get_parser_check() = true;
-		// token_print(token);
 		ast = parser(&token);
+		ast_print(ast);
 		finish(line);
 	}
 	return (0);

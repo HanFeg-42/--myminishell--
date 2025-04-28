@@ -14,11 +14,11 @@ t_ast   *ast_compound(t_token **tokens)
         pipeline = ast_pipeline(tokens);
         if (!pipeline)
             return (NULL);
-        ast_add(ast_head,pipeline);
+        ast_add(ast_head, pipeline);
         type = check_and_or_token(*tokens);
         if (type < 0)
             break;
-        ast_add(&ast_head, ast_create(type));
+        ast_add(ast_head, ast_create(type));
         token_advance(tokens);
     }
     return (ast_head);
@@ -85,7 +85,7 @@ t_ast *ast_simple_command(t_token **tokens)
             add_args(tokens, simple_cmd);
         else
         {
-            if (is_arg_and_red_empty() && *tokens)
+            if (is_empty_cmd(simple_cmd) && *tokens)
                 return (syntax_error(NULL));
             break;
         }
@@ -97,11 +97,11 @@ void io_redirect(t_token **token, t_ast *simple_cmd)
 {
     if (!(*token))
         return ;
-    if ((*token)->next->type == WORD)
+    if ((*token)->next && (*token)->next->type == WORD)
     {
         if ((*token)->type != HERE_DOC)
         {
-            simple_cmd->redirect = redirect_create((*token)->type, (*token)->next->value);
+            redirect_add(&simple_cmd->redirect, redirect_create((*token)->type, (*token)->next->value));
             token_advance(token);
             token_advance(token);
         }
@@ -109,33 +109,10 @@ void io_redirect(t_token **token, t_ast *simple_cmd)
             heredoc((*token)->next->value);  //  we have to open the heredoc file before executing
     }
     else
+    {
+        token_advance(token);
         syntax_error(NULL);
-}
-t_file *redirect_create(int type, char *filename)
-{
-    t_file *redirect_file;
-
-    redirect_file = ft_malloc(sizeof(t_file));
-    if (!redirect_file)
-        return (NULL);
-    redirect_file->filename = ft_strdup(filename);
-    redirect_file->type = type;
-}
-
-int is_token_redirect(t_token *token)
-{
-    if (!token)
-        return (0);
-    if (token->type == INPUT_RED
-        || token->type == OUTPUT_RED
-        || token->type == APPEND
-        || token->type == HERE_DOC)
-        return (1);
-    return (0);
-}
-void add_args(t_token **token, t_ast *simple_cmd)
-{
-    simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
+    }
 }
 
 t_ast *ast_subshell(t_token **token)
@@ -167,16 +144,5 @@ void redirect_list(t_token **token ,t_ast *subshell)
 {
     while (is_token_redirect(*token))
         io_redirect(token, subshell);
-}
-
-void *syntax_error(char *err)
-{
-    *(get_parser_check()) = false;
-    if (err)
-    {
-        ft_putstr_fd("syntax error near unexpected token ", 2);
-        ft_putstr_fd(err, 2);
-    }
-    return (NULL);
 }
 
