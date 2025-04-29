@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 RLFLAG = -lreadline
 
-SRC = src/parsing/lexer/main.c \
+SRC = src/main.c \
 		src/parsing/lexer/token.c \
 		src/parsing/lexer/lexer.c \
 		src/parsing/lexer/lexer_advancer.c \

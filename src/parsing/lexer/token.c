@@ -58,6 +58,8 @@ t_token *token_last(t_token *tok_head)
 
 void token_print(t_token *tok)
 {
+    if (!tok)
+        printf("no token");
     while (tok)
     {
         printf("%s \t-- its type : %d | ", tok->value, tok->type);

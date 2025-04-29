@@ -53,7 +53,7 @@ t_ast *ast_command(t_token **tokens)
     command = ast_create(AST_COMMANDD);
     if (!command)
         return (NULL);
-    if ((*tokens)->type == OPAREN)
+    if ((*tokens) && (*tokens)->type == OPAREN)
     {
         token_advance(tokens);
         result = ast_subshell(tokens);
@@ -127,7 +127,7 @@ t_ast *ast_subshell(t_token **token)
     if (!compound)
         return (NULL);
     ast_add(subshell, compound);
-    if ((*token)->type == CPAREN)
+    if ((*token) && (*token)->type == CPAREN)
         token_advance(token);
     else
         return (syntax_error(NULL));

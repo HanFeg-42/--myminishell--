@@ -5,11 +5,15 @@ t_ast *parser(t_token **token)
 {
     t_ast *ast;
 
+    if (!(*get_parser_check()) || !(*token))
+        return (NULL);
     ast = ast_compound(token);
     if (!ast)
     {
         if ((*token))
             syntax_error((*token)->value);
+        else
+            syntax_error("EOI");
     }
     return (ast);
 }

@@ -1,4 +1,4 @@
-#include "../../../include/minishell.h"
+#include "../include/minishell.h"
 
 int main()
 {
@@ -14,9 +14,9 @@ int main()
 		break;
 		token = tokenizer(line);
 		// token_print(token);
-		*get_parser_check() = true;
 		ast = parser(&token);
 		ast_print(ast);
+		*get_parser_check() = true;
 		finish(line);
 	}
 	return (0);
