@@ -42,18 +42,32 @@ int is_token_redirect(t_token *token)
         return (1);
     return (0);
 }
+
 void add_args(t_token **token, t_ast *simple_cmd)
 {
     if (!simple_cmd->args)
     {
-        simple_cmd->args = ft_malloc(sizeof(char *) * 10);
-        if (simple_cmd->args)
+        simple_cmd->args = ft_realloc(simple_cmd->args, sizeof(char *) * (simple_cmd->i + 2));
+        if (!simple_cmd->args)
             return ;
     }
     simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
     simple_cmd->args[simple_cmd->i] = NULL;
     token_advance(token);
 }
+
+void *ft_realloc(void *ptr, size_t size)
+{
+    void *new_ptr;
+
+    new_ptr = ft_malloc(size);
+    if (!new_ptr)
+        return (NULL);
+    copy_ptr(ptr, new_ptr);
+    free_old_ptr(ptr);
+    return (new_ptr);
+}
+
 void *syntax_error(char *err)
 {
     *(get_parser_check()) = false;
