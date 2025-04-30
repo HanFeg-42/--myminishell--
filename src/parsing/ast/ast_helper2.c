@@ -47,7 +47,7 @@ void add_args(t_token **token, t_ast *simple_cmd)
 {
     if (!simple_cmd->args)
     {
-        simple_cmd->args = ft_realloc(simple_cmd->args, sizeof(char *) * (simple_cmd->i + 2));
+        simple_cmd->args = ft_malloc(sizeof(char *) * 10);
         if (!simple_cmd->args)
             return ;
     }
@@ -56,17 +56,43 @@ void add_args(t_token **token, t_ast *simple_cmd)
     token_advance(token);
 }
 
-void *ft_realloc(void *ptr, size_t size)
-{
-    void *new_ptr;
+// void *ft_realloc(void *ptr, size_t size)
+// {
+//     void *new_ptr;
 
-    new_ptr = ft_malloc(size);
-    if (!new_ptr)
-        return (NULL);
-    copy_ptr(ptr, new_ptr);
-    free_old_ptr(ptr);
-    return (new_ptr);
-}
+//     new_ptr = ft_malloc(size);
+//     if (!new_ptr)
+//         return (NULL);
+//     copy_ptr(ptr, new_ptr);
+//     free_old_ptr(ptr);
+//     return (new_ptr);
+// }
+
+// void    copy_ptr(char **ptr, char **new_ptr)
+// {
+//     int i;
+
+//     i = 0;
+//     while (ptr[i])
+//     {
+//         new_ptr[i] = ft_strdup(ptr[i]);
+//         i++;
+//     }
+//     new_ptr[i] = NULL;
+// }
+
+// void    free_old_ptr(char **ptr)
+// {
+//     int i;
+
+//     i = 0;
+//     while (ptr[i])
+//     {
+//         free_one(ptr[i]);
+//         i++;
+//     }
+//     free_one(ptr);
+// }
 
 void *syntax_error(char *err)
 {

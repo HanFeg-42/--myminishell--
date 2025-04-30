@@ -61,4 +61,8 @@ void print_args(char **args);
 void print_redirect(t_file *redirect);
 int is_empty_cmd(t_ast *simple_cmd);
 
+void *ft_realloc(void *ptr, size_t size);
+void    copy_ptr(char **ptr, char **new_ptr);
+void    free_old_ptr(char **ptr);
+
 #endif
