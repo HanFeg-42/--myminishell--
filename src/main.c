@@ -9,7 +9,7 @@ int main()
 	token = NULL;
 	while (1)
 	{
-		line = readline("\033[38;2;255;105;180mMinishell > \033[0m");
+		line = readline("\001\033[38;2;255;105;180m\002Minishell > \001\033[0m\002");
 		if (!line)
 		break;
 		token = tokenizer(line);

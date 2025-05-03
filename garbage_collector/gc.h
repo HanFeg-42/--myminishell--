@@ -23,9 +23,6 @@ t_gc			*gc_last(t_gc *head);
 void			gc_print(t_gc *head);
 void			free_one(void *addr);
 void			free_all(void);
-void			free_mid_node(t_gc *node);
-void			free_first_node(t_gc *node);
-void			free_last_node(t_gc *node);
-void			free_lonley_node(t_gc *node);
+void 			gc_detach(t_gc *node);
 
 #endif

@@ -7,12 +7,11 @@ void free_all(void)
 	t_gc *next;
 
 	head = get_gc_head();
-	if (!head)
+	if (!head || !(*head))
 		return ;
 	curr = *head;
 	while (curr)
 	{
-		curr->prev = NULL;
 		next = curr->next;
 		if (curr->addr)
 			free(curr->addr);

@@ -39,3 +39,7 @@ token : bye 	type : 1
 ==597649==    by 0x4012E6: main (in /home/hfegrach/Desktop/fake_minishell/minishell)
 ==597649== 
 token : bye! 	type : 1
+
+
+
+

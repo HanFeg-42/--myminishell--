@@ -45,54 +45,53 @@ int is_token_redirect(t_token *token)
 
 void add_args(t_token **token, t_ast *simple_cmd)
 {
+    simple_cmd->args = ft_realloc(simple_cmd->args, sizeof(char *) * (simple_cmd->i + 2));
     if (!simple_cmd->args)
-    {
-        simple_cmd->args = ft_malloc(sizeof(char *) * 10);
-        if (!simple_cmd->args)
-            return ;
-    }
+        return ;
     simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
     simple_cmd->args[simple_cmd->i] = NULL;
     token_advance(token);
 }
 
-// void *ft_realloc(void *ptr, size_t size)
-// {
-//     void *new_ptr;
+char **ft_realloc(char **ptr, size_t size)
+{
+    char **new_ptr;
 
-//     new_ptr = ft_malloc(size);
-//     if (!new_ptr)
-//         return (NULL);
-//     copy_ptr(ptr, new_ptr);
-//     free_old_ptr(ptr);
-//     return (new_ptr);
-// }
+    if(!ptr)
+        return (ft_malloc(size));
+    new_ptr = ft_malloc(size);
+    if (!new_ptr)
+        return (NULL);
+    copy_ptr(ptr, new_ptr);
+    free_old_ptr(ptr);
+    return (new_ptr);
+}
 
-// void    copy_ptr(char **ptr, char **new_ptr)
-// {
-//     int i;
+void    copy_ptr(char **ptr, char **new_ptr)
+{
+    int i;
 
-//     i = 0;
-//     while (ptr[i])
-//     {
-//         new_ptr[i] = ft_strdup(ptr[i]);
-//         i++;
-//     }
-//     new_ptr[i] = NULL;
-// }
+    i = 0;
+    while (ptr[i])
+    {
+        new_ptr[i] = ft_strdup(ptr[i]);
+        i++;
+    }
+    new_ptr[i] = NULL;
+}
 
-// void    free_old_ptr(char **ptr)
-// {
-//     int i;
+void    free_old_ptr(char **ptr)
+{
+    int i;
 
-//     i = 0;
-//     while (ptr[i])
-//     {
-//         free_one(ptr[i]);
-//         i++;
-//     }
-//     free_one(ptr);
-// }
+    i = 0;
+    while (ptr[i])
+    {
+        free_one(ptr[i]);
+        i++;
+    }
+    free_one(ptr);
+}
 
 void *syntax_error(char *err)
 {
