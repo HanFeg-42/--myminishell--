@@ -65,4 +65,10 @@ void *ft_realloc(void *ptr, size_t size);
 void    copy_ptr(char **ptr, char **new_ptr);
 void    free_old_ptr(char **ptr);
 
+//get_next_line
+char	*ft_strjoin_(char *s1, char *s2);
+void	fill_in_save(int fd, ssize_t *rd, char **save, char **buff);
+char	*read_line(char **save, ssize_t rd);
+char	*get_next_line(int fd, int f);
+
 #endif
