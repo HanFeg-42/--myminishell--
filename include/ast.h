@@ -53,7 +53,7 @@ t_ast			*ast_subshell(t_token **token);
 void redirect_list(t_token **token ,t_ast *subshell);
 void redirect_list(t_token **token ,t_ast *subshell);
 void *syntax_error(char *err);
-void heredoc(char *delim);
+// void heredoc(char *delim);
 
 t_ast *parser(t_token **token);
 void ast_print(t_ast *ast);
@@ -70,5 +70,11 @@ char	*ft_strjoin_(char *s1, char *s2);
 void	fill_in_save(int fd, ssize_t *rd, char **save, char **buff);
 char	*read_line(char **save, ssize_t rd);
 char	*get_next_line(int fd, int f);
+
+/*************************************/
+/*				herdoc				 */
+/*************************************/
+void    heredoc(char *eof, t_file **redirect);
+
 
 #endif

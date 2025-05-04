@@ -104,28 +104,6 @@ void *syntax_error(char *err)
     return (NULL);
 }
 
-void heredoc(char *eof)
-{
-    char *lim;
-    int to_expand;
-    int fd;
-    char *line;
-
-    if (is_quoted(eof))
-        to_expand = false;
-    else
-        to_expand = true;
-    lim = quote_removal(eof);
-    fd = open("filename", O_CREAT | O_RDWR , 0777);
-    line = get_next_line(0, 0);
-    while (line && ft_strncmp(line, lim, ))
-    {
-        /* code */
-    }
-    
-    return ;
-}
-
 int is_empty_cmd(t_ast *simple_cmd)
 {
     if (!simple_cmd->args && !simple_cmd->redirect)

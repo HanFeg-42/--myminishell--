@@ -105,7 +105,7 @@ void io_redirect(t_token **token, t_ast *simple_cmd)
                 redirect_create((*token)->type, (*token)->next->value));
         }
         else
-            heredoc((*token)->next->value);  //  we have to open the heredoc file before executing
+            heredoc((*token)->next->value, &simple_cmd->redirect);  //  we have to open the heredoc file before executing
         token_advance(token);
         token_advance(token);
     }
