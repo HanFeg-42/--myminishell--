@@ -3,9 +3,8 @@
 void gc_detach(t_gc *node)
 {
     t_gc **head;
-	
-	head = get_gc_head();
 
+	head = get_gc_head();
     if (node->prev)
         node->prev->next = node->next;
     else

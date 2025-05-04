@@ -104,9 +104,10 @@ void *syntax_error(char *err)
     return (NULL);
 }
 
-void heredoc(char *delim)
+void heredoc(char *eof)
 {
-    (void)delim;
+    (void)eof;
+
     return ;
 }
 

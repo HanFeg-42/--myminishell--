@@ -40,6 +40,41 @@ token : bye 	type : 1
 ==597649== 
 token : bye! 	type : 1
 
+======================================
+==              heredoc             ==
+======================================
 
+~/Desktop/fake_minishell main* ❯ bash                                            2m 2s 15:28:00
+hfegrach@c3r6p3:~/Desktop/fake_minishell$ << "eof" cat
+> $USER
+> eof
+$USER
+hfegrach@c3r6p3:~/Desktop/fake_minishell$ << ""eof"" cat
+> $USER
+> eof
+$USER
+hfegrach@c3r6p3:~/Desktop/fake_minishell$ << '""eof""' cat
+> $USER
+> eof
+> ""eof""
+$USER
+eof
+hfegrach@c3r6p3:~/Desktop/fake_minishell$ << """eof" cat
+> $USER
+> eof
+$USER
+hfegrach@c3r6p3:~/Desktop/fake_minishell$ << "fi""eof" cat
+> $USER
+> fieof
+$USER
+hfegrach@c3r6p3:~/Desktop/fake_minishell$ << a"fi""eof"a cat
+> $USER
+> afieofa
+$USER
+hfegrach@c3r6p3:~/Desktop/fake_minishell$ << a"fi""eof cat
+> $USER
+> afieof
+> a"fi""eof
+> ^C
 
 

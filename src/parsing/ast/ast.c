@@ -101,12 +101,13 @@ void io_redirect(t_token **token, t_ast *simple_cmd)
     {
         if ((*token)->type != HERE_DOC)
         {
-            redirect_add(&simple_cmd->redirect, redirect_create((*token)->type, (*token)->next->value));
-            token_advance(token);
-            token_advance(token);
+            redirect_add(&simple_cmd->redirect,
+                redirect_create((*token)->type, (*token)->next->value));
         }
         else
             heredoc((*token)->next->value);  //  we have to open the heredoc file before executing
+        token_advance(token);
+        token_advance(token);
     }
     else
     {
