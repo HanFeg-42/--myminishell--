@@ -53,7 +53,7 @@ void add_args(t_token **token, t_ast *simple_cmd)
     token_advance(token);
 }
 
-char **ft_realloc(char **ptr, size_t size)
+void *ft_realloc(void *ptr, size_t size)
 {
     char **new_ptr;
 
