@@ -1,0 +1,14 @@
+hi 
+cv
+Makefile
+README.md
+f
+filename
+garbage_collector
+include
+info
+libft
+minishell
+readline.supp
+src
+todo
