@@ -11,13 +11,14 @@ int main()
 	{
 		line = readline("\001\033[38;2;255;105;180m\002Minishell > \001\033[0m\002");
 		if (!line)
-		break;
+			break;
 		token = tokenizer(line);
 		ast = parser(&token);
 		ast_print(ast);
 		*get_parser_check() = true;
 		finish(line);
 	}
+	free_all();
 	return (0);
 }
 
@@ -26,5 +27,5 @@ void finish(char *line)
 	printf("\n");
 	add_history(line);
 	free(line);
-	free_all();
+	// free_all();
 }

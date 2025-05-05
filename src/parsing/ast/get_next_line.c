@@ -20,7 +20,7 @@ char	*ft_strjoin_(char *s1, char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	size = (ft_strlen(s1) + ft_strlen(s2));
-	join = (char *)malloc(sizeof(char) * size + 1);
+	join = (char *)ft_malloc(sizeof(char) * size + 1);
 	if (!join)
 		return (NULL);
 	i = 0;
@@ -36,7 +36,7 @@ char	*ft_strjoin_(char *s1, char *s2)
 		j++;
 	}
 	join[size] = '\0';
-	free(s1);
+	free_one(s1);
 	return (join);
 }
 
@@ -68,19 +68,19 @@ char	*read_line(char **save, ssize_t rd)
 	{
 		line = ft_substr(*save, 0, nl_ptr - *save + 1);
 		new = ft_strdup(nl_ptr + 1);
-		return (free(*save), *save = ft_strdup(new), free(new), line);
+		return (free_one(*save), *save = ft_strdup(new), free_one(new), line);
 	}
 	else if (!rd && save != NULL)
 	{
 		new = ft_strdup(*save);
 		if (!new || !new[0])
-			return (free(*save), free(new), NULL);
-		return (free(*save), *save = NULL, new);
+			return (free_one(*save), free_one(new), NULL);
+		return (free_one(*save), *save = NULL, new);
 	}
 	return (NULL);
 }
 
-char	*get_next_line(int fd, int f)
+char	*get_next_line(int fd)
 {
 	static char	*save;
 	char		*buff;
@@ -88,17 +88,11 @@ char	*get_next_line(int fd, int f)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (f)
-	{
-		free(save);
-		save = NULL;
-		return (NULL);
-	}
-	buff = malloc((BUFFER_SIZE * sizeof(char)) + 1);
+	buff = ft_malloc((BUFFER_SIZE * sizeof(char)) + 1);
 	if (!buff)
 		return (NULL);
 	fill_in_save(fd, &rd, &save, &buff);
-	free(buff);
+	free_one(buff);
 	if (!save)
 		return (NULL);
 	return (read_line(&save, rd));

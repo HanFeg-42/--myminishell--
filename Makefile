@@ -23,7 +23,10 @@ SRC = src/main.c \
 		src/parsing/ast/ast.c \
 		src/parsing/ast/ast_helper.c \
 		src/parsing/ast/ast_helper2.c \
-		src/parsing/ast/parser.c
+		src/parsing/ast/parser.c \
+		src/parsing/ast/heredoc.c \
+		src/parsing/ast/heredoc_expander.c \
+		src/parsing/ast/get_next_line.c
 
 OBJ = ${SRC:.c=.o}
 
@@ -40,19 +43,19 @@ HEADER	=	include/minishell.h
 all: $(NAME) $(HEADER)
 
 $(NAME): $(OBJ)
-	$(MAKE) -s -C $(LIBFT_DIR)
+	@$(MAKE) -s -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(RLFLAG) -o $(NAME)
 	echo "compiled"
 
 bonus: all
 
 clean:
-	$(MAKE) $(CLEAN) -s -C $(LIBFT_DIR)
-	$(RM) $(OBJ)
+	@$(MAKE) $(CLEAN) -s -C $(LIBFT_DIR)
+	@$(RM) $(OBJ)
 
 fclean: clean
-	$(MAKE) $(FCLEAN) -s -C $(LIBFT_DIR)
-	$(RM) $(NAME)
+	@$(MAKE) $(FCLEAN) -s -C $(LIBFT_DIR)
+	@$(RM) $(NAME)
 
 re: fclean all
 

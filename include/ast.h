@@ -61,7 +61,7 @@ void print_args(char **args);
 void print_redirect(t_file *redirect);
 int is_empty_cmd(t_ast *simple_cmd);
 
-void *ft_realloc(void *ptr, size_t size);
+void 	*ft_realloc(void *ptr, size_t size);
 void    copy_ptr(char **ptr, char **new_ptr);
 void    free_old_ptr(char **ptr);
 
@@ -69,12 +69,17 @@ void    free_old_ptr(char **ptr);
 char	*ft_strjoin_(char *s1, char *s2);
 void	fill_in_save(int fd, ssize_t *rd, char **save, char **buff);
 char	*read_line(char **save, ssize_t rd);
-char	*get_next_line(int fd, int f);
+char	*get_next_line(int fd);
 
 /*************************************/
 /*				herdoc				 */
 /*************************************/
 void    heredoc(char *eof, t_file **redirect);
-
+int		is_quoted(char *eof);
+char	*quote_removal(char *str);
+char    *heredoc_expander(char *s);
+char    *get_env_name(char *s);
+char    *skip_env_var(char *s);
+char    *ft_getenv(char *var);
 
 #endif
