@@ -42,7 +42,7 @@ char *quote_removal(char *str)
     ret = ft_malloc(sizeof(char) * (ft_strlen(str) + 1));
     if (!ret)
         return (NULL);
-    //need a good algo
+    
     return (ret);
 }
 
