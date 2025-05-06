@@ -57,6 +57,8 @@ t_ast *ast_command(t_token **tokens)
     {
         token_advance(tokens);
         result = ast_subshell(tokens);
+        if (!result)
+        return (NULL);
     }
     else
         result = ast_simple_command(tokens);

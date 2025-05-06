@@ -1,11 +1,14 @@
 #include "../include/minishell.h"
 
-int main()
+int main(int ac, char **av, char **envp)
 {
 	char *line;
 	t_token *token;
 	t_ast *ast;
+	t_envp *new_envp;
 
+	new_envp = get_new_env(envp);
+	// print_env(new_envp);
 	token = NULL;
 	while (1)
 	{
