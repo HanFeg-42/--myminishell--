@@ -57,6 +57,8 @@ t_ast *ast_command(t_token **tokens)
     {
         token_advance(tokens);
         result = ast_subshell(tokens);
+        if (!result)
+        return (NULL);
     }
     else
         result = ast_simple_command(tokens);
@@ -106,8 +108,11 @@ void io_redirect(t_token **token, t_ast *simple_cmd)
             token_advance(token);
         }
         else
-            heredoc((*token)->next->value);  //  we have to open the heredoc file before executing
-    }
+        {
+            heredoc((*token)->next->value);
+            token_advance(token); //  we have to open the heredoc file before executing
+        }
+    }   
     else
     {
         token_advance(token);

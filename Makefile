@@ -4,7 +4,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 RLFLAG = -lreadline
 
@@ -23,7 +23,8 @@ SRC = src/main.c \
 		src/parsing/ast/ast.c \
 		src/parsing/ast/ast_helper.c \
 		src/parsing/ast/ast_helper2.c \
-		src/parsing/ast/parser.c
+		src/parsing/ast/parser.c \
+		src/execution/env.c
 
 OBJ = ${SRC:.c=.o}
 

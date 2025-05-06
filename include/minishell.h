@@ -97,6 +97,8 @@ void			advance_to_next_quote(t_lexer *lexer, int *i, int quote);
 
 
 #include "./ast.h"
+#include "exec.h"
+
 // //========================================
 // typedef enum e_ast_type
 // {
