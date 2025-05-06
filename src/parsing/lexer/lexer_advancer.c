@@ -36,14 +36,6 @@ t_token *lexer_advance_with2(t_lexer *lexer, t_token *token)
     return (token);
 }
 
-t_token *lexer_advance_with3(t_lexer *lexer, t_token *token)
-{
-    lexer_advance(lexer);
-    lexer_advance(lexer);
-    lexer_advance(lexer);
-    return (token);
-}
-
 t_token *lexer_advance_current(t_lexer *lexer, int type)
 {
     char *token;

@@ -59,7 +59,6 @@ t_token			*lexer_get_word(t_lexer *lexer);
 t_token			*lexer_advance_current(t_lexer *lexer, int type);
 t_token			*lexer_advance_with(t_lexer *lexer, t_token *token);
 t_token			*lexer_advance_with2(t_lexer *lexer, t_token *token);
-t_token			*lexer_advance_with3(t_lexer *lexer, t_token *token);
 t_token			*lexer_skip_comment(t_lexer *lexer);
 t_token			*lexer_next_token(t_lexer *lexer);
 t_token			*lexer_operator(t_lexer *lexer);

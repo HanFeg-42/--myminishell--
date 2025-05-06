@@ -27,7 +27,7 @@ t_token *lexer_operator(t_lexer *lexer)
 	{
 		if (lexer->line[lexer->i + 1] == '&')
 			return (lexer_advance_with2(lexer, init_token(ft_strdup("&&"), AND)));
-		throw_error("&");
+		throw_error("syntax error");
 	}
 	if (lexer->c == '|')
 	{
@@ -47,13 +47,7 @@ t_token *lexer_redirection(t_lexer *lexer)
 	if (lexer->c == '>')
 	{
 		if (lexer->line[lexer->i + 1] == '>')
-		{
-			if (lexer->line[lexer->i + 2] == '|')
-				return (lexer_advance_with3(lexer, init_token(ft_strdup(">>|"), APPEND)));
 			return (lexer_advance_with2(lexer, init_token(ft_strdup(">>"), APPEND)));
-		}
-		else if (lexer->line[lexer->i + 1] == '|')
-			return (lexer_advance_with2(lexer, init_token(ft_strdup(">|"), OUTPUT_RED)));
 		return (lexer_advance_current(lexer, OUTPUT_RED));
 	}
 	if (lexer->c == '<')

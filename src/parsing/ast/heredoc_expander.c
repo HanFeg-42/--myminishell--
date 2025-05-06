@@ -4,9 +4,8 @@ char    *heredoc_expander(char *s)
 {
     char    *ret;
     char    *dollar_pos;
-
     if (!s)
-        return (NULL);
+    return (NULL);
     ret = ft_strdup("");
     while(*s)
     {
@@ -17,6 +16,7 @@ char    *heredoc_expander(char *s)
             break;
         }
         ret = ft_strjoin(ret, ft_substr(s, 0, dollar_pos - s)); // need new substr that start always = 0
+        ret = ft_strjoin(ret, get_env_name(dollar_pos));
         s = skip_env_var(dollar_pos + 1);
     }
     return (ret);

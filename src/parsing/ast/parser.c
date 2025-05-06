@@ -26,7 +26,7 @@ void ast_print(t_ast *ast)
     print_args(ast->args);
     print_redirect(ast->redirect);
     ast_print(ast->first_child);
-    printf("|\n");
+    // printf("|\n");
     ast_print(ast->next_sibling);
 }
 

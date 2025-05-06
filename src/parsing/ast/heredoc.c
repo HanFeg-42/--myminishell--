@@ -12,9 +12,10 @@ void    heredoc(char *eof, t_file **redirect)
     else
         to_expand = true;
     lim = quote_removal(eof);
-    fd = open("filename", O_CREAT | O_RDWR , 0777);
+    fd = open("filename", O_CREAT | O_RDWR | O_TRUNC , 0777);
     line = get_next_line(0);
-    while (line && ft_strncmp(line, lim, ft_strlen(lim))) // limmmmm == lim
+    while (line && !(!ft_strncmp(line, lim, ft_strlen(lim))
+        && ft_strlen(line) - 1 == ft_strlen(lim))) // limmmmm == lim
     {
         if (to_expand)
             line = heredoc_expander(line);

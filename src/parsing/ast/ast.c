@@ -85,7 +85,7 @@ t_ast *ast_simple_command(t_token **tokens)
             add_args(tokens, simple_cmd);
         else
         {
-            if (is_empty_cmd(simple_cmd) && *tokens)
+            if (is_empty_cmd(simple_cmd))
                 return (syntax_error(NULL));
             break;
         }
