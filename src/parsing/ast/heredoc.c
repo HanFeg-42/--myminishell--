@@ -7,10 +7,7 @@ void    heredoc(char *eof, t_file **redirect)
     int fd;
     char *line;
 
-    if (is_quoted(eof))
-        to_expand = false;
-    else
-        to_expand = true;
+    to_expand = !(is_quoted(eof));
     lim = quote_removal(eof);
     fd = open("filename", O_CREAT | O_RDWR | O_TRUNC , 0777);
     line = get_next_line(0);
@@ -54,12 +51,10 @@ char *quote_removal(char *str)
     {
         if (str[i] == 34 && stat == 0) // inside double quotes
             stat = 1;
-        else if (str[i] == 34 && stat == 1) // khrjt mn l quoted stat + now on normal stat 
+        else if ((str[i] == 34 && stat == 1 )|| (str[i] == 39 && stat == 2)) // khrjt mn l quoted stat + now on normal stat 
             stat = 0;
         else if (str[i] == 39 && stat == 0) // inside single quotes
             stat = 2;
-        else if (str[i] == 39 && stat == 2) // khrjt mn l quoted stat + now on normal stat 
-            stat = 0;
         else
             ret[j++] = str[i];
         i++;

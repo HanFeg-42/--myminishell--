@@ -16,7 +16,7 @@ SRC = src/main.c \
 		src/parsing/lexer/lexer_skipper.c \
 		src/parsing/lexer/cleanup.c \
 		src/parsing/lexer/getters.c \
-		garbagnew_envp = get_new_env(envp);e_collector/free_address.c \
+		garbage_collector/free_address.c \
 		garbage_collector/free_all.c \
 		garbage_collector/ft_malloc.c \
 		garbage_collector/getter.c  \
@@ -26,7 +26,7 @@ SRC = src/main.c \
 		src/parsing/ast/parser.c \
 		src/parsing/ast/heredoc.c \
 		src/parsing/ast/heredoc_expander.c \
-		src/parsing/ast/get_next_line.c
+		src/parsing/ast/get_next_line.c \
 		src/execution/env.c
 
 OBJ = ${SRC:.c=.o}
