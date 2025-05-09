@@ -41,8 +41,19 @@ char    *skip_env_var(char *s)
     return (s);
 }
 
-char    *ft_getenv(char *var)
+char *ft_getenv(char *var)
 {
-    
-    return (getenv(var));
+    t_envp **new_envp;
+    t_envp *current;
+
+    new_envp = get_env_head();
+
+    current = *new_envp;
+    while (current)
+    {
+        if (ft_strcmp(current->key, var) == 0)
+            return (current->value);
+        current = current->next;
+    }
+    return (NULL);
 }
