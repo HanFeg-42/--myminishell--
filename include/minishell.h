@@ -83,6 +83,8 @@ void 			throw_error(char *err);
 void 			finish(char *line);
 int				get_word_size(t_lexer *lexer);
 void			advance_to_next_quote(t_lexer *lexer, int *i, int quote);
+int ft_strcmp(const char *s1, const char *s2);
+
 
 
 // " => 34

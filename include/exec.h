@@ -12,6 +12,17 @@ struct s_envp
 	char *value;
 	t_envp *next;
 };
+enum s_builtin_type 
+{
+	ECHO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT
+};
+typedef enum s_builtin_type builtin_type;
 
 t_envp *env_create(char *key, char *value);
 void env_add(t_envp **envp, t_envp *new);
