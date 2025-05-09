@@ -1,8 +1,8 @@
 #include "../../include/exec.h"
 
-t_envp	*env_create(char *key, char *value)
+t_envp *env_create(char *key, char *value)
 {
-	t_envp	*new;
+	t_envp *new;
 
 	new = ft_malloc(sizeof(t_envp));
 	if (!new)
@@ -14,21 +14,21 @@ t_envp	*env_create(char *key, char *value)
 	return (new);
 }
 
-void	env_add(t_envp **envp, t_envp *new)
+void env_add(t_envp **envp, t_envp *new)
 {
-    if (!envp || !new)
-    return ;
-    if (!(*envp))
-    {
-        *envp = new;
-        return ;
+	if (!envp || !new)
+		return;
+	if (!(*envp))
+	{
+		*envp = new;
+		return;
 	}
 	(get_env_last(*envp))->next = new;
 }
 
-t_envp	*get_env_last(t_envp *env)
+t_envp *get_env_last(t_envp *env)
 {
-	t_envp	*current;
+	t_envp *current;
 
 	current = env;
 	while (current && current->next)
@@ -36,35 +36,59 @@ t_envp	*get_env_last(t_envp *env)
 	return (current);
 }
 
-t_envp	*get_new_env(char **old_env)
+void get_basics(t_envp **new_envp)
 {
-	int		i;
-	t_envp	*new_envp;
-	char	*equal_pos;
-    char *key;
-    char *value;
+	char *cwd = getcwd(NULL, 0);
 
-    new_envp = NULL;
+	env_add(new_envp, env_create("PATH", "/bin:/usr/bin"));
+	env_add(new_envp, env_create("PWD", cwd));
+	// env_add(new_envp, env_create("SHLVL", "1"));
+	// env_add(new_envp, env_create("_", "/usr/bin/env"));
+	env_add(new_envp, env_create("OLDPWD", NULL));
+	free(cwd);
+	return;
+}
+void get_new_env(t_envp **new_envp, char **old_env)
+{
+	int i;
+	char *equal_pos;
+	char *key;
+	char *value;
+
+    // *new_envp = NULL;
+
+	if (!old_env || !*old_env)
+	{
+		get_basics(new_envp);
+		return ;
+	}
 	i = 0;
 	while (old_env[i])
 	{
 		equal_pos = ft_strchr(old_env[i], '=');
-        key = ft_substr(old_env[i],0,equal_pos-old_env[i]);
-        value = ft_strdup(equal_pos + 1);
-		env_add(&new_envp, env_create(key,value));
+		key = ft_substr(old_env[i], 0, equal_pos - old_env[i]);
+		value = ft_strdup(equal_pos + 1);
+		env_add(new_envp, env_create(key, value));
 		i++;
 	}
-	return (new_envp);
+		return ;
 }
 
-void	print_env(t_envp *env)
+void print_env(t_envp **env)
 {
 	t_envp *current;
-	current = env;
+	current = *env;
 
 	while (current)
 	{
 		printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
+}
+
+t_envp **get_env_head()
+{
+	static t_envp *head;
+
+	return (&head);
 }
