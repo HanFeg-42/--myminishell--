@@ -7,3 +7,4 @@ t_gc **get_gc_head(void)
 
     return (&head);
 }
+

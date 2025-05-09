@@ -43,5 +43,6 @@ char    *skip_env_var(char *s)
 
 char    *ft_getenv(char *var)
 {
+    
     return (getenv(var));
 }
