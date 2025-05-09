@@ -30,5 +30,4 @@ void finish(char *line)
 	printf("\n");
 	add_history(line);
 	free(line);
-	// free_all();
 }

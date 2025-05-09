@@ -98,8 +98,9 @@ void *syntax_error(char *err)
     *(get_parser_check()) = false;
     if (err)
     {
-        ft_putstr_fd("syntax error near unexpected token ", 2);
+        ft_putstr_fd("syntax error near unexpected token '", 2);
         ft_putstr_fd(err, 2);
+        ft_putstr_fd("'", 2);
     }
     return (NULL);
 }

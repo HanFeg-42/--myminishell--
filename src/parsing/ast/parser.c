@@ -1,5 +1,4 @@
 #include "../../../include/ast.h"
-// #include "../../../include/minishell.h"
 
 t_ast *parser(t_token **token)
 {
@@ -13,7 +12,7 @@ t_ast *parser(t_token **token)
         if ((*token))
             syntax_error((*token)->value);
         else
-            syntax_error("EOI");
+            syntax_error("'newline'");
     }
     return (ast);
 }

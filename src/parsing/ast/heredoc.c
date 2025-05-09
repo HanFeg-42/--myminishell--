@@ -44,14 +44,12 @@ char *quote_removal(char *str)
     ret = ft_malloc(sizeof(char) * (ft_strlen(str) + 1));
     if (!ret)
         return (NULL);
-    stat = 0;
-    i = 0;
-    j = 0;
+    (stat = 0, i = 0, j = 0);
     while (str[i])
     {
         if (str[i] == 34 && stat == 0) // inside double quotes
             stat = 1;
-        else if ((str[i] == 34 && stat == 1 )|| (str[i] == 39 && stat == 2)) // khrjt mn l quoted stat + now on normal stat 
+        else if ((str[i] == 34 && stat == 1) || (str[i] == 39 && stat == 2)) // khrjt mn l quoted stat + now on normal stat 
             stat = 0;
         else if (str[i] == 39 && stat == 0) // inside single quotes
             stat = 2;
