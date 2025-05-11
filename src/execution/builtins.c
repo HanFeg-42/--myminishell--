@@ -1,4 +1,4 @@
-#include "exec.h"
+#include "../../include/exec.h"
 
 int is_builtin(char *cmd)
 {
@@ -44,18 +44,49 @@ int execute_cd(char *args)
 
     envp = get_env_head();
     old_pwd = getcwd(NULL,0);
-    if( !(*args) || chdir(*args) != 0)
+    if( !args || chdir(args) != 0)
     {
-        error();   // specify the error 
+        perror("cd: "); 
         free(old_pwd);
+        return (1);
+    }
+    new_pwd = getcwd(NULL,0);
+    execute_export(ft_strjoin("PWD=",new_pwd));
+    execute_export(ft_strjoin("OLDPWD=",old_pwd));
+    free(new_pwd);
+    return(0);
+}
+
+int execute_pwd()
+{
+    char *cwd;
+
+    cwd = getcwd(NULL,0);
+    if(!cwd)
+    {
+        perror("getcwd error");
         return (-1);
     }
+    printf("%s\n",cwd);
+    free(cwd);
+    return (0);  
+}
+int execute_env()
+{
+    t_envp **envp;
+    t_envp *current;
 
-    // todo
-    // add old_pwd as   export OLDCWD=old_env
-    //get new pwd using getcwd ---> export CWD=getcwd;
+    envp = get_env_head();
+	current = *envp;
 
+	while (current)
+	{
+		printf("%s=%s\n", current->key, current->value);
+		current = current->next;
+	}
+    return (0);
+}
+int execute_export(char *args)
+{
     
-    return(0);
-
 }
