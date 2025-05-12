@@ -12,7 +12,7 @@ struct s_envp
 	char *value;
 	t_envp *next;
 };
-enum s_builtin_type 
+enum s_builtin_type
 {
 	ECHO,
 	CD,
@@ -24,7 +24,13 @@ enum s_builtin_type
 };
 typedef enum s_builtin_type builtin_type;
 
-typedef 
+typedef struct s_pipe
+{
+	int **pipes;
+	int num_of_cmds;
+	pid_t *pids;
+
+} t_pipe;
 
 // -------------------------------------- env functions ------------------------------//
 t_envp *env_create(char *key, char *value);
@@ -36,21 +42,13 @@ t_envp **get_env_head(void);
 
 // ----------------------------------------builtins functions-------------------------//
 
-
-
 // ----------------------------------------execution functions -----------------------//
 
 int execute_shell(t_ast *ast);
 int execute_compoud(t_ast *ast);
 int execute_pipeline(t_ast *ast);
-int execute_command(t_ast *ast);
-int execute_simple_command(t_ast *ast);
-int execute_subshell(t_ast *ast);
-
-
-
-
-
-
+int execute_command(t_ast *ast, t_pipe *pipeline, int i);
+int execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i);
+int execute_subshell(t_ast *ast, t_pipe *pipeline, int i);
 
 #endif
