@@ -10,9 +10,7 @@ void gc_detach(t_gc *node)
     else
         *head = node->next;
     if (node->next)
-	{
         node->next->prev = node->prev;
-	}
 	free(node->addr);
 	free(node);
 }
@@ -25,7 +23,6 @@ void free_one(void *addr)
 
     if (!head || !addr)
         return;
-
     curr = *head;
     while (curr)
     {

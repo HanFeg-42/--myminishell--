@@ -1,5 +1,19 @@
 #include "../../../include/minishell.h"
 
+t_lexer *init_lexer(char *line)
+{
+    t_lexer *lexer;
+
+    lexer = ft_malloc(sizeof(t_lexer));
+    if (!lexer)
+        return (NULL);
+    lexer->line = ft_strdup(line);
+    lexer->i = 0;
+    lexer->c = line[0];
+    lexer->line_size = ft_strlen(line);
+    return (lexer);
+}
+
 t_token *lexer_next_token(t_lexer *lexer)
 {
 	if (*get_parser_check() == false)
