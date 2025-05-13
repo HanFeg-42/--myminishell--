@@ -3,25 +3,6 @@ void ast_advance(t_ast *current)
 {
     current = current->next_sibling;
 }
-// int ** allocate_pipes(int size)
-// {
-//     int **pipes;
-//     int i;
-
-//     pipes = ft_malloc(sizeof(int *) * size);
-//     if(!pipes)
-//         error();
-//     i = 0;
-//     while (i < size)
-//     {
-//         pipes[i] = ft_malloc(sizeof(int) * 2);
-//         if(!pipes[i])
-//             error(); // get_exeuter_error or something like this , dont exit , desplay error affect false to the static var then return
-//     i++;
-//     }
-//     return(pipes);
-// }
-
 void create_pipes(t_pipe *pipeline)
 {
     int i;
@@ -133,68 +114,188 @@ int excute_command(t_ast *ast, t_pipe *pipeline, int i)
         status = execute_subshell(current, i, pipeline);
     return (status);
 }
+int envp_size(t_envp **old_envp)
+{
+    int size;
+    t_envp *curent;
 
+    current = *envp;
+    size = 0;
+
+    while (curent)
+    {
+        size++;
+        curent = curent->next;
+    }
+    return (size);
+}
+char **convert_envp()
+{
+    char **envp;
+    t_envp **old_envp;
+    int size;
+    t_envp *current;
+    char *holder;
+
+    old_envp = get_env_head();
+    size = envp_size(old_envp);
+    envp = malloc(sizeof(char *) * (size + 1));
+    if (!envp)
+        ;
+    return (NULL);
+    current = *old_envp;
+    size = 0;
+    while (current)
+    {
+        holder = ft_strjoin(current->key, "=");
+        holder = ft_strjoin(holder, current->value);
+        envp[size] = ft_strdup(holder);
+        size++;
+    }
+    envp[size] = NULL;
+    return (envp);
+}
+static char *concat_path(char *path, char *cmd)
+{
+    char *fullpath;
+    char *tmp;
+
+    if (!path || !cmd)
+        return (NULL);
+    tmp = ft_strjoin(path, "/");
+    if (!tmp)
+        return (NULL);
+    fullpath = ft_strjoin(tmp, cmd);
+    free(tmp);
+    return (fullpath);
+}
+
+static char *find_path(char **paths, char *cmd)
+{
+    int i;
+    char *fullpath;
+
+    i = 0;
+    while (paths[i])
+    {
+        fullpath = concat_path(paths[i], cmd);
+        if (fullpath && access(fullpath, X_OK) == 0)
+        {
+            free_2d_array(paths);
+            return (fullpath);
+        }
+        free(fullpath);
+        i++;
+    }
+    free_2d_array(paths);
+    return (NULL);
+}
+char *get_path(char *cmd, char **envp)
+{
+    char **paths;
+    int i;
+
+    if (!cmd || !envp)
+        return (NULL);
+    if (ft_strchr(cmd, '/'))
+    {
+        if (access(cmd, X_OK) == 0)
+            return (ft_strdup(cmd));
+        return (NULL);
+    }
+    i = 0;
+    while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
+        i++;
+    if (!envp[i])
+        return (NULL);
+    paths = ft_split(envp[i] + 5, ':');
+    if (!paths)
+        return (NULL);
+    return (find_path(paths, cmd));
+}
 int execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
     int status;
+    int *fds;
 
+    char **envp;
 
-
+    fds = open_redirects(ast->redirect);
+    if (i != pipeline->num_of_cmds)
+        dup2(pipeline->pipes[i + 1][1], STDOUT_FILENO);
+    if (i != 0)
+        dup2(pipeline->pipes[i][0], STDIN_FILENO)
+            envp = convert_envp(); // wait till u fork
+    pipeline
 }
 
-int	num_of_redirects(t_file *lst)
+int num_of_redirects(t_file *lst)
 {
-	int		len;
+    int len;
     t_file *current;
 
     current = lst;
 
-	len = 0;
-	while (current)
-	{
-		current = current->next;
-		len++;
-	}
-	return (len);
+    len = 0;
+    while (current)
+    {
+        current = current->next;
+        len++;
+    }
+    return (len);
 }
-void close_redirect(int *fds)
+void close_redirect(int *fds, int i)
 {
-    int i;
-
-    i=0;
-    
+    while (i >= 0)
+    {
+        close(fds[i]);
+        i--;
+    }
 }
-int* open_redirects(t_file *redirect)
+void open_file(t_file *file, int *fds, int i)
+{
+    if (file->type == APPEND)
+        fds[i] = open(file->filename, O_CREAT | O_RDONLY | O_APPEND, 0644);
+    else if (file->type == INPUT_RED)
+        fds[i] = open(file->filename, O_RDONLY, 0644);
+    else if (file->type == OUTPUT_RED)
+        fds[i] = open(file->filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
+    // else      // dont forget heredoc
+    if (fds[i] < 0)
+    {
+        close_redirects(fds, i - 1);
+        error(); // come back here
+    }
+}
+void redirect(int fd, t_file *file)
+{
+    if (file->type == APPEND || (file->type == OUTPUT_RED))
+        dup2(fd, STDOUT_FILENO);
+    else if ((file->type == OUTPUT_RED))
+        dup2(fd, STDOUT_FILENO);
+    // ELSE heredoc
+}
+int *open_redirects(t_file *redirect)
 {
     t_file *current;
     int *fds;
     int i;
 
-    fds=malloc(sizeof(int) * num_of_redirects(redirect));
-    if(!fds)
-        error();   // handle this
+    fds = ft_malloc(sizeof(int) * num_of_redirects(redirect));
+    if (!fds)
+        error(); // handle this
     i = 0;
     current = redirect;
-    while(current)
+    while (current)
     {
-        if(current->type == APPEND)
-            fds[i] = open(current->filename,O_CREAT | O_RDONLY | O_APPEND,0644);
-        else if(current->type == INPUT_RED)
-            fds[i] = open(current->filename,O_RDONLY,0644);
-        else if(current->type ==  OUTPUT_RED)
-            fds[i] = open(current->filename,O_CREAT | O_RDWR | O_TRUNC,0644);
-        //else      // dont forget heredoc
-        if(fds[i] < 0)
-        {
-            close_redirects(fds,i);
-            error();   // come back here
-        }
+        open_file(current, fds, i);
+        redirect(fds[i], current);
         i++;
+        current = current->next;
     }
-    return(fds);    
+    return (fds);
 }
 
 int execute_subshell(t_ast *ast, t_pipe *pipeline, int i)
 {
-
 }
