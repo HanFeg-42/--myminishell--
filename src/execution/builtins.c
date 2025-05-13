@@ -33,7 +33,7 @@ int execute_builtins(builtin_type type, char **args)
     if(type == ENV)
         return(execute_env());
     if(type == EXIT)
-        return (execute_exit());                                                                                                                                                                    
+        return (execute_exit());
 }
 
 int execute_cd(char *args)

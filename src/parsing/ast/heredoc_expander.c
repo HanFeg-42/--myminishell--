@@ -4,8 +4,9 @@ char    *heredoc_expander(char *s)
 {
     char    *ret;
     char    *dollar_pos;
+
     if (!s)
-    return (NULL);
+        return (NULL);
     ret = ft_strdup("");
     while(*s)
     {
@@ -28,6 +29,13 @@ char    *get_env_name(char *s)
     int i;
 
     i = 1;
+    /*
+    zidi $?
+    if (s[i] == '?')
+        return (ft_itoa(get_exit_status()));
+    ========================================
+    zidi ila kan s[i] = '$'
+    */
     while (s[i] && ft_isalnum(s[i]))
         i++;
     var = ft_substr(s, 1, i - 1);
@@ -43,12 +51,9 @@ char    *skip_env_var(char *s)
 
 char *ft_getenv(char *var)
 {
-    t_envp **new_envp;
     t_envp *current;
 
-    new_envp = get_env_head();
-
-    current = *new_envp;
+    current = *get_env_head();
     while (current)
     {
         if (ft_strcmp(current->key, var) == 0)
@@ -57,6 +62,7 @@ char *ft_getenv(char *var)
     }
     return (NULL);
 }
+
 int ft_strcmp(const char *s1, const char *s2)
 {
 	while (*s1 && (*s1 == *s2))

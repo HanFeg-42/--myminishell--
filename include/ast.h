@@ -76,7 +76,7 @@ char	*get_next_line(int fd);
 /*************************************/
 void    heredoc(char *eof, t_file **redirect);
 int		is_quoted(char *eof);
-char	*quote_removal(char *str);
+char	*remove_quotes(char *str);
 char    *heredoc_expander(char *s);
 char    *get_env_name(char *s);
 char    *skip_env_var(char *s);

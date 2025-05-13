@@ -12,7 +12,12 @@ t_ast *parser(t_token **token)
         if ((*token))
             syntax_error((*token)->value);
         else
-            syntax_error("'newline'");
+            syntax_error("newline");
+    }
+    if (*(token))
+    {
+        syntax_error((*token)->prev->value);
+        return (NULL);
     }
     return (ast);
 }

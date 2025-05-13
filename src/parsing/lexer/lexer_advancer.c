@@ -1,19 +1,5 @@
 #include "../../../include/minishell.h"
 
-t_lexer *init_lexer(char *line)
-{
-    t_lexer *lexer;
-
-    lexer = ft_malloc(sizeof(t_lexer));
-    if (!lexer)
-        return (NULL);
-    lexer->line = ft_strdup(line);
-    lexer->i = 0;
-    lexer->c = line[0];
-    lexer->line_size = ft_strlen(line);
-    return (lexer);
-}
-
 void lexer_advance(t_lexer *lexer)
 {
     if (lexer && lexer->c) // && lexer->line[lexer->i + 1])
