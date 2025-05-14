@@ -1,4 +1,16 @@
 #include "../../include/exec.h"
+
+int *get_status_code()
+{
+    static int status;
+    return (&status);
+}
+int *get_error_check(void)
+{
+    static int check = true;
+
+    return (&check);
+}
 void ast_advance(t_ast *current)
 {
     current = current->next_sibling;
@@ -8,10 +20,10 @@ void create_pipes(t_pipe *pipeline)
     int i;
     i = 0;
 
-    while (i < pipeline->num_of_cmds)
+    while (i < pipeline->num_of_cmds -1)
     {
         if (pipe(pipeline->pipes[i]) < 0)
-            error();
+            *get_error_check()=false;
         i++;
     }
 }
@@ -30,36 +42,35 @@ int ast_size(t_ast *ast)
     }
     retrun(i);
 }
-int execute_compoud(t_ast *ast)
+void execute_compoud(t_ast *ast)
 {
-    int status;
     t_ast *current;
 
     current = ast->first_child;
     while (current)
     {
-        status = execute_pipeline(current);
+        execute_pipeline(current);
         ast_advance(current);
         if (current)
         {
             if (current->type == AST_OR)
             {
                 ast_advance(current);
-                if (!status)
+                if (!(*get_status_code()))
                     ast_advance(current);
             }
             if (current->type == AST_AND)
             {
                 ast_advance(current);
-                if (status)
+                if (*get_status_code())
                     ast_advance(current);
             }
         }
         else
             break;
     }
-    return (status);
 }
+
 t_pipe *init_pipes(t_ast *ast)
 {
     t_pipe *pipeline;
@@ -71,33 +82,42 @@ t_pipe *init_pipes(t_ast *ast)
     pipeline->num_of_cmds = ast_size(ast);
     pipeline->pipes = ft_malloc(sizeof(int *) * (pipeline->num_of_cmds - 1));
     if (!pipeline->pipes)
-        error();
+        return (NULL);
     i = 0;
     while (i < pipeline->num_of_cmds)
     {
         pipeline->pipes[i] = ft_malloc(sizeof(int) * 2);
         if (!pipeline->pipes[i])
-            error(); // get_exeuter_error or something like this , dont exit , desplay error affect false to the static var then return
+            return (NULL); // get_exeuter_error or something like this , dont exit , desplay error affect false to the static var then return
         i++;
     }
+    pipeline->pids = malloc(sizeof(int) * pipeline->num_of_cmds);
+    if (!pipeline->pids)
+        return (NULL);
     pipeline->counter = -1;
     return (pipeline->pipes);
 }
 
-int execute_pipeline(t_ast *ast)
+void execute_pipeline(t_ast *ast)
 {
-    int status;
-    t_ast *current;
     t_pipe *pipeline;
+    t_ast *current;
     int i;
 
     pipeline = init_pipes(ast);
+    if (!pipeline)
+    {
+        *get_error_check() = false;
+        return;
+    }
     create_pipes(pipeline);
+    if(!(*get_error_check()))
+        return;
     current = ast->first_child;
     i = 0;
     while (current)
     {
-        status = execute_command(current, pipeline, i);
+        execute_command(current, pipeline, i);
         ast_advance(current);
         i++;
     }
