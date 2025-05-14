@@ -29,6 +29,7 @@ typedef struct s_pipe
 	int **pipes;
 	int num_of_cmds;
 	pid_t *pids;
+	int counter;
 
 } t_pipe;
 

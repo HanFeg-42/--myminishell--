@@ -22,7 +22,7 @@ int ast_size(t_ast *ast)
     t_ast *current;
 
     current = ast->first_child;
-    i = -1;
+    i = 0;
     while (current)
     {
         current = current->next_sibling;
@@ -69,7 +69,7 @@ t_pipe *init_pipes(t_ast *ast)
     if (!pipeline)
         return (NULL);
     pipeline->num_of_cmds = ast_size(ast);
-    pipeline->pipes = ft_malloc(sizeof(int *) * pipeline->num_of_cmds);
+    pipeline->pipes = ft_malloc(sizeof(int *) * (pipeline->num_of_cmds - 1));
     if (!pipeline->pipes)
         error();
     i = 0;
@@ -80,6 +80,7 @@ t_pipe *init_pipes(t_ast *ast)
             error(); // get_exeuter_error or something like this , dont exit , desplay error affect false to the static var then return
         i++;
     }
+    pipeline->counter = -1;
     return (pipeline->pipes);
 }
 
@@ -170,7 +171,7 @@ static char *concat_path(char *path, char *cmd)
     return (fullpath);
 }
 
-static char *find_path(char **paths, char *cmd)
+char *find_path(char **paths, char *cmd)
 {
     int i;
     char *fullpath;
@@ -181,13 +182,10 @@ static char *find_path(char **paths, char *cmd)
         fullpath = concat_path(paths[i], cmd);
         if (fullpath && access(fullpath, X_OK) == 0)
         {
-            free_2d_array(paths);
             return (fullpath);
         }
-        free(fullpath);
         i++;
     }
-    free_2d_array(paths);
     return (NULL);
 }
 char *get_path(char *cmd, char **envp)
@@ -213,20 +211,75 @@ char *get_path(char *cmd, char **envp)
         return (NULL);
     return (find_path(paths, cmd));
 }
+void redirect_to_pipe(t_pipe *pipeline, int i)
+{
+    if (pipeline->num_of_cmds != 1)
+    {
+        if (i == 0)
+            dup2(pipeline->pipes[i][1], STDOUT_FILENO);
+        else if (i == pipeline->num_of_cmds)
+            dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
+        else
+        {
+            dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
+            dup2(pipeline->pipes[i][1], STDOUT_FILENO);
+        }
+    }
+}
+int type_cmd(char *cmd)
+{
+    char *command;
+    char *position;
+
+    command = cmd;
+    position = ft_strrchr(cmd, '/');
+    if (position)
+    {
+        command = ft_strdup(position + 1);
+    }
+    return (is_builtin(command));
+}
+void handle_cmd_error(char *command)
+{
+    ft_putstr_fd(command, 2);
+    ft_putstr_fd(": command not found", 2);
+    ft_putstr_fd("\n", 2);
+    // exit->status = 127 //
+}
+void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
+{
+    char **envp;
+    char *pathname;
+    int type;
+
+    type = type_cmd(ast->args[0]);
+
+    if (type == -1)
+    {
+        pipeline->counter++;
+        pipeline->pids[pipeline->counter] = fork();
+        if (pipeline->pids[pipeline->counter] == 0)
+        {
+            redirect_to_pipe(pipeline, i); // inside fork;
+            envp = convert_envp();         // wait till u fork
+            pathname = get_path(command[0], envp);
+            if (!pathname)
+                handle_cmd_error(command[0]);
+            execve(pathname, ast->args, envp);
+            // exit->status = 126 //
+        }
+    }
+    else
+        execute_builtins(type, ast->args);
+}
+
 int execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
     int status;
     int *fds;
 
-    char **envp;
-
     fds = open_redirects(ast->redirect);
-    if (i != pipeline->num_of_cmds)
-        dup2(pipeline->pipes[i + 1][1], STDOUT_FILENO);
-    if (i != 0)
-        dup2(pipeline->pipes[i][0], STDIN_FILENO)
-            envp = convert_envp(); // wait till u fork
-    pipeline
+    exec_cmd(ast, pipeline, i);
 }
 
 int num_of_redirects(t_file *lst)
@@ -298,4 +351,16 @@ int *open_redirects(t_file *redirect)
 
 int execute_subshell(t_ast *ast, t_pipe *pipeline, int i)
 {
+    int status;
+    int *fds;
+    int fd;
+
+    if (ast->redirect)
+        fds = open_redirects(ast->redirect);
+    fd = fork();
+    if (fd == 0)
+    {
+        status = execute_compoud(ast->first_child);
+    }
+    return (status);
 }
