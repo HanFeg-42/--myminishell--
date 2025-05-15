@@ -1,4 +1,6 @@
 #include "../../../include/ast.h"
+#include "../../../include/exec.h"
+
 
 char    *heredoc_expander(char *s)
 {

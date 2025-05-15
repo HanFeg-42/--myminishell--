@@ -1,0 +1,24 @@
+starts
+batat 
+size 78 
+envp
+
+[38;2;255;105;180mMinishell > [0mHhhhhhhh
+ls
+seeeeee
+Makefile
+README.md
+ZC
+bb
+ff
+file.supp
+filename
+garbage_collector
+hek
+include
+info
+libft
+minishell
+readline.supp
+src
+todo

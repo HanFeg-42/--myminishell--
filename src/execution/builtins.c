@@ -20,20 +20,20 @@ int is_builtin(char *cmd)
 }
 int execute_builtins(builtin_type type, char **args)
 {
-    if(type == ECHO)
-        return (execute_echo(args));
+    // if(type == ECHO)
+    //     return (execute_echo(args));
     if(type == CD)
         return(execute_cd(*args));
     if(type == PWD)
         return(execute_pwd());
     if(type == EXPORT)
         return(execute_export(args));
-    if(type == UNSET)
-        return (execute_unset(args));
+    // if(type == UNSET)
+    //     return (execute_unset(args));
     if(type == ENV)
         return(execute_env());
-    if(type == EXIT)
-        return (execute_exit());                                                                                                                                                                    
+    // if(type == EXIT)
+    //     return (execute_exit());                                                                                                                                                                    
 }
 
 int execute_cd(char *args)
@@ -88,5 +88,6 @@ int execute_env()
 }
 int execute_export(char *args)
 {
+    return (1);
     
 }

@@ -1,4 +1,6 @@
 #include "../include/minishell.h"
+#include "../include/exec.h"
+
 
 int main(int ac, char **av, char **envp)
 {
@@ -19,8 +21,9 @@ int main(int ac, char **av, char **envp)
 			break;
 		token = tokenizer(line);
 		ast = parser(&token);
-		ast_print(ast);
+		//ast_print(ast);
 		*get_parser_check() = true;
+		execute_compoud(ast);
 		finish(line);
 	}
 	free_all();

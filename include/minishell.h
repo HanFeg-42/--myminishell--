@@ -11,6 +11,7 @@
 #include "../libft/libft.h"
 #include "../garbage_collector/gc.h"
 
+
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 10
 #endif
@@ -92,5 +93,4 @@ int ft_strcmp(const char *s1, const char *s2);
 
 
 #include "./ast.h"
-#include "exec.h"
 #endif
