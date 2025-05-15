@@ -16,7 +16,8 @@ char    *heredoc_expander(char *s)
             ret = ft_strjoin(ret, s); // need new strjoin that returns s1 if !s2
             break;
         }
-        ret = ft_strjoin(ret, ft_substr(s, 0, dollar_pos - s)); // need new substr that start always = 0
+        ret = ft_strjoin(ret,
+            ft_substr(s, 0, dollar_pos - s)); // need new substr that start always = 0
         ret = ft_strjoin(ret, get_env_name(dollar_pos));
         s = skip_env_var(dollar_pos + 1);
     }
@@ -34,7 +35,7 @@ char    *get_env_name(char *s)
     if (s[i] == '?')
         return (ft_itoa(get_exit_status()));
     ========================================
-    zidi ila kan s[i] = '$'
+    zidi ila kan s[i] = '$' <-- priority
     */
     while (s[i] && ft_isalnum(s[i]))
         i++;
@@ -51,16 +52,17 @@ char    *skip_env_var(char *s)
 
 char *ft_getenv(char *var)
 {
-    t_envp *current;
+    // t_envp *current;
 
-    current = *get_env_head();
-    while (current)
-    {
-        if (ft_strcmp(current->key, var) == 0)
-            return (current->value);
-        current = current->next;
-    }
-    return (NULL);
+    // current = *get_env_head();
+    // while (current)
+    // {
+    //     if (ft_strcmp(current->key, var) == 0)
+    //         return (current->value);
+    //     current = current->next;
+    // }
+    // return (NULL);
+    return (getenv(var));
 }
 
 int ft_strcmp(const char *s1, const char *s2)

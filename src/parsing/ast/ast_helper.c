@@ -1,6 +1,6 @@
 #include "../../../include/ast.h"
 
-t_ast *ast_create(ast_type type)
+t_ast *ast_create(t_ast_type type)
 {
     t_ast *new;
 

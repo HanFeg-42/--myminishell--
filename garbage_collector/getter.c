@@ -1,10 +1,20 @@
-#include "gc.h"
-// #include "../include/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   getter.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 20:19:23 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/05/15 11:30:21 by hfegrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_gc **get_gc_head(void)
+#include "../include/gc.h"
+
+t_gc	**get_gc_head(void)
 {
-    static t_gc *head;
+	static t_gc	*head;
 
-    return (&head);
+	return (&head);
 }
-

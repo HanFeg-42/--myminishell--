@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 00:38:51 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/10 16:55:23 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/13 20:25:20 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strdup(const char *str)
 	return (ret);
 }
 
-char **arr_of_strdup(char **arr)
+char	**arr_of_strdup(char **arr)
 {
 	return (arr);
 }

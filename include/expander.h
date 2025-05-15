@@ -1,22 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/05/15 11:20:12 by hfegrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
 # include "ast.h"
+# include "minishell.h"
 
 typedef struct s_arg
 {
-    char *value;
-    struct s_arg *next;
-}               t_arg;
+	char			*value;
+	struct s_arg	*next;
+}					t_arg;
 
 typedef struct s_expand
 {
-    t_arg *arg;
-    char **args;
-    char *word;
-    int i;
-    int stat;
-    int pos;
-}               t_expand;
+	t_arg			*arg;
+	char			**args;
+	char			*word;
+	int				i;
+	int				stat;
+	int				pos;
+}					t_expand;
+
+char				**expander(char **args);
+t_expand			*init_expand(char **args);
+void				expand_param(t_expand *exp);
+void				copy_characters_until_quote(t_expand *exp);
+void				expand_inside_double_quote(t_expand *exp);
+void				expand_unquoted(t_expand *exp);
+char				*first_quote_occ(char *str);
+void				field_split(t_expand *exp);
+t_arg				*get_next_field(t_expand *exp);
+char				*get_field(t_expand *exp);
+char				*first_ifs_occ(char *s);
+void				arg_add(t_arg **head, t_arg *new);
+t_arg				*arg_create(char *value);
+void				print_t_arg(t_arg *arg);
+void				exp_skip_whitespaces(t_expand *exp);
+char				**copy_arr(char **arg);
 
 #endif

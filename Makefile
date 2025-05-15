@@ -27,7 +27,9 @@ SRC = src/main.c \
 		src/parsing/ast/heredoc.c \
 		src/parsing/ast/heredoc_expander.c \
 		src/parsing/ast/get_next_line.c \
-		src/execution/env.c
+		src/parsing/expander/expand.c \
+		src/parsing/expander/expand_param.c \
+		src/parsing/expander/field_split.c
 
 OBJ = ${SRC:.c=.o}
 

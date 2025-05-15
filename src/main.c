@@ -5,10 +5,12 @@ int main(int ac, char **av, char **envp)
 	char *line;
 	t_token *token;
 	t_ast *ast;
+	char **tst;
 
 	(void)ac;
 	(void)av;
-    get_new_env(get_env_head(),envp);
+	(void)envp;
+    // get_new_env(get_env_head(),envp);
 	//print_env(get_env_head());
 	token = NULL;
 	while (1)
