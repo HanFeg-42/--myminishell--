@@ -1,20 +1,15 @@
-starts
+starts SIMPLE CMD EXEC 
 batat 
-size 78 
+size 81 
 envp
-
-[38;2;255;105;180mMinishell > [0mHhhhhhhh
 ls
 seeeeee
 Makefile
 README.md
-ZC
-bb
-ff
+file
 file.supp
 filename
 garbage_collector
-hek
 include
 info
 libft

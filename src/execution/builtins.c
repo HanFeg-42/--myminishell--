@@ -26,23 +26,24 @@ int execute_builtins(builtin_type type, char **args)
         return(execute_cd(*args));
     if(type == PWD)
         return(execute_pwd());
-    if(type == EXPORT)
-        return(execute_export(args));
+    // if(type == EXPORT)
+    //     return(execute_export(args));
     // if(type == UNSET)
     //     return (execute_unset(args));
     if(type == ENV)
         return(execute_env());
     // if(type == EXIT)
-    //     return (execute_exit());                                                                                                                                                                    
+    //     return (execute_exit());  
+    return (0);  // remove it later                                                                                                                                                                  
 }
 
 int execute_cd(char *args)
 {
-    t_envp **envp;
+   // t_envp **envp;
     char *old_pwd;
     char *new_pwd;
 
-    envp = get_env_head();
+    //envp = get_env_head();
     old_pwd = getcwd(NULL,0);
     if( !args || chdir(args) != 0)
     {
@@ -88,6 +89,7 @@ int execute_env()
 }
 int execute_export(char *args)
 {
+    (void)args; // remove it later   
     return (1);
     
 }

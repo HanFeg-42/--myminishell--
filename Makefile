@@ -4,7 +4,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 RLFLAG = -lreadline
 
@@ -28,7 +28,11 @@ SRC = src/main.c \
 		src/parsing/ast/heredoc_expander.c \
 		src/parsing/ast/get_next_line.c \
 		src/execution/env.c \
-		src/execution/exec.c \
+		src/execution/exec_compound.c \
+		src/execution/exec_command.c \
+		src/execution/exec_simple_cmd.c \
+		src/execution/exec_pipeline.c \
+		src/execution/simple_cmd_helpers.c \
 		src/execution/builtins.c 
 		
 

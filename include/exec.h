@@ -5,15 +5,14 @@
 #include <sys/wait.h>
 // #include "minishell.h"
 
-typedef struct s_envp t_envp;
 
-struct s_envp
-{
+typedef struct s_envp{
 	char *key;
 	char *value;
-	t_envp *next;
-};
-enum s_builtin_type
+	struct s_envp *next;
+} t_envp;
+
+typedef enum s_builtin_type
 {
 	ECHO,
 	CD,
@@ -22,8 +21,7 @@ enum s_builtin_type
 	UNSET,
 	ENV,
 	EXIT
-};
-typedef enum s_builtin_type builtin_type;
+} builtin_type;
 
 typedef struct s_pipe
 {
@@ -31,6 +29,8 @@ typedef struct s_pipe
 	int num_of_cmds;
 	pid_t *pids;
 	int counter;
+	int saved_stdout;
+	int saved_stdin;
 
 } t_pipe;
 
@@ -67,13 +67,12 @@ t_pipe *init_pipes(t_ast *ast);
 void close_pipes(t_pipe *pipeline);
 void wait_children(t_pipe *pipeline);
 
-void execute_pipeline(t_ast *ast);
 
 int envp_size(t_envp **old_envp);
 
 char **convert_envp();
 
-static char *concat_path(char *path, char *cmd);
+char *concat_path(char *path, char *cmd);
 
 char *find_path(char **paths, char *cmd);
 
@@ -102,6 +101,8 @@ int execute_pwd();
 int execute_env();
 
 int execute_export(char *args);
-
+void redirect_io(int fd, t_file *file);
+void create_pipes(t_pipe *pipeline);
+void ast_advance(t_ast **current);
 
 #endif
