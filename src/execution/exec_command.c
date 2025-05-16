@@ -8,8 +8,7 @@ void execute_command(t_ast *ast, t_pipe *pipeline, int i)
     if (current->type == AST_SIMPLE_CMD)
     {
         execute_simple_cmd(current, pipeline, i);
-
     }
-    // else
-    //     execute_subshell(current, pipeline, i);
+    else
+        execute_subshell(current, pipeline);
 }

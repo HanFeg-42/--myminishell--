@@ -10,13 +10,13 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
     fds = open_redirects(ast->redirect);
     if (!fds)
         set_exec_error(NULL, 1);
+        
     }
-    printf("starts SIMPLE CMD EXEC \n");
     exec_cmd(ast, pipeline, i);
     dup2(pipeline->saved_stdout,STDOUT_FILENO);
     dup2(pipeline->saved_stdin,STDIN_FILENO);
-    // if(ast->redirect)
-    //     close_redirect(fds,num_of_redirects(ast->redirect));
+    if(ast->redirect)
+        close_redirect(fds,num_of_redirects(ast->redirect));
 }
 int *open_redirects(t_file *redirect)
 {
@@ -54,7 +54,6 @@ int num_of_redirects(t_file *lst)
         current = current->next;
         len++;
     }
-    printf("num of redirects %d \n",len);
     return (len);
 }
 void close_redirect(int *fds, int i)
@@ -84,6 +83,7 @@ void redirect_io(int fd, t_file *file)
 {
     if (file->type == APPEND || (file->type == OUTPUT_RED))
         dup2(fd, STDOUT_FILENO);
+
     else if ((file->type == INPUT_RED))
         dup2(fd, STDIN_FILENO);
     // ELSE heredoc

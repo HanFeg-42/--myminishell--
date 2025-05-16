@@ -33,7 +33,8 @@ SRC = src/main.c \
 		src/execution/exec_simple_cmd.c \
 		src/execution/exec_pipeline.c \
 		src/execution/simple_cmd_helpers.c \
-		src/execution/builtins.c 
+		src/execution/builtins.c \
+		src/execution/exec_subshell.c 
 		
 
 OBJ = ${SRC:.c=.o}

@@ -39,6 +39,7 @@ void execute_compoud(t_ast *ast)
         execute_pipeline(current);
         // if (!(*get_error_check()))
         //     return;
+        printf("\n exit status %d \n", *get_status_code());
         ast_advance(&current);
         if (current)
         {

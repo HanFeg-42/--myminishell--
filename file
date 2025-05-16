@@ -1,19 +1,18 @@
-starts SIMPLE CMD EXEC 
-batat 
-size 81 
-envp
-ls
-seeeeee
 Makefile
 README.md
+bb
 file
 file.supp
 filename
 garbage_collector
+hona
 include
 info
 libft
 minishell
+mmm
 readline.supp
 src
 todo
+
+ exit status 0 

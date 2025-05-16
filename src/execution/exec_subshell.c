@@ -1,15 +1,19 @@
 #include "../../include/exec.h"
 
-void execute_subshell(t_ast *ast, t_pipe *pipeline, int i)
+void execute_subshell(t_ast *ast, t_pipe *pipeline)
 {
     int *fds;
-    int fd;
 
     if (ast->redirect)
         fds = open_redirects(ast->redirect);
-    fd = fork();
-    if (fd == 0)
+    pipeline->counter++;
+    pipeline->pids[pipeline->counter]= fork();
+    if (pipeline->pids[pipeline->counter] == 0)
     {
         execute_compoud(ast->first_child);
     }
+    dup2(pipeline->saved_stdout,STDOUT_FILENO);
+    dup2(pipeline->saved_stdin,STDIN_FILENO);
+    if(ast->redirect)
+        close_redirect(fds,num_of_redirects(ast->redirect));
 }

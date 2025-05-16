@@ -29,8 +29,11 @@ typedef struct s_pipe
 	int num_of_cmds;
 	pid_t *pids;
 	int counter;
+	
 	int saved_stdout;
 	int saved_stdin;
+	int saved_stdout1;
+	int saved_stdin1;
 
 } t_pipe;
 
@@ -51,7 +54,7 @@ void execute_compoud(t_ast *ast);
 void execute_pipeline(t_ast *ast);
 void execute_command(t_ast *ast, t_pipe *pipeline, int i);
 void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i);
-void execute_subshell(t_ast *ast, t_pipe *pipeline, int i);
+void execute_subshell(t_ast *ast, t_pipe *pipeline);
 int is_builtin(char *cmd);
 
 int *get_status_code();
@@ -66,6 +69,7 @@ t_pipe *init_pipes(t_ast *ast);
 
 void close_pipes(t_pipe *pipeline);
 void wait_children(t_pipe *pipeline);
+void	close_all_pipes(t_pipe *pipeline);
 
 
 int envp_size(t_envp **old_envp);
@@ -104,5 +108,8 @@ int execute_export(char *args);
 void redirect_io(int fd, t_file *file);
 void create_pipes(t_pipe *pipeline);
 void ast_advance(t_ast **current);
+int *open_redirects(t_file *redirect);
+void execute_subshell(t_ast *ast, t_pipe *pipeline);
+
 
 #endif

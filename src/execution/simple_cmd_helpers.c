@@ -14,15 +14,16 @@ void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
         pipeline->pids[pipeline->counter] = fork();
         if (pipeline->pids[pipeline->counter] == 0)
         {
-            envp = convert_envp();         // wait till u fork
+            envp = convert_envp();  
+                   // wait till u fork
+            if(!ast->redirect)
             redirect_to_pipe(pipeline, i); // inside fork;
-            write (2,"after redirct to pipe \n",24);
-            printf("%s\n",ast->args[0]);
             if(!envp)
                 write (2,"envp failed \n",14);
             pathname = get_path(ast->args[0], envp);
             if (!pathname)
                 handle_cmd_error(ast->args[0]);
+            close_all_pipes(pipeline);
             execve(pathname, ast->args, envp);
             exit(126);
         }
@@ -30,13 +31,24 @@ void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
     else
         execute_builtins(type, ast->args);
 }
+void	close_all_pipes(t_pipe *pipeline)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipeline->num_of_cmds - 1)
+	{
+		close(pipeline->pipes[i][0]);
+		close(pipeline->pipes[i][1]);
+		i++;
+	}
+}
 int type_cmd(char *cmd)
 {
     char *command;
     char *position;
 
     command = ft_strdup(cmd);
-    printf("batat \n");
     position = ft_strrchr(cmd, '/');
     if (position)
     {
@@ -54,8 +66,6 @@ char **convert_envp()
     
     old_envp = get_env_head();
     size = envp_size(old_envp);
-    printf("size %d \n",size);
-    printf("envp\n");
     envp = malloc(sizeof(char *) * (size + 1));
     if (!envp)
         return (NULL);
@@ -88,7 +98,6 @@ void redirect_to_pipe(t_pipe *pipeline, int i)
             dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
             dup2(pipeline->pipes[i][1], STDOUT_FILENO);
         }
-        write(2,"finishing redirecting to pipes\n",32);
     }
 }
 
@@ -99,7 +108,6 @@ char *get_path(char *cmd, char **envp)
 
     if (!cmd || !envp)
         return (NULL);
-    printf("seeeeee\n");
     if (ft_strchr(cmd, '/'))
     {
         if (access(cmd, X_OK) == 0)

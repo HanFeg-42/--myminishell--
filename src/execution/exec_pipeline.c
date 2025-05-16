@@ -24,8 +24,9 @@ void execute_pipeline(t_ast *ast)
         ast_advance(&current);
         i++;
     }
+    close_all_pipes(pipeline);
+    wait_children(pipeline);
     // close_pipes(pipeline);
-    // wait_children(pipeline);
 }
 
 t_pipe *init_pipes(t_ast *ast)
@@ -37,14 +38,13 @@ t_pipe *init_pipes(t_ast *ast)
     if (!pipeline)
         return (NULL);
     pipeline->num_of_cmds = ast_size(ast);
-    printf("num of commands %d\n", pipeline->num_of_cmds);
     if (pipeline->num_of_cmds != 1)
     {
         pipeline->pipes = ft_malloc(sizeof(int *) * (pipeline->num_of_cmds - 1));
         if (!pipeline->pipes)
             return (NULL);
         i = 0;
-        while (i < pipeline->num_of_cmds)
+        while (i < pipeline->num_of_cmds -1)
         {
             pipeline->pipes[i] = ft_malloc(sizeof(int) * 2);
             if (!pipeline->pipes[i])
@@ -106,14 +106,15 @@ void wait_children(t_pipe *pipeline)
     int status;
 
     i = 0;
-    while (i < pipeline->counter)
+    // printf("num of commands %d \n", pipeline->counter);
+    while (i <= pipeline->counter)
     {
         waitpid(pipeline->pids[i], &status, 0);
-        // if (i == pipeline->n - 1)
-        // {
-        //     if (WIFEXITED(status))
-        //         *get_status_code() = WEXITSTATUS(status);
-        // }
+        if (i == pipeline->counter )
+        {
+            if (WIFEXITED(status))
+                *get_status_code() = WEXITSTATUS(status);
+        }
         i++;
     }
 }
