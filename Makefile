@@ -29,7 +29,8 @@ SRC = src/main.c \
 		src/parsing/ast/get_next_line.c \
 		src/parsing/expander/expand.c \
 		src/parsing/expander/expand_param.c \
-		src/parsing/expander/field_split.c
+		src/parsing/expander/field_split.c \
+		src/parsing/expander/expand_helper.c
 
 OBJ = ${SRC:.c=.o}
 

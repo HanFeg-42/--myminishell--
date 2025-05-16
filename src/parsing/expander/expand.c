@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:55:37 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:17:09 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ char	**expander(char **args)
 		expand_param(expand); //looks for $ dquoted or unquoted then replace it
 		field_split(expand); // split nodes value by IFS (tab or space) outside quotes
 		// check wash tal hna mzyan
-		// expand_pathname(expand); // look for * the replace it with correspond files + split it in parallel and add to (include field split)
-		// expand_advance(expand); // inncrement i]
+		expand_pathname(expand); // look for * the replace it with correspond files + split it in parallel and add to (include field split)
 		expand->i++;
 	}
 	print_t_arg(expand->arg);
@@ -50,40 +49,9 @@ t_expand	*init_expand(char **args)
 	return (exp);
 }
 
-char	**copy_arr(char **arg)
+void	expand_pathname(t_expand *exp)
 {
-	char	**ret;
-	int		i;
-
-	if (!arg)
-		return (NULL);
-	i = 0;
-	while (arg[i])
-		i++;
-	ret = ft_malloc(sizeof(char *) * (i + 1));
-	if (!arg)
-		return (NULL);
-	i = 0;
-	while (arg[i])
-	{
-		ret[i] = ft_strdup(arg[i]);
-		i++;
-	}
-	ret[i] = NULL;
-	return (ret);
-}
-
-void	print_t_arg(t_arg *arg)
-{
-	if (!arg)
-		return ;
-	printf("hello\n");
-	while (arg)
-	{
-		printf("%s -- ", arg->value);
-		arg = arg->next;
-	}
-	printf("\n");
+	(void)exp;
 }
 
 
@@ -94,6 +62,5 @@ void	print_t_arg(t_arg *arg)
 //TODO : strnchr !!!!!!!!!!!!!!!!!!!!!!!!======================>> DONE
 //TODO : field_split(t_expand *expand)=========================>> DONE
 //TODO : expand_path(t_expand *expand)=========================>>
-//TODO : expand_advance(t_expand *expand)======================>>
 //TODO : remove_quotes_from_all(t_expand *expand)==============>>
 //TODO : init_expand ==========================================>>

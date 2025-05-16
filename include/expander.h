@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:20:12 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:17:39 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ t_arg				*arg_create(char *value);
 void				print_t_arg(t_arg *arg);
 void				exp_skip_whitespaces(t_expand *exp);
 char				**copy_arr(char **arg);
+char				*replace_quotes(char *var);
+void				expand_pathname(t_expand *exp);
 
 #endif
