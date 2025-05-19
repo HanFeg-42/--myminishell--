@@ -1,22 +1,29 @@
 #include "../../include/exec.h"
 
-
 void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
     int *fds;
 
-    if(ast->redirect)
+    if (ast->redirect)
     {
-    fds = open_redirects(ast->redirect);
-    if (!fds)
-        set_exec_error(NULL, 1);
-        
+        fds = open_redirects(ast->redirect);
+        if (!fds)
+        {
+            printf("error opeming file\n");
+            set_exec_error(NULL, 1);
+            dup2(pipeline->saved_stdout, STDOUT_FILENO);
+            dup2(pipeline->saved_stdin, STDIN_FILENO);
+            close(pipeline->saved_stdout);
+            close(pipeline->saved_stdin);
+            return;
+        }
     }
-    exec_cmd(ast, pipeline, i);
-    dup2(pipeline->saved_stdout,STDOUT_FILENO);
-    dup2(pipeline->saved_stdin,STDIN_FILENO);
-    if(ast->redirect)
-        close_redirect(fds,num_of_redirects(ast->redirect));
+    exec_cmd(ast, pipeline, i, fds);
+    if (ast->redirect)
+        close_redirect(fds, num_of_redirects(ast->redirect));
+
+    dup2(pipeline->saved_stdout, STDOUT_FILENO);
+    dup2(pipeline->saved_stdin, STDIN_FILENO);
 }
 int *open_redirects(t_file *redirect)
 {
@@ -32,6 +39,8 @@ int *open_redirects(t_file *redirect)
     while (current)
     {
         open_file(current, fds, i);
+        if (!(*get_error_check()))
+            return (NULL);
         redirect_io(fds[i], current);
         i++;
         current = current->next;
@@ -43,7 +52,7 @@ int num_of_redirects(t_file *lst)
     int len;
     t_file *current;
 
-    if(!lst)
+    if (!lst)
         return (0);
 
     current = lst;
@@ -72,11 +81,11 @@ void open_file(t_file *file, int *fds, int i)
         fds[i] = open(file->filename, O_RDONLY, 0644);
     else if (file->type == OUTPUT_RED)
         fds[i] = open(file->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-    // else      // dont forget heredoc
+    // else if (file->type == HEREDOC) Handle heredoc here
     if (fds[i] < 0)
     {
         close_redirect(fds, i - 1);
-        // error(); // come back here
+        set_exec_error(file->filename, 1);
     }
 }
 void redirect_io(int fd, t_file *file)
@@ -86,5 +95,6 @@ void redirect_io(int fd, t_file *file)
 
     else if ((file->type == INPUT_RED))
         dup2(fd, STDIN_FILENO);
+    close(fd);
     // ELSE heredoc
 }

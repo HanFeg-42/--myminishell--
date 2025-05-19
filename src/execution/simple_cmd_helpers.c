@@ -1,47 +1,55 @@
 #include "../../include/exec.h"
 
-void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
+void exec_cmd(t_ast *ast, t_pipe *pipeline, int i, int *fds)
 {
     char **envp;
     char *pathname;
     int type;
 
     type = type_cmd(ast->args[0]);
+    (void)fds;
 
     if (type == -1)
     {
         pipeline->counter++;
         pipeline->pids[pipeline->counter] = fork();
+        if (pipeline->pids[pipeline->counter] < 0)
+        {
+            set_exec_error("fork", 1);
+            return;
+        }
         if (pipeline->pids[pipeline->counter] == 0)
         {
-            envp = convert_envp();  
-                   // wait till u fork
-            if(!ast->redirect)
-            redirect_to_pipe(pipeline, i); // inside fork;
-            if(!envp)
-                write (2,"envp failed \n",14);
+            if (!is_out_redirect(ast->redirect))
+            {
+                redirect_to_pipe(pipeline, i);
+            }
+            envp = convert_envp();
             pathname = get_path(ast->args[0], envp);
             if (!pathname)
                 handle_cmd_error(ast->args[0]);
             close_all_pipes(pipeline);
+            // if (ast->redirect)
+            //     close_redirect(fds, num_of_redirects(ast->redirect));
             execve(pathname, ast->args, envp);
+            perror("execve");
             exit(126);
         }
     }
     else
         execute_builtins(type, ast->args);
 }
-void	close_all_pipes(t_pipe *pipeline)
+void close_all_pipes(t_pipe *pipeline)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	while (i < pipeline->num_of_cmds - 1)
-	{
-		close(pipeline->pipes[i][0]);
-		close(pipeline->pipes[i][1]);
-		i++;
-	}
+    i = 0;
+    while (i < pipeline->num_of_cmds - 1)
+    {
+        close(pipeline->pipes[i][0]);
+        close(pipeline->pipes[i][1]);
+        i++;
+    }
 }
 int type_cmd(char *cmd)
 {
@@ -63,7 +71,7 @@ char **convert_envp()
     int size;
     t_envp *current;
     char *holder;
-    
+
     old_envp = get_env_head();
     size = envp_size(old_envp);
     envp = malloc(sizeof(char *) * (size + 1));
@@ -74,9 +82,7 @@ char **convert_envp()
     while (current)
     {
         holder = ft_strjoin(current->key, "=");
-        holder = ft_strjoin(holder, "\"");
         holder = ft_strjoin(holder, current->value);
-        holder = ft_strjoin(holder, "\"");
         envp[size] = ft_strdup(holder);
         size++;
         current = current->next;
@@ -87,17 +93,21 @@ char **convert_envp()
 
 void redirect_to_pipe(t_pipe *pipeline, int i)
 {
-    if (pipeline->num_of_cmds != 1)
+    if (pipeline->num_of_cmds == 1)
+        return;
+
+    if (i == 0)
     {
-        if (i == 0)
-            dup2(pipeline->pipes[i][1], STDOUT_FILENO);
-        else if (i == pipeline->num_of_cmds - 1)
-            dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
-        else
-        {
-            dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
-            dup2(pipeline->pipes[i][1], STDOUT_FILENO);
-        }
+        dup2(pipeline->pipes[i][1], STDOUT_FILENO);
+    }
+    else if (i == pipeline->num_of_cmds - 1)
+    {
+        dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
+    }
+    else
+    {
+        dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
+        dup2(pipeline->pipes[i][1], STDOUT_FILENO);
     }
 }
 
@@ -169,7 +179,7 @@ int envp_size(t_envp **old_envp)
 {
     int size = 0;
     t_envp *current;
-    
+
     current = *old_envp;
 
     while (current)
@@ -179,5 +189,3 @@ int envp_size(t_envp **old_envp)
     }
     return (size);
 }
-
-

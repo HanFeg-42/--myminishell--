@@ -1,5 +1,18 @@
 #include "../../include/exec.h"
-
+int is_out_redirect(t_file *file)
+{
+    t_file *current;
+    if (!file)
+        return (0);
+    current = file;
+    while (current)
+    {
+        if (current->type == OUTPUT_RED || current->type == APPEND)
+            return (1);
+        current = current->next;
+    }
+    return (0);
+}
 void execute_command(t_ast *ast, t_pipe *pipeline, int i)
 {
     t_ast *current;

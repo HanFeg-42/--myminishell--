@@ -26,20 +26,16 @@ void ast_advance(t_ast **current)
         *current = (*current)->next_sibling;
 }
 
-
 void execute_compoud(t_ast *ast)
 {
     t_ast *current;
-    if(!ast)
-    return;
 
+    if (!ast)
+        return;
     current = ast->first_child;
     while (current)
     {
         execute_pipeline(current);
-        // if (!(*get_error_check()))
-        //     return;
-        printf("\n exit status %d \n", *get_status_code());
         ast_advance(&current);
         if (current)
         {
@@ -61,20 +57,4 @@ void execute_compoud(t_ast *ast)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////
-

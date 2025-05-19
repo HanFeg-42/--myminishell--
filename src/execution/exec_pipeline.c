@@ -26,7 +26,6 @@ void execute_pipeline(t_ast *ast)
     }
     close_all_pipes(pipeline);
     wait_children(pipeline);
-    // close_pipes(pipeline);
 }
 
 t_pipe *init_pipes(t_ast *ast)
@@ -106,7 +105,6 @@ void wait_children(t_pipe *pipeline)
     int status;
 
     i = 0;
-    // printf("num of commands %d \n", pipeline->counter);
     while (i <= pipeline->counter)
     {
         waitpid(pipeline->pids[i], &status, 0);

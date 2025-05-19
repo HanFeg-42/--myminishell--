@@ -32,8 +32,6 @@ typedef struct s_pipe
 	
 	int saved_stdout;
 	int saved_stdin;
-	int saved_stdout1;
-	int saved_stdin1;
 
 } t_pipe;
 
@@ -88,7 +86,7 @@ int type_cmd(char *cmd);
 
 void handle_cmd_error(char *command);
 
-void exec_cmd(t_ast *ast, t_pipe *pipeline, int i);
+void exec_cmd(t_ast *ast, t_pipe *pipeline, int i, int *fds);
 
 int num_of_redirects(t_file *lst);
 
@@ -110,6 +108,8 @@ void create_pipes(t_pipe *pipeline);
 void ast_advance(t_ast **current);
 int *open_redirects(t_file *redirect);
 void execute_subshell(t_ast *ast, t_pipe *pipeline);
+int is_out_redirect(t_file *file);
+
 
 
 #endif

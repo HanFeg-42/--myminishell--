@@ -11,8 +11,6 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
     get_new_env(get_env_head(),envp);
-	
-	//print_env(get_env_head());
 	token = NULL;
 	while (1)
 	{
