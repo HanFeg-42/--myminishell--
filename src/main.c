@@ -5,8 +5,8 @@ int main(int ac, char **av, char **envp)
 	char *line;
 	t_token *token;
 	t_ast *ast;
-	char **tst;
 
+	signal(SIGINT, SIG_IGN);
 	(void)ac;
 	(void)av;
 	(void)envp;
@@ -20,11 +20,12 @@ int main(int ac, char **av, char **envp)
 			break;
 		token = tokenizer(line);
 		ast = parser(&token);
-		ast_print(ast);
+		(void)ast;
+		// ast_print(ast);
 		*get_parser_check() = true;
 		finish(line);
+		free_all();
 	}
-	free_all();
 	return (0);
 }
 

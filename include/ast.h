@@ -88,4 +88,6 @@ char			*get_env_name(char *s);
 char			*skip_env_var(char *s);
 char			*ft_getenv(char *var);
 
+# include "heredoc.h"
+
 #endif

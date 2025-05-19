@@ -26,7 +26,6 @@ char    *heredoc_expander(char *s)
 
 char    *get_env_name(char *s)
 {
-	char    *ret;
 	char    *var;
 	int i;
 

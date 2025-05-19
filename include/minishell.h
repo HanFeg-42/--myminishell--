@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 # include "gc.h"
 

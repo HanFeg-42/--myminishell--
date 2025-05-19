@@ -18,3 +18,10 @@ int	*get_parser_check(void)
 
 	return (&check);
 }
+
+int	*get_heredoc_check(void)
+{
+	static int check = true;
+
+	return (&check);
+}

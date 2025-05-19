@@ -55,7 +55,7 @@ t_token	*lexer_operator(t_lexer *lexer)
 		if (lexer->line[lexer->i + 1] == '&')
 			return (lexer_advance_with2(lexer,
 					init_token(ft_strdup("&&"), AND)));
-		throw_error("syntax error");
+		throw_error("syntax error near unexpected token '&'");
 	}
 	if (lexer->c == '|')
 	{

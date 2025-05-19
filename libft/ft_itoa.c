@@ -54,7 +54,7 @@ char	*ft_itoa(int nbr)
 	i = 0;
 	n = nbr;
 	d = 1;
-	s = malloc(sizeof(char) * (nbr_size(n, d) + 1));
+	s = ft_malloc(sizeof(char) * (nbr_size(n, d) + 1));
 	if (!s)
 		return (NULL);
 	if (n < 0)

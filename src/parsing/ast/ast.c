@@ -36,7 +36,8 @@ t_ast *ast_pipeline(t_token **tokens)
     {
         command = ast_command(tokens);
         if (!command)
-            return (syntax_error(NULL));
+            return (NULL);
+            // return (syntax_error(NULL));
         ast_add(pipeline, command);
         if (!(*tokens) || (*tokens)->type != PIPE)
             break ;
@@ -107,7 +108,7 @@ void io_redirect(t_token **token, t_ast *simple_cmd)
                 redirect_create((*token)->type, (*token)->next->value));
         }
         else
-            heredoc((*token)->next->value, &simple_cmd->redirect);  //  we have to open the heredoc file before executing
+            heredoc_handler((*token)->next->value, &simple_cmd->redirect);  //  we have to open the heredoc file before executing
         token_advance(token);
         token_advance(token);
     }

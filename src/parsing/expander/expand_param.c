@@ -18,7 +18,7 @@ void	expand_param(t_expand *exp)
 
 	word = exp->args[exp->i];
 	exp->word = ft_strdup("");
-	while (exp->pos < ft_strlen(word) && word[exp->pos])// red lbal l sigle quote & double quote
+	while (exp->pos < (int)ft_strlen(word) && word[exp->pos])// red lbal l sigle quote & double quote
 	{
 		if (word[exp->pos] == 34 && exp->stat == 0)
 			expand_inside_double_quote(exp);// inside double quotes
