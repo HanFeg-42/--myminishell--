@@ -2,50 +2,48 @@
 
 void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
-    int *fds;
+    int type;
 
     if (ast->redirect)
     {
-        fds = open_redirects(ast->redirect);
-        if (!fds)
-        {
-            printf("error opeming file\n");
-            set_exec_error(NULL, 1);
-            dup2(pipeline->saved_stdout, STDOUT_FILENO);
-            dup2(pipeline->saved_stdin, STDIN_FILENO);
-            close(pipeline->saved_stdout);
-            close(pipeline->saved_stdin);
+        open_redirects(ast->redirect);
+        if (!(*get_error_check()))
             return;
-        }
     }
-    exec_cmd(ast, pipeline, i, fds);
-    if (ast->redirect)
-        close_redirect(fds, num_of_redirects(ast->redirect));
-
-    dup2(pipeline->saved_stdout, STDOUT_FILENO);
-    dup2(pipeline->saved_stdin, STDIN_FILENO);
+    type = type_cmd(ast->args[0]);
+    if (type != -1)
+    {
+        execute_builtins(type, ast->args);
+        return;
+    }
+    exec_cmd(ast, pipeline, i);
 }
-int *open_redirects(t_file *redirect)
+void open_redirects(t_file *redirect)
 {
     t_file *current;
     int *fds;
     int i;
+    int num_of_redirect;
 
-    fds = ft_malloc(sizeof(int) * num_of_redirects(redirect));
+    num_of_redirect = num_of_redirects(redirect);
+    fds = ft_malloc(sizeof(int) * num_of_redirect);
     if (!fds)
-        return (NULL);
+    {
+        set_exec_error("Memory allocation failed", 1);
+        return ;
+    }
     i = 0;
     current = redirect;
     while (current)
     {
         open_file(current, fds, i);
         if (!(*get_error_check()))
-            return (NULL);
+            return;
         redirect_io(fds[i], current);
         i++;
         current = current->next;
     }
-    return (fds);
+    close_redirect(fds, num_of_redirect);
 }
 int num_of_redirects(t_file *lst)
 {
@@ -78,23 +76,20 @@ void open_file(t_file *file, int *fds, int i)
     if (file->type == APPEND)
         fds[i] = open(file->filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
     else if (file->type == INPUT_RED)
-        fds[i] = open(file->filename, O_RDONLY, 0644);
+        fds[i] = open(file->filename, O_RDONLY);
     else if (file->type == OUTPUT_RED)
         fds[i] = open(file->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-    // else if (file->type == HEREDOC) Handle heredoc here
     if (fds[i] < 0)
     {
-        close_redirect(fds, i - 1);
+        close_redirect(fds, i);
         set_exec_error(file->filename, 1);
     }
 }
+
 void redirect_io(int fd, t_file *file)
 {
-    if (file->type == APPEND || (file->type == OUTPUT_RED))
+    if (file->type == APPEND || file->type == OUTPUT_RED)
         dup2(fd, STDOUT_FILENO);
-
-    else if ((file->type == INPUT_RED))
+    else if (file->type == INPUT_RED)
         dup2(fd, STDIN_FILENO);
-    close(fd);
-    // ELSE heredoc
 }

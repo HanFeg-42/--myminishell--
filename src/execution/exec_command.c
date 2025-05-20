@@ -13,6 +13,19 @@ int is_out_redirect(t_file *file)
     }
     return (0);
 }
+int	has_input_redirection(t_file *redirect)
+{
+	t_file	*current;
+
+	current = redirect;
+	while (current)
+	{
+		if (current->type == INPUT_RED)
+			return (1);
+		current = current->next;
+	}
+	return (0);
+}
 void execute_command(t_ast *ast, t_pipe *pipeline, int i)
 {
     t_ast *current;

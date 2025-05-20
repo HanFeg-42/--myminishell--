@@ -4,41 +4,54 @@ void exec_cmd(t_ast *ast, t_pipe *pipeline, int i, int *fds)
 {
     char **envp;
     char *pathname;
-    int type;
 
-    type = type_cmd(ast->args[0]);
-    (void)fds;
-
-    if (type == -1)
+    pipeline->counter++;
+    pipeline->pids[pipeline->counter] = fork();
+    if (pipeline->pids[pipeline->counter] < 0)
     {
-        pipeline->counter++;
-        pipeline->pids[pipeline->counter] = fork();
-        if (pipeline->pids[pipeline->counter] < 0)
+        set_exec_error("fork", 1);
+        return;
+    }
+    if (pipeline->pids[pipeline->counter] == 0)
+    {
+        setup_process_pipes(ast, pipeline, i);
+        envp = convert_envp();
+        pathname = get_path(ast->args[0], envp);
+        if (!pathname)
+            handle_cmd_error(ast->args[0]);
+        execve(pathname, ast->args, envp);
+        exit(126);
+    }
+}
+
+void setup_process_pipes(t_ast *ast, t_pipe *pipeline, int i)
+{
+    if (pipeline->num_of_cmds > 1)
+    {
+        if (i == 0)
         {
-            set_exec_error("fork", 1);
-            return;
+            if (!has_output_redirection(ast->redirect))
+                dup2(pipeline->pipes[i][1], STDOUT_FILENO);
         }
-        if (pipeline->pids[pipeline->counter] == 0)
+        else if (i == pipeline->num_of_cmds - 1)
         {
-            if (!is_out_redirect(ast->redirect))
-            {
-                redirect_to_pipe(pipeline, i);
-            }
-            envp = convert_envp();
-            pathname = get_path(ast->args[0], envp);
-            if (!pathname)
-                handle_cmd_error(ast->args[0]);
-            close_all_pipes(pipeline);
-            // if (ast->redirect)
-            //     close_redirect(fds, num_of_redirects(ast->redirect));
-            execve(pathname, ast->args, envp);
-            perror("execve");
-            exit(126);
+            if (!has_input_redirection(ast->redirect))
+                dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
+        }
+
+        else
+        {
+            if (!has_input_redirection(ast->redirect))
+                dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
+            if (!has_output_redirection(ast->redirect))
+                dup2(pipeline->pipes[i][1], STDOUT_FILENO);
         }
     }
-    else
-        execute_builtins(type, ast->args);
+        close(pipeline->saved_stdin);
+        close(pipeline->saved_stdout);
+    close_all_pipes(pipeline);
 }
+
 void close_all_pipes(t_pipe *pipeline)
 {
     int i;
@@ -91,26 +104,6 @@ char **convert_envp()
     return (envp);
 }
 
-void redirect_to_pipe(t_pipe *pipeline, int i)
-{
-    if (pipeline->num_of_cmds == 1)
-        return;
-
-    if (i == 0)
-    {
-        dup2(pipeline->pipes[i][1], STDOUT_FILENO);
-    }
-    else if (i == pipeline->num_of_cmds - 1)
-    {
-        dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
-    }
-    else
-    {
-        dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
-        dup2(pipeline->pipes[i][1], STDOUT_FILENO);
-    }
-}
-
 char *get_path(char *cmd, char **envp)
 {
     char **paths;
@@ -134,6 +127,7 @@ char *get_path(char *cmd, char **envp)
         return (NULL);
     return (find_path(paths, cmd));
 }
+
 char *concat_path(char *path, char *cmd)
 {
     char *fullpath;

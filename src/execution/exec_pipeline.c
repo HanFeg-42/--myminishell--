@@ -1,5 +1,11 @@
 #include "../../include/exec.h"
+void cleanup_pipeline(t_pipe *pipeline)
+{
+    dup2(pipeline->saved_stdout, STDOUT_FILENO);
 
+    dup2(pipeline->saved_stdin, STDIN_FILENO);
+    close(pipeline->saved_stdin);
+}
 void execute_pipeline(t_ast *ast)
 {
     t_pipe *pipeline;
@@ -43,7 +49,7 @@ t_pipe *init_pipes(t_ast *ast)
         if (!pipeline->pipes)
             return (NULL);
         i = 0;
-        while (i < pipeline->num_of_cmds -1)
+        while (i < pipeline->num_of_cmds - 1)
         {
             pipeline->pipes[i] = ft_malloc(sizeof(int) * 2);
             if (!pipeline->pipes[i])
@@ -108,7 +114,7 @@ void wait_children(t_pipe *pipeline)
     while (i <= pipeline->counter)
     {
         waitpid(pipeline->pids[i], &status, 0);
-        if (i == pipeline->counter )
+        if (i == pipeline->counter)
         {
             if (WIFEXITED(status))
                 *get_status_code() = WEXITSTATUS(status);

@@ -14,6 +14,5 @@ void execute_subshell(t_ast *ast, t_pipe *pipeline)
     }
     dup2(pipeline->saved_stdout,STDOUT_FILENO);
     dup2(pipeline->saved_stdin,STDIN_FILENO);
-    if(ast->redirect)
-        close_redirect(fds,num_of_redirects(ast->redirect));
+    
 }
