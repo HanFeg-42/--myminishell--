@@ -6,13 +6,14 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/16 17:17:39 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:13:03 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
+# include <dirent.h>
 # include "ast.h"
 # include "minishell.h"
 

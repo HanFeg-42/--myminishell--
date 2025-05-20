@@ -60,6 +60,8 @@ t_heredoc	*init_heredoc(char *eof)
 void	SIGINT_handler(int sig)
 {
 	(void)sig;
+	free_all();
+	exit(130);
 }
 
 void	heredoc2(t_heredoc *hd)
@@ -67,7 +69,8 @@ void	heredoc2(t_heredoc *hd)
 	// use a struct to keep all these
 	char	*line;
 
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, SIGINT_handler);
+	// signal(SIGINT, SIG_DFL);
 	line = get_next_line(0);
 	while (line && ft_strcmp(line, hd->lim)) // limmmmm == lim
 	{
@@ -82,34 +85,34 @@ void	heredoc2(t_heredoc *hd)
 	exit(EXIT_SUCCESS);
 }
 
-void	heredoc(char *eof, t_file **redirect)
-{
-	// use a struct to keep all these
-	char *lim;
-	int to_expand;
-	int fd;
-	char *line;
-	char	*filename;
+// void	heredoc(char *eof, t_file **redirect)
+// {
+// 	// use a struct to keep all these
+// 	char *lim;
+// 	int to_expand;
+// 	int fd;
+// 	char *line;
+// 	char	*filename;
 
-	filename = generate_name();
-	to_expand = !(is_quoted(eof));
-	lim = remove_quotes(eof);
-	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC , 0777);
-	line = get_next_line(0);
-	while (line && ft_strcmp(line, lim)) // limmmmm == lim
-	{
-		if (to_expand)
-			line = heredoc_expander(line);
-		write(fd, line, ft_strlen(line));
-		free_one(line);
-		line = get_next_line(0);
-	}
-	free_one(line);
-	close(fd);
-	redirect_add(redirect,
-		redirect_create(HERE_DOC, filename));
-	return ;
-}
+// 	filename = generate_name();
+// 	to_expand = !(is_quoted(eof));
+// 	lim = remove_quotes(eof);
+// 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC , 0777);
+// 	line = get_next_line(0);
+// 	while (line && ft_strcmp(line, lim)) // limmmmm == lim
+// 	{
+// 		if (to_expand)
+// 			line = heredoc_expander(line);
+// 		write(fd, line, ft_strlen(line));
+// 		free_one(line);
+// 		line = get_next_line(0);
+// 	}
+// 	free_one(line);
+// 	close(fd);
+// 	redirect_add(redirect,
+// 		redirect_create(HERE_DOC, filename));
+// 	return ;
+// }
 
 int is_quoted(char *eof)
 {
