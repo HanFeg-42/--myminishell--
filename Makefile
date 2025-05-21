@@ -30,7 +30,8 @@ SRC = src/main.c \
 		src/parsing/expander/expand.c \
 		src/parsing/expander/expand_param.c \
 		src/parsing/expander/field_split.c \
-		src/parsing/expander/expand_helper.c
+		src/parsing/expander/expand_helper.c \
+		src/parsing/expander/expand_pathname.c
 
 OBJ = ${SRC:.c=.o}
 
