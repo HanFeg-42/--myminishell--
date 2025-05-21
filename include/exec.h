@@ -84,19 +84,13 @@ int type_cmd(char *cmd);
 
 void handle_cmd_error(char *command);
 
-void exec_cmd(t_ast *ast, t_pipe *pipeline, int i, int *fds);
+void exec_cmd(t_ast *ast, t_pipe *pipeline, int i);
 
 int num_of_redirects(t_file *lst);
 
 void open_file(t_file *file, int *fds, int i);
 
-<<<<<<< Updated upstream
-void open_file(t_file *file, int *fds, int i);
-
-int *open_redirects(t_file *redirect);
-=======
 void open_redirects(t_file *redirect);
->>>>>>> Stashed changes
 int execute_builtins(builtin_type type, char **args);
 int execute_cd(char *args);
 
@@ -108,19 +102,13 @@ int execute_export(char *args);
 void redirect_io(int fd, t_file *file);
 void create_pipes(t_pipe *pipeline);
 void ast_advance(t_ast **current);
-<<<<<<< Updated upstream
-int *open_redirects(t_file *redirect);
 void execute_subshell(t_ast *ast, t_pipe *pipeline);
-int is_out_redirect(t_file *file);
-=======
-void execute_subshell(t_ast *ast, t_pipe *pipeline);
-int has_output_redirection(t_file *redir);
+int has_output_redirection(t_file *redirect);
 void cleanup_pipeline(t_pipe *pipeline);
 void	setup_process_pipes(t_ast *ast, t_pipe *pipeline, int i);
 int num_of_redirects(t_file *lst);
 void close_redirect(int *fds, int num_redirects);
 int	has_input_redirection(t_file *redirect);
->>>>>>> Stashed changes
 
 
 

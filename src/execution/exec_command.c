@@ -1,10 +1,9 @@
 #include "../../include/exec.h"
-int is_out_redirect(t_file *file)
+int	has_output_redirection(t_file *redirect)
 {
     t_file *current;
-    if (!file)
-        return (0);
-    current = file;
+
+    current = redirect;
     while (current)
     {
         if (current->type == OUTPUT_RED || current->type == APPEND)

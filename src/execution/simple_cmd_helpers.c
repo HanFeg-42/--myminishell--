@@ -1,6 +1,6 @@
 #include "../../include/exec.h"
 
-void exec_cmd(t_ast *ast, t_pipe *pipeline, int i, int *fds)
+void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
     char **envp;
     char *pathname;

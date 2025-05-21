@@ -2,9 +2,7 @@
 void cleanup_pipeline(t_pipe *pipeline)
 {
     dup2(pipeline->saved_stdout, STDOUT_FILENO);
-
     dup2(pipeline->saved_stdin, STDIN_FILENO);
-    close(pipeline->saved_stdin);
 }
 void execute_pipeline(t_ast *ast)
 {
@@ -32,6 +30,7 @@ void execute_pipeline(t_ast *ast)
     }
     close_all_pipes(pipeline);
     wait_children(pipeline);
+    cleanup_pipeline(pipeline);
 }
 
 t_pipe *init_pipes(t_ast *ast)
