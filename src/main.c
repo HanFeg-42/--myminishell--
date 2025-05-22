@@ -1,4 +1,12 @@
 #include "../include/minishell.h"
+void handler_SIGINT(int sig)
+{
+    (void)sig;
+    printf("\n");
+    rl_replace_line("", 0); // hadi kima glt ma3ndha tachi dawr flhayat
+    rl_on_new_line();
+    rl_redisplay();
+}
 
 int main(int ac, char **av, char **envp)
 {
@@ -6,7 +14,8 @@ int main(int ac, char **av, char **envp)
 	t_token *token;
 	t_ast *ast;
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handler_SIGINT);
+	// signal(SIGINT, SIG_IGN);
 	(void)ac;
 	(void)av;
 	(void)envp;

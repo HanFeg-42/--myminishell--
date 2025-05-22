@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_pathname.c                                  :+:      :+:    :+:   */
+/*   pathname_v3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/22 01:28:16 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:56:05 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	**expander(char **args)
 	}
 	printf("\n");
 	return(arg);
-	// return NULL;
 }
 
 
@@ -47,14 +46,33 @@ char **remove_quotes_from_all(t_expand *exp)
 {
 	char **ret;
 	int i;
+	int j;
 
-	ret = ft_malloc(sizeof(char *) * (arg_size(exp->arg) + 1));
-	if (!ret)
-		return (NULL);
 	i = 0;
+	ret = NULL;
 	while (exp->arg)
 	{
-		ret[i++] = undo_char_changes(remove_quotes(exp->arg->value));
+		if (exp->arg->file)
+		{
+			j = 0;
+			while (exp->arg->file[j])
+			{
+				ret = ft_realloc(ret, sizeof(char *) * (i + 2));
+				if (!ret)
+					return (NULL);
+				ret[i] = ft_strdup(exp->arg->file[j]);
+				i++; j++;
+				ret[i] = NULL;
+			}
+		}
+		else
+		{
+			ret = ft_realloc(ret, sizeof(char *) * (i + 2));
+			if (!ret)
+				return (NULL);
+			ret[i++] = undo_char_changes(remove_quotes(exp->arg->value));
+			ret[i] = NULL;
+		}
 		exp->arg = exp->arg->next;
 	}
 	return (ret);
@@ -104,6 +122,7 @@ t_expand	*init_expand(char **args)
 	exp->stat = 0;
 	exp->pos = 0;
 	exp->dir_files = get_files();
+
 	return (exp);
 }
 
@@ -115,68 +134,39 @@ void	expand_pathname(t_expand *exp)
 	files = exp->dir_files;
 	replace_unquoted_asterisk(exp);
 	arg = exp->arg;
+    int i;
 	while (arg)
 	{
-		if (ft_strchr(arg->value, -3))
-			arg = match_star(exp, files, arg);
-		printf("%s -- %c -- %d--\n", arg->value, arg->value[0], arg->value[0]);
+        while (files[i])
+        {
+            i = 0;
+            if (ft_strchr(arg->value, -3))
+            {
+                ret
+                ret = wdmatch(arg->value, files);
+            }
+        }
+		// printf("%s -- %c -- %d--\n", arg->value, arg->value[0], arg->value[0]);
 		arg = arg->next;
 	}
 }
-// *'' $var'' "$USER" '$PWD'
-t_arg	*match_star(t_expand *exp, char **files, t_arg *arg)
-{
-	char *w;
-	char *tmp;
-	int i;
-	int j;
-	int a;
-	char *star_pos;
-	char *to_find;
-	char *file_pos;
-	int to_find_size;
 
-	arg->file = NULL;
-	w = arg->value;
-	if (w[0] == -3 && !w[1])
-	{
-		arg->file = remove_hidden_files(files);
-		return ;
-	}
-	if (w[0] == -3)
-		files = remove_hidden_files(files);
-	i = 0;
-	while (files[i])
-	{
-		tmp = files[i];
-		j = 0;
-		while (w[j])
-		{
-			if (w[j] != -3)
-			{
-				star_pos = ft_strchr(w + j, -3);
-				if (!star_pos)
-					star_pos = ft_strchr(w + j, '\0');
-				to_find = ft_substr(w + j, 0, star_pos - w - j);
-				to_find_size = ft_strlen(to_find);
-				j += to_find_size;
-				file_pos = ft_strnstr(tmp, to_find, to_find_size);//khdmi b strstr
-				if (!file_pos)
-					break ;
-				tmp = file_pos + to_find_size;
-			}
-			while (w[j] == -3)
-				j++;
-			if (!(*tmp) && *(w + j))
-				break;
-			if ((!(*tmp) && !(*(w + j))) || (!(*(w + j)) && *tmp))
-			{
-				// arg = arg_addmid(&exp->arg, arg, arg_create(files[i]));
-			}
-		}
-		i++;
-	}
-	return (arg);
+char *wdmatch(char *wd, char *file)
+{
+    const char *s1 = wd;
+    const char *s2 = file;
+    int len = 0, i = 0;
+
+    while (s1[len])
+        len++;
+    while (i < len && *s2)
+    {
+        if (s1[i] == *s2++)
+            i++;
+    }
+    if (i == len)
+        return (file);
+    return (NULL);
 }
 
 char **remove_hidden_files(char **files)
@@ -210,27 +200,6 @@ char **remove_hidden_files(char **files)
 	}
 	ret[j] = NULL;
 	return (ret);
-}
-
-t_arg	*arg_addmid(t_arg **head, t_arg *mid, t_arg *new)
-{
-	if (!head || !mid || !new)
-		return (mid);
-	if (!(*head))
-	{
-		*head = new;
-		return (mid);
-	}
-	if (!ft_strchr(mid->value, -3))
-	{
-		new->next = mid->next;
-		if (mid->prev)
-			mid->prev = new;/// hna lmachakiiiil
-	}
-	new->next = mid->next;
-	if (mid->next)
-		mid->next = new;
-	return (mid);
 }
 
 void replace_unquoted_asterisk(t_expand *exp)
@@ -288,13 +257,3 @@ char **get_files(void)
 	closedir(dir);
 	return (ret);
 }
-
-//TODO : expand_param(t_expand *expand)========================>> DONE
-//TODO : expand_inside_double_quote(exp)=======================>> DONE
-//TODO : copy_characters_until_quote(exp)======================>> DONE
-//TODO : expand_unquoted(exp)==================================>> DONE
-//TODO : strnchr !!!!!!!!!!!!!!!!!!!!!!!!======================>> DONE
-//TODO : field_split(t_expand *expand)=========================>> DONE
-//TODO : expand_path(t_expand *expand)=========================>>
-//TODO : remove_quotes_from_all(t_expand *expand)==============>>
-//TODO : init_expand ==========================================>>

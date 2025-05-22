@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:20:19 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:31:19 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@
 # include "./ast.h"
 // # include "exec.h"
 # include "expander.h"
+void	handler_SIGINT(int sig);
 #endif
