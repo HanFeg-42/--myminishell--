@@ -78,18 +78,18 @@ char **remove_quotes_from_all(t_expand *exp)
 	return (ret);
 }
 
-int	arg_size(t_arg *arg)
-{
-	int count;
+// int	arg_size(t_arg *arg)
+// {
+// 	int count;
 
-	count = 0;
-	while (arg)
-	{
-		count++;
-		arg = arg->next;
-	}
-	return (count);
-}
+// 	count = 0;
+// 	while (arg)
+// 	{
+// 		count++;
+// 		arg = arg->next;
+// 	}
+// 	return (count);
+// }
 
 char *undo_char_changes(char *str)
 {
@@ -130,25 +130,73 @@ void	expand_pathname(t_expand *exp)
 {
 	char **files;
 	t_arg *arg;
+	char *wd;
 
 	files = exp->dir_files;
 	replace_unquoted_asterisk(exp);
 	arg = exp->arg;
-    int i;
+    int i, j;
 	while (arg)
 	{
-        while (files[i])
+		i = 0;
+		j = 0;
+		if (ft_strchr(arg->value, -3))
         {
-            i = 0;
-            if (ft_strchr(arg->value, -3))
+        	while (files[i])
             {
-                ret
-                ret = wdmatch(arg->value, files);
-            }
-        }
+				wd = wdmatch(get_pattern(arg->value), files[i]);
+				printf("wd = %s", wd);
+				if (wd)
+				{
+					printf("%s==", wd);
+					arg->file = ft_realloc(arg->file, sizeof(char *) * (j + 2));
+					if (!arg->file)
+						return ;
+					arg->file[j++] = ft_strdup(wd);
+					printf("%s==", arg->file[j - 1]);
+					arg->file[j] = NULL;
+				}
+				else
+				
+				i++;
+			}
+		}
 		// printf("%s -- %c -- %d--\n", arg->value, arg->value[0], arg->value[0]);
 		arg = arg->next;
 	}
+}
+
+char *get_pattern(char *str)
+{
+	char *ret;
+	int i;
+	int a;
+
+	printf("%s==", str);
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	a = 0;
+	while (str[i])
+	{
+		if (str[i] != -3)
+			a++;
+		i++;
+	}
+	ret = NULL;
+	ret = ft_malloc(sizeof(char) * (a + 1));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (*str)
+	{
+		if (*str != -3)
+			ret[i++] = *str;
+		str++;
+	}
+	ret[i] = '\0';
+	return (ret);
 }
 
 char *wdmatch(char *wd, char *file)
@@ -157,6 +205,8 @@ char *wdmatch(char *wd, char *file)
     const char *s2 = file;
     int len = 0, i = 0;
 
+	if (!s1 || !(*s1))
+		return (file);
     while (s1[len])
         len++;
     while (i < len && *s2)

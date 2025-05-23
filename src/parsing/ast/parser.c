@@ -50,7 +50,7 @@ void print_args(char **args)
         i++;
     }
     printf("\n");
-    expander(args);
+    // expander(args);
 }
 
 void print_redirect(t_file *redirect)

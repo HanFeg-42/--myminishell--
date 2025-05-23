@@ -40,7 +40,7 @@ int main(int ac, char **av, char **envp)
 
 void finish(char *line)
 {
-	printf("\n");
+	// printf("\n");
 	add_history(line);
 	free(line);
 }

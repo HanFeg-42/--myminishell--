@@ -100,7 +100,7 @@ void *syntax_error(char *err)
     {
         ft_putstr_fd("syntax error near unexpected token '", 2);
         ft_putstr_fd(err, 2);
-        ft_putstr_fd("'", 2);
+        ft_putstr_fd("'\n", 2);
     }
     return (NULL);
 }
