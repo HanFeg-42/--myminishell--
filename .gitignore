@@ -7,4 +7,4 @@ minishell
 # ma3rft wash aydoz
 .vscode
 # ghi zaydin
-info todo readline.supp
+info todo *.supp filename

@@ -1,36 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   expand_helper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 00:38:51 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/13 20:25:20 by hfegrach         ###   ########.fr       */
+/*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/05/15 16:51:21 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../../include/expander.h"
 
-char	*ft_strdup(const char *str)
+char	**copy_arr(char **arg)
 {
-	char	*ret;
+	char	**ret;
 	int		i;
 
-	ret = ft_malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (!ret)
+	if (!arg)
 		return (NULL);
 	i = 0;
-	while (str[i])
+	while (arg[i])
+		i++;
+	ret = ft_malloc(sizeof(char *) * (i + 1));
+	if (!arg)
+		return (NULL);
+	i = 0;
+	while (arg[i])
 	{
-		ret[i] = str[i];
+		ret[i] = ft_strdup(arg[i]);
 		i++;
 	}
-	ret[i] = '\0';
+	ret[i] = NULL;
 	return (ret);
 }
 
-char	**arr_of_strdup(char **arr)
+void	print_t_arg(t_arg *arg)
 {
-	return (arr);
+	if (!arg)
+		return ;
+	printf("hello\n");
+	while (arg)
+	{
+		printf("%s -- ", arg->value);
+		arg = arg->next;
+	}
+	printf("\n");
 }

@@ -4,12 +4,6 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
     int type;
 
-    // if (ast->redirect)
-    // {
-    //     open_redirects(ast->redirect);
-    //     if (!(*get_error_check()))
-    //         return;
-    // }
     type = type_cmd(ast->args[0]);
     if (type != -1)
     {
@@ -95,3 +89,11 @@ void redirect_io(int fd, t_file *file)
     else if (file->type == INPUT_RED)
         dup2(fd, STDIN_FILENO);
 }
+
+
+// if (ast->redirect)
+    // {
+    //     open_redirects(ast->redirect);
+    //     if (!(*get_error_check()))
+    //         return;
+    // }

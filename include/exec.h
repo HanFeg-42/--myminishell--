@@ -2,6 +2,7 @@
 #define EXEC_H
 
 #include "ast.h"
+#include "lexer.h"
 #include <sys/wait.h>
 // #include "minishell.h"
 

@@ -9,10 +9,17 @@ t_ast *parser(t_token **token)
     ast = ast_compound(token);
     if (!ast)
     {
+        if (!(*get_heredoc_check()))
+            return(NULL);
         if ((*token))
             syntax_error((*token)->value);
         else
-            syntax_error("'newline'");
+            syntax_error("newline"); // zoidiha as a token f tokenization
+    }
+    else if (*(token))
+    {
+        syntax_error((*token)->prev->value);
+        return (NULL);
     }
     return (ast);
 }
@@ -43,6 +50,7 @@ void print_args(char **args)
         i++;
     }
     printf("\n");
+    // expander(args);
 }
 
 void print_redirect(t_file *redirect)

@@ -1,10 +1,22 @@
-#include "gc.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_all.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 20:18:52 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/05/15 11:30:13 by hfegrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void free_all(void)
+#include "../include/gc.h"
+
+void	free_all(void)
 {
-	t_gc **head;
-	t_gc *curr;
-	t_gc *next;
+	t_gc	**head;
+	t_gc	*curr;
+	t_gc	*next;
 
 	head = get_gc_head();
 	if (!head || !(*head))
