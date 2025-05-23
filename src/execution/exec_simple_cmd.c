@@ -4,12 +4,12 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
     int type;
 
-    if (ast->redirect)
-    {
-        open_redirects(ast->redirect);
-        if (!(*get_error_check()))
-            return;
-    }
+    // if (ast->redirect)
+    // {
+    //     open_redirects(ast->redirect);
+    //     if (!(*get_error_check()))
+    //         return;
+    // }
     type = type_cmd(ast->args[0]);
     if (type != -1)
     {
@@ -17,8 +17,9 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
         return;
     }
     exec_cmd(ast, pipeline, i);
+    cleanup_pipeline(pipeline);
 }
-void open_redirects(t_file *redirect)
+int *open_redirects(t_file *redirect)
 {
     t_file *current;
     int *fds;
@@ -30,7 +31,7 @@ void open_redirects(t_file *redirect)
     if (!fds)
     {
         set_exec_error("Memory allocation failed", 1);
-        return ;
+        return(NULL) ;
     }
     i = 0;
     current = redirect;
@@ -38,12 +39,13 @@ void open_redirects(t_file *redirect)
     {
         open_file(current, fds, i);
         if (!(*get_error_check()))
-            return;
+            return(NULL);
         redirect_io(fds[i], current);
         i++;
         current = current->next;
     }
-    close_redirect(fds, num_of_redirect);
+    return (fds);
+    // close_redirect(fds, num_of_redirect);
 }
 int num_of_redirects(t_file *lst)
 {
@@ -81,7 +83,7 @@ void open_file(t_file *file, int *fds, int i)
         fds[i] = open(file->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
     if (fds[i] < 0)
     {
-        close_redirect(fds, i);
+        close_redirect(fds, i - 1);
         set_exec_error(file->filename, 1);
     }
 }

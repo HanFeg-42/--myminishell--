@@ -90,7 +90,7 @@ int num_of_redirects(t_file *lst);
 
 void open_file(t_file *file, int *fds, int i);
 
-void open_redirects(t_file *redirect);
+int *open_redirects(t_file *redirect);
 int execute_builtins(builtin_type type, char **args);
 int execute_cd(char *args);
 

@@ -21,6 +21,7 @@ int main(int ac, char **av, char **envp)
 		ast = parser(&token);
 		// ast_print(ast);
 		*get_parser_check() = true;
+		*get_error_check() = true;
 		execute_compoud(ast);
 		finish(line);
 	}
@@ -30,7 +31,7 @@ int main(int ac, char **av, char **envp)
 
 void finish(char *line)
 {
-	printf("\n");
+	// printf("\n");
 	add_history(line);
 	free(line);
 }

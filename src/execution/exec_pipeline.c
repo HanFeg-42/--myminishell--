@@ -30,7 +30,7 @@ void execute_pipeline(t_ast *ast)
     }
     close_all_pipes(pipeline);
     wait_children(pipeline);
-    cleanup_pipeline(pipeline);
+    // cleanup_pipeline(pipeline);
 }
 
 t_pipe *init_pipes(t_ast *ast)
@@ -60,8 +60,8 @@ t_pipe *init_pipes(t_ast *ast)
     if (!pipeline->pids)
         return (NULL);
     pipeline->counter = -1;
-    pipeline->saved_stdin = dup(STDIN_FILENO);
-    pipeline->saved_stdout = dup(STDOUT_FILENO);
+    // pipeline->saved_stdin = dup(STDIN_FILENO);
+    // pipeline->saved_stdout = dup(STDOUT_FILENO);
     return (pipeline);
 }
 

@@ -12,7 +12,5 @@ void execute_subshell(t_ast *ast, t_pipe *pipeline)
     {
         execute_compoud(ast->first_child);
     }
-    dup2(pipeline->saved_stdout,STDOUT_FILENO);
-    dup2(pipeline->saved_stdin,STDIN_FILENO);
     
 }
