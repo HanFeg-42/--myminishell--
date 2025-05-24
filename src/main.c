@@ -33,8 +33,10 @@ int main(int ac, char **av, char **envp)
 		*get_error_check() = true;
 		execute_compoud(ast);
 		finish(line);
-		// free_all();
+		free_all();
+		break;
 	}
+	free_all_env();
 	return (0);
 }
 

@@ -4,12 +4,12 @@ t_envp *env_create(char *key, char *value)
 {
 	t_envp *new;
 
-	new = ft_malloc(sizeof(t_envp));
+	new = malloc(sizeof(t_envp));
 	if (!new)
 		return (NULL);
-	new->key = ft_strdup(key);
+	new->key = ft_str_dup(key);
 	if (value)
-		new->value = ft_strdup(value);
+		new->value = ft_str_dup(value);
 	new->next = NULL;
 	return (new);
 }
@@ -66,10 +66,12 @@ void get_new_env(t_envp **new_envp, char **old_env)
 	while (old_env[i])
 	{
 		equal_pos = ft_strchr(old_env[i], '=');
-		key = ft_substr(old_env[i], 0, equal_pos - old_env[i]);
-		value = ft_strdup(equal_pos + 1);
+		key = ft_sub_str(old_env[i], 0, equal_pos - old_env[i]);
+		value = ft_str_dup(equal_pos + 1);
 		env_add(new_envp, env_create(key, value));
 		i++;
+		free(key);
+		free(value);
 	}
 		return ;
 }
@@ -91,4 +93,24 @@ t_envp **get_env_head()
 	static t_envp *head;
 
 	return (&head);
+}
+void free_all_env()
+{
+	t_envp **envp;
+	t_envp *current;
+
+	envp=get_env_head();
+	current = *envp;
+
+	while(*envp)
+	{
+		if((*envp)->key)
+			free((*envp)->key);
+		if((*envp)->value)
+			free((*envp)->value);
+		current = *envp;
+		*envp = (*envp)->next;
+		free(current);
+	}
+
 }

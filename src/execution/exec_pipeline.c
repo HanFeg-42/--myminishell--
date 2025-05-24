@@ -55,7 +55,7 @@ t_pipe *init_pipes(t_ast *ast)
             i++;
         }
     }
-    pipeline->pids = malloc(sizeof(int) * pipeline->num_of_cmds);
+    pipeline->pids = ft_malloc(sizeof(int) * pipeline->num_of_cmds);
     if (!pipeline->pids)
         return (NULL);
     pipeline->counter = -1;

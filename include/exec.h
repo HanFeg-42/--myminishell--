@@ -70,7 +70,7 @@ void close_pipes(t_pipe *pipeline);
 void wait_children(t_pipe *pipeline);
 void	close_all_pipes(t_pipe *pipeline);
 
-
+void free_all_env();
 int envp_size(t_envp **old_envp);
 
 char **convert_envp();

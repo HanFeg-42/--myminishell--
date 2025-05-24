@@ -97,7 +97,7 @@ char **convert_envp()
 
     old_envp = get_env_head();
     size = envp_size(old_envp);
-    envp = malloc(sizeof(char *) * (size + 1));
+    envp = ft_malloc(sizeof(char *) * (size + 1));
     if (!envp)
         return (NULL);
     current = *old_envp;
