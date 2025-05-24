@@ -4,7 +4,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror# -fsanitize=address -g3
+CFLAGS = #-Wall -Wextra -Werror# -fsanitize=address -g3
 
 RLFLAG = -lreadline
 
@@ -34,8 +34,13 @@ SRC = src/main.c \
 		src/execution/exec_pipeline.c \
 		src/execution/simple_cmd_helpers.c \
 		src/execution/builtins.c \
-		src/execution/exec_subshell.c
-
+		src/execution/exec_subshell.c \
+		src/parsing/expander/expand.c \
+		src/parsing/expander/expand_param.c \
+		src/parsing/expander/field_split.c \
+		src/parsing/expander/expand_helper.c
+		
+# src/parsing/expander/pathname_v3.c
 
 OBJ = ${SRC:.c=.o}
 

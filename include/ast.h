@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:03 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:27:44 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:13:00 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ char			*skip_env_var(char *s);
 char			*ft_getenv(char *var);
 
 # include "heredoc.h"
+
 
 #endif

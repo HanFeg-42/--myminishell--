@@ -11,7 +11,6 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
         return;
     }
     exec_cmd(ast, pipeline, i);
-    cleanup_pipeline(pipeline);
 }
 int *open_redirects(t_file *redirect)
 {

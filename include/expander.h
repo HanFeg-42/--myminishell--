@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/20 11:13:03 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/22 01:46:39 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 typedef struct s_arg
 {
 	char			*value;
+	char			**file;
 	struct s_arg	*next;
+	struct s_arg	*prev;
 }					t_arg;
 
 typedef struct s_expand
@@ -31,6 +33,7 @@ typedef struct s_expand
 	int				i;
 	int				stat;
 	int				pos;
+	char 			**dir_files;
 }					t_expand;
 
 char				**expander(char **args);
@@ -51,5 +54,14 @@ void				exp_skip_whitespaces(t_expand *exp);
 char				**copy_arr(char **arg);
 char				*replace_quotes(char *var);
 void				expand_pathname(t_expand *exp);
-
+void				match_star(t_expand *exp, char **files, t_arg *arg);
+char				**remove_hidden_files(char **files);
+t_arg				*arg_addmid(t_arg **head, t_arg *mid, t_arg *new);
+void				replace_unquoted_asterisk(t_expand *exp);
+char				**get_files(void);
+char				**remove_quotes_from_all(t_expand *exp);
+char				*undo_char_changes(char *str);
+int					arg_size(t_arg *arg);
+char *get_pattern(char *str);
+char *wdmatch(char *wd, char *file);
 #endif

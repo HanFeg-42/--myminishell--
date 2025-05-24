@@ -30,7 +30,6 @@ void execute_pipeline(t_ast *ast)
     }
     close_all_pipes(pipeline);
     wait_children(pipeline);
-    // cleanup_pipeline(pipeline);
 }
 
 t_pipe *init_pipes(t_ast *ast)

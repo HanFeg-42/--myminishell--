@@ -6,7 +6,7 @@
 /*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/23 14:57:50 by ghita            ###   ########.fr       */
+/*   Updated: 2025/05/23 15:40:41 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # endif
 
 # include "lexer.h"
-# include "./ast.h"
+// # include "./ast.h"
 # include "expander.h"
+// #include "exec.h"
+void	handler_SIGINT(int sig);
 #endif

@@ -45,7 +45,7 @@ void execute_compoud(t_ast *ast)
                 if (!(*get_status_code()))
                     ast_advance(&current);
             }
-            if (current->type == AST_AND)
+            if (current && current->type == AST_AND)
             {
                 ast_advance(&current);
                 if (*get_status_code())

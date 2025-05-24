@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:25 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/20 15:33:27 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:42:02 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	arg_add(t_arg **head, t_arg *new)
 	while (last->next)
 		last = last->next;
 	last->next = new;
+	new->prev = last;
 }
 
 t_arg	*arg_create(char *value)
@@ -99,6 +100,7 @@ t_arg	*arg_create(char *value)
 	if (!new)
 		return (NULL);
 	new->value = value;
+	new->file = NULL;
 	new->next = NULL;
 	return (new);
 }
