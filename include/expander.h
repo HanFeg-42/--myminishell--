@@ -62,6 +62,7 @@ char				**get_files(void);
 char				**remove_quotes_from_all(t_expand *exp);
 char				*undo_char_changes(char *str);
 int					arg_size(t_arg *arg);
-char *get_pattern(char *str);
-char *wdmatch(char *wd, char *file);
+char				*get_pattern(char *str);
+char				*wdmatch(char *wd, char *file);
+int					is_match(char *s, char *p);
 #endif

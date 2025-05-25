@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathname_v3.c                                      :+:      :+:    :+:   */
+/*   expand_asterisk.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/22 11:56:05 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:39:26 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**expander(char **args)
 	char **arg;
 
 	if (!args)
-		printf("arg list rah khawya asmitk\n");
+		return (NULL);
 	expand = init_expand(args);
 	while (expand && expand->args && expand->args[expand->i]) // example : { echo; $hi; NULL }
 	{
@@ -30,7 +30,7 @@ char	**expander(char **args)
 	print_t_arg(expand->arg);
 	arg = remove_quotes_from_all(expand);
 	if (!arg)
-		printf("diri chi 7araka!\n");
+		return (NULL);
 	int j = 0;
 	while (arg[j])
 	{
@@ -78,19 +78,6 @@ char **remove_quotes_from_all(t_expand *exp)
 	return (ret);
 }
 
-// int	arg_size(t_arg *arg)
-// {
-// 	int count;
-
-// 	count = 0;
-// 	while (arg)
-// 	{
-// 		count++;
-// 		arg = arg->next;
-// 	}
-// 	return (count);
-// }
-
 char *undo_char_changes(char *str)
 {
 	int i;
@@ -129,103 +116,64 @@ t_expand	*init_expand(char **args)
 void	expand_pathname(t_expand *exp)
 {
 	char **files;
-	char *pattern;
 	t_arg *arg;
-	char *wd;
+	int i;
+	int size;
 
 	replace_unquoted_asterisk(exp);
 	arg = exp->arg;
-    int i, j;
 	while (arg)
 	{
-		i = 0;
-		j = 0;
 		if (ft_strchr(arg->value, -3))
-        {
-			if (*arg->value == -3)
+		{
+			if (arg->value[0] == -3)
 				files = remove_hidden_files(exp->dir_files);
 			else
 				files = exp->dir_files;
-			pattern = get_pattern(arg->value);
-        	while (files[i])
-            {
-				if (*pattern)
+			i = 0;
+			size = 0;
+			while (files[i])
+			{
+				if (is_match(files[i], remove_quotes(arg->value)))
 				{
-					wd = wdmatch(pattern, files[i]);
-					if (wd)
-					{
-						arg->file = ft_realloc(arg->file, sizeof(char *) * (j + 2));
-						if (!arg->file)
-							return ;
-						arg->file[j++] = ft_strdup(wd);
-						arg->file[j] = NULL;
-					}
-				}
-				else if (!(*pattern))
-				{
-					arg->file = ft_realloc(arg->file, sizeof(char *) * (j + 2));
+					arg->file = ft_realloc(arg->file, sizeof(char *) * (size + 2));
 					if (!arg->file)
 						return ;
-					arg->file[j++] = ft_strdup(files[i]);
-					arg->file[j] = NULL;
+					arg->file[size++] = ft_strdup(files[i]);
+					arg->file[size] = NULL;
 				}
 				i++;
-			}
+			}	
 		}
-		// printf("%s -- %c -- %d--\n", arg->value, arg->value[0], arg->value[0]);
 		arg = arg->next;
 	}
 }
 
-char *get_pattern(char *str)
+int is_match(char *s, char *p)
 {
-	char *ret;
-	int i;
-	int a;
+    char *asterisk = NULL;
+    char *track_pos = NULL;
 
-	if (!str)
-		return (NULL);
-	i = 0;
-	a = 0;
-	while (str[i])
-	{
-		if (str[i] != -3)
-			a++;
-		i++;
-	}
-	ret = NULL;
-	ret = ft_malloc(sizeof(char) * (a + 1));
-	if (!ret)
-		return (NULL);
-	i = 0;
-	while (*str)
-	{
-		if (*str != -3)
-			ret[i++] = *str;
-		str++;
-	}
-	ret[i] = '\0';
-	return (ret);
-}
-
-char *wdmatch(char *wd, char *file)
-{
-    const char *s1 = wd;
-    const char *s2 = file;
-    int len = 0, i = 0;
-
-	if (!s1 || !(*s1))
-		return (file);
-    while (s1[len])
-        len++;
-    while (i < len && *s2)
+    while (*s)
     {
-        if (s1[i] == *s2++)
-            i++;
+        if (*p == *s || *p == -3)
+        {
+            if (*p == -3)
+                (asterisk = p++, track_pos = s);
+            else
+                (p++, s++);
+        }
+        else if (asterisk)
+        {
+            p = asterisk + 1;
+            s = ++track_pos;
+        }
+        else
+            return (0);
     }
-    if (i == len)
-        return (file);
-    return (NULL);
+    while (*p == -3)
+        p++;
+    return (*p == '\0');
 }
 
 char **remove_hidden_files(char **files)
@@ -237,6 +185,7 @@ char **remove_hidden_files(char **files)
 
 	a = 0;
 	i = 0;
+	ret = NULL;
 	while (files[i])
 	{
 		if (files[i][0] != '.')
