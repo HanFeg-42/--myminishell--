@@ -10,41 +10,37 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "../../../include/expander.h"
+#include "../../../include/expander.h"
 
-// char	**expander(char **args)
-// {
-// 	t_expand	*expand;
-// 	// char **arg;
+char	**expander(char **args)
+{
+	t_expand	*expand;
 
-// 	if (!args)
-// 		printf("arg list rah khawya asmitk\n");
-// 	expand = init_expand(args);
-// 	while (expand && expand->args && expand->args[expand->i]) // example : { echo; $hi; NULL }
-// 	{
-// 		expand_param(expand); //looks for $ dquoted or unquoted then replace it
-// 		field_split(expand); // split nodes value by IFS (tab or space) outside quotes
-// 		// check wash tal hna mzyan
-// //		expand_pathname(expand); // look for * then replace it with correspond files + split it in parallel and add to (include field split)
-// 		expand->i++;
-// 	}
-// 	print_t_arg(expand->arg);
-// 	// arg = remove_quotes_from_all(expand);
-// 	// return(arg);
-// 	return NULL;
-// }
+	if (!args)
+		return (NULL);
+	expand = init_expand(args);
+	while (expand && expand->args && expand->args[expand->i])
+	{
+		expand_param(expand);
+		field_split(expand);
+		expand->i++;
+	}
+	expand_pathname(expand);
+	return (remove_quotes_from_all(expand));
+}
 
-// t_expand	*init_expand(char **args)
-// {
-// 	t_expand	*exp;
+t_expand	*init_expand(char **args)
+{
+	t_expand	*exp;
 
-// 	exp = ft_malloc(sizeof(t_expand));
-// 	if (!exp)
-// 		return (NULL);
-// 	exp->arg = NULL;
-// 	exp->args = copy_arr(args);// alloci a zmer
-// 	exp->i = 0;
-// 	exp->stat = 0;
-// 	exp->pos = 0;
-// 	return (exp);
-// }
+	exp = ft_malloc(sizeof(t_expand));
+	if (!exp)
+		return (NULL);
+	exp->arg = NULL;
+	exp->args = copy_arr(args);// alloci a zmer
+	exp->i = 0;
+	exp->stat = 0;
+	exp->pos = 0;
+	exp->dir_files = get_files();
+	return (exp);
+}

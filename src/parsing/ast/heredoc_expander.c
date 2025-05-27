@@ -37,7 +37,7 @@ char    *get_env_name(char *s)
 	========================================
 	zidi ila kan s[i] = '$' <-- priority
 	*/
-	while (s[i] && ft_isalpha(s[1]) && (s[i] == '_' || ft_isalnum(s[i])))
+	while (s[i] && (ft_isalpha(s[1]) || s[1] == '_') && (s[i] == '_' || ft_isalnum(s[i])))
 		i++;
 	if (i == 1)
 		return (ft_strdup("$"));

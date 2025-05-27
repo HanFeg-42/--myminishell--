@@ -62,17 +62,17 @@ void *ft_realloc(void *ptr, size_t size)
     new_ptr = ft_malloc(size);
     if (!new_ptr)
         return (NULL);
-    copy_ptr(ptr, new_ptr);
+    copy_ptr(ptr, new_ptr, size);
     free_old_ptr(ptr);
     return (new_ptr);
 }
 
-void    copy_ptr(char **ptr, char **new_ptr)
+void    copy_ptr(char **ptr, char **new_ptr, int size)
 {
     int i;
 
     i = 0;
-    while (ptr[i])
+    while (ptr[i] && i < size - 1)
     {
         new_ptr[i] = ft_strdup(ptr[i]);
         i++;

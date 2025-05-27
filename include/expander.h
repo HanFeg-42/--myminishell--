@@ -39,9 +39,12 @@ typedef struct s_expand
 char				**expander(char **args);
 t_expand			*init_expand(char **args);
 void				expand_param(t_expand *exp);
-void				copy_characters_until_quote(t_expand *exp);
-void				expand_inside_double_quote(t_expand *exp);
-void				expand_unquoted(t_expand *exp);
+// void				copy_characters_until_quote(t_expand *exp);
+// void				expand_inside_double_quote(t_expand *exp);
+// void				expand_unquoted(t_expand *exp);
+void				copy_characters_until_quote(t_expand *exp, char *file);
+void				expand_inside_double_quote(t_expand *exp, char *file);
+void				expand_unquoted(t_expand *exp, char *file);
 char				*first_quote_occ(char *str);
 void				field_split(t_expand *exp);
 t_arg				*get_next_field(t_expand *exp);
@@ -65,4 +68,10 @@ int					arg_size(t_arg *arg);
 char				*get_pattern(char *str);
 char				*wdmatch(char *wd, char *file);
 int					is_match(char *s, char *p);
+// void expand(t_ast *ast);
+// void expand_file(t_file *red);
+void paramter_expansion(char *file, t_expand *exp);
+int field_splitting(t_expand *exp);
+int pathname_expansion(t_expand *exp);
+void ambiguous_redirect(char *err);
 #endif

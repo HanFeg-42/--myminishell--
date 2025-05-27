@@ -23,7 +23,7 @@ char	**copy_arr(char **arg)
 	while (arg[i])
 		i++;
 	ret = ft_malloc(sizeof(char *) * (i + 1));
-	if (!arg)
+	if (!ret)
 		return (NULL);
 	i = 0;
 	while (arg[i])

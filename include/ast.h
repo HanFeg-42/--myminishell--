@@ -68,7 +68,7 @@ void			print_args(char **args);
 void			print_redirect(t_file *redirect);
 int				is_empty_cmd(t_ast *simple_cmd);
 void			*ft_realloc(void *ptr, size_t size);
-void			copy_ptr(char **ptr, char **new_ptr);
+void			copy_ptr(char **ptr, char **new_ptr, int size);
 void			free_old_ptr(char **ptr);
 
 //get_next_line
@@ -87,6 +87,10 @@ char			*heredoc_expander(char *s);
 char			*get_env_name(char *s);
 char			*skip_env_var(char *s);
 char			*ft_getenv(char *var);
+
+/**************************************/
+void expand(t_ast *ast);
+void expand_file(t_file *red);
 
 # include "heredoc.h"
 

@@ -27,7 +27,7 @@ void ast_add(t_ast *head, t_ast *child)
         head->first_child = child;
         return ;
     }
-    last = ast_last(head);
+    last = ast_last(head->first_child);
     last->next_sibling = child;
 }
 

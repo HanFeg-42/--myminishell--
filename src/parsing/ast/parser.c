@@ -24,15 +24,16 @@ t_ast *parser(t_token **token)
     return (ast);
 }
 
-void ast_print(t_ast *ast)
+void   ast_print(t_ast *ast)
 {
     if (!ast)
         return ;
-    printf("type : %d\t", ast->type);
+    expand(ast);
+    if (!(*get_parser_check()))
+        return ;
     print_args(ast->args);
     print_redirect(ast->redirect);
     ast_print(ast->first_child);
-    // printf("|\n");
     ast_print(ast->next_sibling);
 }
 
@@ -50,17 +51,21 @@ void print_args(char **args)
         i++;
     }
     printf("\n");
-    expander(args);
 }
 
 void print_redirect(t_file *redirect)
 {
+    t_file *tmp;
+
     if (!redirect)
         return ;
+    tmp = redirect;
     printf("files:");
     while (redirect)
     {
         printf("%s; ", redirect->filename);
         redirect = redirect->next;
     }
+    redirect = tmp;
+    printf("\n");
 }
