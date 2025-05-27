@@ -6,6 +6,7 @@ void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
     char *pathname;
     int *fds;
     int num_of_redirect;
+    int type;
 
     pipeline->counter++;
     pipeline->pids[pipeline->counter] = fork();
@@ -17,13 +18,19 @@ void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
     if (pipeline->pids[pipeline->counter] == 0)
     {
         if (ast->redirect)
-    {
-        num_of_redirect=num_of_redirects(ast->redirect);
-        fds = open_redirects(ast->redirect);
-        if (!(*get_error_check()))
-            return;
-    }
+        {
+            num_of_redirect = num_of_redirects(ast->redirect);
+            fds = open_redirects(ast->redirect);
+            if (!(*get_error_check()))
+                return;
+        }
         setup_process_pipes(ast, pipeline, i);
+        type = type_cmd(ast->args[0]);
+        if (type != -1)
+        {
+            execute_builtins(type, ast->args);
+            exit(*get_status_code());
+        }
         envp = convert_envp();
         pathname = get_path(ast->args[0], envp);
         if (!pathname)
@@ -58,8 +65,8 @@ void setup_process_pipes(t_ast *ast, t_pipe *pipeline, int i)
         }
         close_all_pipes(pipeline);
     }
-        // close(pipeline->saved_stdin);
-        // close(pipeline->saved_stdout);
+    // close(pipeline->saved_stdin);
+    // close(pipeline->saved_stdout);
 }
 
 void close_all_pipes(t_pipe *pipeline)

@@ -5,12 +5,34 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
     int type;
 
     type = type_cmd(ast->args[0]);
-    if (type != -1)
+    if (type != -1 && pipeline->num_of_cmds == 1)
     {
-        execute_builtins(type, ast->args);
+        execute_single_built(type, ast);
+        // execute_builtins(type, ast->args);
         return;
     }
     exec_cmd(ast, pipeline, i);
+}
+
+void execute_single_built(int type, t_ast *ast)
+{
+    int saved_stdout;
+	int saved_stdin;
+    int *fds;
+    int num_of_redirect;
+
+    saved_stdin = dup(STDIN_FILENO);
+    saved_stdout =  dup(STDOUT_FILENO);
+    if (ast->redirect)
+    {
+        num_of_redirect=num_of_redirects(ast->redirect);
+        fds = open_redirects(ast->redirect);
+        if (!(*get_error_check()))
+            return;
+    }
+    execute_builtins(type, ast->args);
+    dup2(saved_stdout,STDOUT_FILENO);
+    dup2(saved_stdin,STDIN_FILENO);
 }
 int *open_redirects(t_file *redirect)
 {
@@ -38,7 +60,6 @@ int *open_redirects(t_file *redirect)
         current = current->next;
     }
     return (fds);
-    // close_redirect(fds, num_of_redirect);
 }
 int num_of_redirects(t_file *lst)
 {

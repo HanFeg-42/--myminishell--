@@ -114,3 +114,16 @@ void free_all_env()
 	}
 
 }
+// char *ft_getenv(char *key)
+// {
+// 	t_envp *current;
+
+// 	current = *get_env_head();
+// 	while (current)
+// 	{
+// 	    if (ft_strcmp(current->key, key) == 0)
+// 	        return (current->value);
+// 	    current = current->next;
+// 	}
+// 	return (NULL);
+// }

@@ -15,8 +15,8 @@ int main(int ac, char **av, char **envp)
 	t_token *token;
 	t_ast *ast;
 
-	signal(SIGINT, handler_SIGINT);
-	// signal(SIGINT, SIG_IGN);
+	// // signal(SIGINT, handler_SIGINT);
+	// // signal(SIGINT, SIG_IGN);
 	(void)ac;
 	(void)av;
     get_new_env(get_env_head(),envp);
@@ -28,16 +28,29 @@ int main(int ac, char **av, char **envp)
 			break;
 		token = tokenizer(line);
 		ast = parser(&token);
-		// ast_print(ast);
 		*get_parser_check() = true;
 		*get_error_check() = true;
 		execute_compoud(ast);
 		finish(line);
 		free_all();
-		break;
 	}
 	free_all_env();
 	return (0);
+
+
+	
+
+    // char *pos;
+    // char *key;
+    // char *value;
+
+    // pos = ft_strchr(*av, '=');
+    // if (!pos)
+    //     {
+    //         printf("mockellaaa\n");
+    //     }
+    // key = ft_substr(*av, 0, pos - (*av));
+    // value = ft_strdup(pos + 1);
 }
 
 void finish(char *line)

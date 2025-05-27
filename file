@@ -1,0 +1,12 @@
+total 88
+drwxrwxr-x 2 ghita ghita  4096 May 23 15:08 42-Minishell
+-rw-r--r-- 1 ghita ghita     0 May 24 15:31 file
+-rwxrwxr-x 1 ghita ghita   145 May 23 15:08 filevalgrind
+drwxrwxr-x 2 ghita ghita  4096 May 24 15:29 garbage_collector
+drwxrwxr-x 2 ghita ghita  4096 May 23 15:09 include
+drwxrwxr-x 2 ghita ghita  4096 May 24 15:29 libft
+-rw-rw-r-- 1 ghita ghita  1652 May 23 15:45 Makefile
+-rwxrwxr-x 1 ghita ghita 49408 May 24 15:29 minishell
+-rw-rw-r-- 1 ghita ghita    17 May  2 18:06 README.md
+drwxrwxr-x 4 ghita ghita  4096 May 24 15:29 src
+-rw-rw-r-- 1 ghita ghita  2456 May  6 17:40 todo

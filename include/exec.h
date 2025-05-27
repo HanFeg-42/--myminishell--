@@ -92,14 +92,7 @@ int num_of_redirects(t_file *lst);
 void open_file(t_file *file, int *fds, int i);
 
 int *open_redirects(t_file *redirect);
-int execute_builtins(builtin_type type, char **args);
-int execute_cd(char *args);
-
-int execute_pwd();
-
-int execute_env();
-
-int execute_export(char *args);
+void execute_builtins(int type, char **args);
 void redirect_io(int fd, t_file *file);
 void create_pipes(t_pipe *pipeline);
 void ast_advance(t_ast **current);
@@ -111,6 +104,35 @@ int num_of_redirects(t_file *lst);
 void close_redirect(int *fds, int num_redirects);
 int	has_input_redirection(t_file *redirect);
 
+
+char *ft_getenv(char *var);
+
+void set_error(char *str);
+
+void update_env(char *old_pwd, char *new_pwd);
+
+void execute_cd(char **args);
+
+
+void execute_pwd();
+
+void execute_env();
+
+void handle_single_export(char *arg, t_envp **envp);
+
+void execute_export(char **args);
+
+t_envp *find_node(char *key);
+
+void free_env(void *key);
+
+void execute_unset(char **args);
+
+int skip_option(char **arg, int *i);
+
+void execute_echo(char **arg);
+void execute_single_built(int type, t_ast *ast);
+int is_key_valid(char *arg, char *pos);
 
 
 #endif
