@@ -1,37 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ast_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:33:55 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 11:09:31 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:09:04 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
 
-t_ast	*parser(t_token **token)
+void	ast_print(t_ast *ast)
 {
-	t_ast	*ast;
-
-	if (!(*get_parser_check()) || !(*token))
-		return (NULL);
-	ast = ast_compound(token);
 	if (!ast)
+		return ;
+	expand(ast);
+	if (!(*get_parser_check()))
+		return ;
+	print_args(ast->args);
+	print_redirect(ast->redirect);
+	ast_print(ast->first_child);
+	ast_print(ast->next_sibling);
+}
+
+void	print_args(char **args)
+{
+	int	i;
+
+	if (!args)
+		return ;
+	printf("args:");
+	i = 0;
+	while (args[i])
 	{
-		if (!(*get_heredoc_check()))
-			return (NULL);
-		if ((*token))
-			syntax_error((*token)->value);
-		else
-			syntax_error("newline");
+		printf("%s; ", args[i]);
+		i++;
 	}
-	else if (*(token))
+	printf("\n");
+}
+
+void	print_redirect(t_file *redirect)
+{
+	t_file	*tmp;
+
+	if (!redirect)
+		return ;
+	tmp = redirect;
+	printf("files:");
+	while (redirect)
 	{
-		syntax_error((*token)->prev->value);
-		return (NULL);
+		printf("%s; ", redirect->filename);
+		redirect = redirect->next;
 	}
-	return (ast);
+	redirect = tmp;
+	printf("\n");
 }

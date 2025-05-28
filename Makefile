@@ -14,25 +14,29 @@ SRC = src/main.c \
 		src/parsing/lexer/lexer_advancer.c \
 		src/parsing/lexer/lexer_getter.c \
 		src/parsing/lexer/lexer_skipper.c \
-		src/parsing/lexer/cleanup.c \
 		src/parsing/lexer/getters.c \
 		garbage_collector/free_address.c \
 		garbage_collector/free_all.c \
 		garbage_collector/ft_malloc.c \
 		garbage_collector/getter.c  \
 		src/parsing/ast/ast.c \
+		src/parsing/ast/ast_redirect.c \
 		src/parsing/ast/ast_helper.c \
 		src/parsing/ast/ast_helper2.c \
 		src/parsing/ast/parser.c \
+		src/parsing/ast/ast_print.c \
 		src/parsing/ast/heredoc.c \
 		src/parsing/ast/heredoc_expander.c \
+		src/parsing/ast/realloc_array.c \
 		src/parsing/ast/get_next_line.c \
 		src/parsing/expander/expand.c \
 		src/parsing/expander/expand_param.c \
 		src/parsing/expander/field_split.c \
 		src/parsing/expander/expand_helper.c \
+		src/parsing/expander/expamd_helper2.c \
 		src/parsing/expander/expand_pathname.c \
-		src/parsing/expander/expand_filename.c
+		src/parsing/expander/expand_filename.c \
+		src/parsing/expander/quote_removal.c
 
 OBJ = ${SRC:.c=.o}
 

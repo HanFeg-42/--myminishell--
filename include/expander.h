@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/22 01:46:39 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:41:50 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,8 @@ void paramter_expansion(char *file, t_expand *exp);
 int field_splitting(t_expand *exp);
 int pathname_expansion(t_expand *exp);
 void ambiguous_redirect(char *err);
+void	arg_traversal(t_expand *exp, t_arg *arg);
+void	track_positions(char **star, char **p_pos, char **s, char **p);
+int	hidden_file_size(char **files);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:41:59 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:43:05 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:38:48 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	lexer_advance(t_lexer *lexer)
 {
-	if (lexer && lexer->c) // && lexer->line[lexer->i + 1])
+	if (lexer && lexer->c)
 	{
 		lexer->i++;
 		lexer->c = lexer->line[lexer->i];
@@ -40,7 +40,7 @@ t_token	*lexer_advance_current(t_lexer *lexer, t_token_type type)
 
 	token = ft_malloc(sizeof(char) + 1);
 	if (!token)
-		return (NULL);/// a revoir
+		return (NULL);
 	token[0] = lexer->c;
 	token[1] = '\0';
 	lexer_advance(lexer);

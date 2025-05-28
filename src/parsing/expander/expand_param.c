@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 12:02:14 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:07:18 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ void	expand_param(t_expand *exp)
 
 	word = exp->args[exp->i];
 	exp->word = ft_strdup("");
-	while (exp->pos < (int)ft_strlen(word) && word[exp->pos])// red lbal l sigle quote & double quote
+	while (exp->pos < (int)ft_strlen(word) && word[exp->pos])
 	{
 		if (word[exp->pos] == 34 && exp->stat == 0)
-			expand_inside_double_quote(exp, word);// inside double quotes
+			expand_inside_double_quote(exp, word);
 		else if ((word[exp->pos] == 34 && exp->stat == 1)
 			|| (word[exp->pos] == 39 && exp->stat == 2))
-			expand_unquoted(exp, word);// outside quotes
+			expand_unquoted(exp, word);
 		else if (word[exp->pos] == 39 && exp->stat == 0)
-			copy_characters_until_quote(exp, word);// inside single quotes
+			copy_characters_until_quote(exp, word);
 		else
-			expand_unquoted(exp, word);// outside quotes
+			expand_unquoted(exp, word);
 	}
 }
 

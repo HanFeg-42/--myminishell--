@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:35:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/13 16:26:32 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:53:39 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *str);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
+int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strnstr(const char *str, const char *to_find, size_t n);
 char				*ft_strrchr(const char *str, int c);
 int					ft_tolower(int ch);

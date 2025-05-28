@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:25 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/22 10:42:02 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:59:25 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@ void	field_split(t_expand *exp)
 	t_arg	*arg;
 
 	exp->pos = 0;
-	while ((arg = get_next_field(exp))) // norminette
+	arg = get_next_field(exp);
+	while (arg)
+	{
 		arg_add(&exp->arg, arg);
+		arg = get_next_field(exp);
+	}
 }
 
 t_arg	*get_next_field(t_expand *exp)
 {
-	exp_skip_whitespaces(exp);// increment exp->pos & exp-> word = exp->word + exp->pos
+	exp_skip_whitespaces(exp);
 	return (arg_create(get_field(exp)));
 }
 
@@ -56,51 +60,18 @@ char	*first_ifs_occ(char *s)
 {
 	int	stat;
 
-	stat = 0; // 0 -> normal | 1 -> in double quote | 2 -> in single quote
+	stat = 0;
 	while (*s)
 	{
 		if (*s == 39 && !stat)
-			stat = 2; // in single quote
+			stat = 2;
 		else if (*s == 34 && !stat)
-			stat = 1; // in double quote
+			stat = 1;
 		else if ((*s == 34 && stat == 1) || (*s == 39 && stat == 2))
-			stat = 0; // khrjt mn l quoted stat
-		else if (ft_issapce(*s) && !stat) //  dirii is_ifs 7sn lik
-			return (s); // found an ifs outside the quotes
+			stat = 0;
+		else if (ft_issapce(*s) && !stat)
+			return (s);
 		s++;
 	}
 	return (NULL);
-}
-
-void	arg_add(t_arg **head, t_arg *new)
-{
-	t_arg	*last;
-
-	if (!head || !new)
-		return ;
-	if (!(*head))
-	{
-		*head = new;
-		return ;
-	}
-	last = *head;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-	new->prev = last;
-}
-
-t_arg	*arg_create(char *value)
-{
-	t_arg	*new;
-
-	if (!value)
-		return (NULL);
-	new = ft_malloc(sizeof(t_arg));
-	if (!new)
-		return (NULL);
-	new->value = value;
-	new->file = NULL;
-	new->next = NULL;
-	return (new);
 }

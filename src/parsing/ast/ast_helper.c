@@ -1,34 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_helper.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:48:12 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/05/28 09:48:48 by hfegrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/ast.h"
 
-t_ast *ast_create(t_ast_type type)
+t_ast	*ast_create(t_ast_type type)
 {
-    t_ast *new;
+	t_ast	*new;
 
-    new = ft_malloc(sizeof(t_ast));
-    if (!new)
-        return (NULL);
-    new->type = type;
-    new->first_child = NULL;
-    new->next_sibling = NULL;
-    new->args = NULL;
-    new->i = 0;
-    new->redirect = NULL;
-    return (new);
+	new = ft_malloc(sizeof(t_ast));
+	if (!new)
+		return (NULL);
+	new->type = type;
+	new->first_child = NULL;
+	new->next_sibling = NULL;
+	new->args = NULL;
+	new->i = 0;
+	new->redirect = NULL;
+	return (new);
 }
 
-void ast_add(t_ast *head, t_ast *child)
+void	ast_add(t_ast *head, t_ast *child)
 {
-    t_ast *last;
+	t_ast	*last;
 
-    if (!head || !child)
-        return ;
-    if (head->first_child == NULL)
-    {
-        head->first_child = child;
-        return ;
-    }
-    last = ast_last(head->first_child);
-    last->next_sibling = child;
+	if (!head || !child)
+		return ;
+	if (head->first_child == NULL)
+	{
+		head->first_child = child;
+		return ;
+	}
+	last = ast_last(head->first_child);
+	last->next_sibling = child;
 }
 
 t_ast	*ast_last(t_ast *ast)
@@ -44,11 +56,9 @@ t_ast	*ast_last(t_ast *ast)
 	return (ast);
 }
 
-void token_advance(t_token **token)
+void	token_advance(t_token **token)
 {
-    if (!token || !(*token))
-        return ;
-    *token = (*token)->next;
+	if (!token || !(*token))
+		return ;
+	*token = (*token)->next;
 }
-
-

@@ -6,44 +6,78 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 16:51:21 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:39:45 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/expander.h"
 
-char	**copy_arr(char **arg)
+//=============pathname expansion=================================
+
+char	**remove_hidden_files(char **files)
 {
 	char	**ret;
 	int		i;
+	int		j;
 
-	if (!arg)
-		return (NULL);
 	i = 0;
-	while (arg[i])
-		i++;
-	ret = ft_malloc(sizeof(char *) * (i + 1));
+	ret = NULL;
+	ret = ft_malloc(sizeof(char *) * (hidden_file_size(files) + 1));
 	if (!ret)
 		return (NULL);
+	j = 0;
 	i = 0;
-	while (arg[i])
+	while (files[i])
 	{
-		ret[i] = ft_strdup(arg[i]);
+		if (files[i][0] != '.')
+			ret[j++] = ft_strdup(files[i]);
 		i++;
 	}
-	ret[i] = NULL;
+	ret[j] = NULL;
 	return (ret);
 }
 
-void	print_t_arg(t_arg *arg)
+int	hidden_file_size(char **files)
 {
-	if (!arg)
-		return ;
-	printf("hello\n");
-	while (arg)
+	int	i;
+	int	size;
+
+	size = 0;
+	i = 0;
+	while (files[i])
 	{
-		printf("%s -- ", arg->value);
-		arg = arg->next;
+		if (files[i][0] != '.')
+			size++;
+		i++;
 	}
-	printf("\n");
+	return (size);
+}
+
+void	replace_unquoted_asterisk(t_expand *exp)
+{
+	int		i;
+	int		stat;
+	char	*tmp;
+	t_arg	*curr;
+
+	curr = exp->arg;
+	while (curr)
+	{
+		tmp = curr->value;
+		stat = 0;
+		i = 0;
+		while (tmp[i])
+		{
+			if (tmp[i] == 34 && stat == 0)
+				stat = 1;
+			else if ((tmp[i] == 34 && stat == 1) || (tmp[i] == 39 && stat == 2))
+				stat = 0;
+			else if (tmp[i] == 39 && stat == 0)
+				stat = 2;
+			else if (tmp[i] == '*' && stat == 0)
+				tmp[i] = -3;
+			i++;
+		}
+		curr = curr->next;
+	}
 }

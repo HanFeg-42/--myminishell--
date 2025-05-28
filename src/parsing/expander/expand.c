@@ -1,16 +1,23 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   expand.c                                           :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-// /*   Updated: 2025/05/21 10:48:40 by hfegrach         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 20:00:42 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/05/28 11:33:51 by hfegrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../../include/expander.h"
+
+void	expand(t_ast *ast)
+{
+	*get_parser_check() = true;
+	ast->args = expander(ast->args);
+	expand_file(ast->redirect);
+}
 
 char	**expander(char **args)
 {
@@ -37,7 +44,7 @@ t_expand	*init_expand(char **args)
 	if (!exp)
 		return (NULL);
 	exp->arg = NULL;
-	exp->args = copy_arr(args);// alloci a zmer
+	exp->args = copy_arr(args);
 	exp->i = 0;
 	exp->stat = 0;
 	exp->pos = 0;
