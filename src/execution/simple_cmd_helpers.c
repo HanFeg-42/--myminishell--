@@ -17,6 +17,11 @@ void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
     }
     if (pipeline->pids[pipeline->counter] == 0)
     {
+        if (!(*get_parser_check()))
+        {
+            close_all_pipes(pipeline);
+            exit(EXIT_FAILURE);
+        }
         if (ast->redirect)
         {
             num_of_redirect = num_of_redirects(ast->redirect);

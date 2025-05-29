@@ -44,10 +44,10 @@ char	*get_env_name(char *s)
 	int		i;
 
 	i = 1;
+	if (s[i] == '?')
+	return (ft_itoa(*get_status_code()));
 	/*
 	zidi $?
-	if (s[i] == '?')
-		return (ft_itoa(get_exit_status()));
 	========================================
 	zidi ila kan s[i] = '$' <-- priority
 	*/

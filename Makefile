@@ -51,8 +51,7 @@ SRC = src/main.c \
 		src/parsing/expander/expamd_helper2.c \
 		src/parsing/expander/expand_pathname.c \
 		src/parsing/expander/expand_filename.c \
-		src/parsing/expander/quote_removal.c \
-		src/parsing/expander/expand_helper.c
+		src/parsing/expander/quote_removal.c
 
 OBJ = ${SRC:.c=.o}
 

@@ -23,10 +23,10 @@ int main(int ac, char **av, char **envp)
 			break;
 		token = tokenizer(line);
 		ast = parser(&token);
-		ast_print(ast);
-		*get_parser_check() = true;
+		if (*get_parser_check() == false)
 		*get_error_check() = true;
 		execute_compoud(ast);
+		*get_parser_check() = true;
 		finish(line);
 		free_all();
 	}

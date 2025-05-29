@@ -3,11 +3,17 @@
 void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
     int type;
+    expand(ast);
     if (ast->args)
     {
         type = type_cmd(ast->args[0]);
         if (type != -1 && pipeline->num_of_cmds == 1)
         {
+            if (!(*get_parser_check()))
+            {
+                *get_status_code() = 1;
+                return ;
+            }
             execute_single_built(type, ast);
             // execute_builtins(type, ast->args);
             return;
