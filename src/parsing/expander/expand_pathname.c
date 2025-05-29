@@ -54,11 +54,40 @@ void	arg_traversal(t_expand *exp, t_arg *arg)
 	}
 }
 
+// int is_match(char *s, char *p)
+// {
+//     char *asterisk = NULL;
+//     char *track_pos = NULL;
+
+//     while (*s)
+//     {
+//         if (*p == *s || *p == -3)
+//         {
+//             if (*p == -3)
+//                 (asterisk = p++, track_pos = s);
+//             else
+//                 (p++, s++);
+//         }
+//         else if (asterisk)
+//         {
+//             p = asterisk + 1;
+//             s = ++track_pos;
+//         }
+//         else
+//             return (0);
+//     }
+//     while (*p == -3)
+//         p++;
+//     return (*p == '\0');
+// }
+
 int	is_match(char *filename, char *pattern)
 {
 	char	*asterisk;
 	char	*track_pos;
 
+	asterisk = NULL;
+	track_pos = NULL;
 	while (*filename)
 	{
 		if (*pattern == *filename || *pattern == -3)
