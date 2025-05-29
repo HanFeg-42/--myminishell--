@@ -34,6 +34,13 @@ SRC = src/main.c \
 		src/execution/exec_pipeline.c \
 		src/execution/simple_cmd_helpers.c \
 		src/execution/builtins.c \
+		src/execution/builtins/ft_export.c \
+		src/execution/builtins/export_helper.c \
+		src/execution/builtins/ft_cd.c \
+		src/execution/builtins/ft_echo.c \
+		src/execution/builtins/ft_env.c \
+		src/execution/builtins/ft_pwd.c \
+		src/execution/builtins/ft_unset.c \
 		src/execution/exec_subshell.c \
 		src/parsing/expander/expand.c \
 		src/parsing/expander/expand_param.c \
