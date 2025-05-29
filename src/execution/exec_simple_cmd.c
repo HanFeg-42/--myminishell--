@@ -3,14 +3,15 @@
 void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
     int type;
-    if (!ast->args)
-        return;
-    type = type_cmd(ast->args[0]);
-    if (type != -1 && pipeline->num_of_cmds == 1)
+    if (ast->args)
     {
-        execute_single_built(type, ast);
-        // execute_builtins(type, ast->args);
-        return;
+        type = type_cmd(ast->args[0]);
+        if (type != -1 && pipeline->num_of_cmds == 1)
+        {
+            execute_single_built(type, ast);
+            // execute_builtins(type, ast->args);
+            return;
+        }
     }
     exec_cmd(ast, pipeline, i);
 }

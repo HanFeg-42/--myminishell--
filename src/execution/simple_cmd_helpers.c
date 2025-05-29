@@ -25,6 +25,8 @@ void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
                 return;
         }
         setup_process_pipes(ast, pipeline, i);
+        if (!ast->args)
+            exit(EXIT_SUCCESS);
         type = type_cmd(ast->args[0]);
         if (type != -1)
         {
