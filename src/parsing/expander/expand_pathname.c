@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 11:42:32 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/29 21:54:53 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,33 +53,6 @@ void	arg_traversal(t_expand *exp, t_arg *arg)
 		i++;
 	}
 }
-
-// int is_match(char *s, char *p)
-// {
-//     char *asterisk = NULL;
-//     char *track_pos = NULL;
-
-//     while (*s)
-//     {
-//         if (*p == *s || *p == -3)
-//         {
-//             if (*p == -3)
-//                 (asterisk = p++, track_pos = s);
-//             else
-//                 (p++, s++);
-//         }
-//         else if (asterisk)
-//         {
-//             p = asterisk + 1;
-//             s = ++track_pos;
-//         }
-//         else
-//             return (0);
-//     }
-//     while (*p == -3)
-//         p++;
-//     return (*p == '\0');
-// }
 
 int	is_match(char *filename, char *pattern)
 {

@@ -23,7 +23,8 @@ int main(int ac, char **av, char **envp)
 			break;
 		token = tokenizer(line);
 		ast = parser(&token);
-		if (*get_parser_check() == false)
+		// ast_print(ast);
+		// if (*get_parser_check() == false)
 		*get_error_check() = true;
 		execute_compoud(ast);
 		*get_parser_check() = true;

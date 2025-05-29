@@ -53,7 +53,7 @@ int *open_redirects(t_file *redirect)
     fds = ft_malloc(sizeof(int) * num_of_redirect);
     if (!fds)
     {
-        set_exec_error("Memory allocation failed", 1);
+        set_exec_error("malloc failed", 1);
         return (NULL);
     }
     i = 0;

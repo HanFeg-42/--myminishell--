@@ -53,6 +53,7 @@ SRC = src/main.c \
 		src/parsing/expander/expand_filename.c \
 		src/parsing/expander/quote_removal.c
 
+# src = $(wildcard folder/f2/*.c) $(wildcard folder/*.c) 
 OBJ = ${SRC:.c=.o}
 
 LIBFT_DIR = ./libft

@@ -2,7 +2,7 @@
 
 int *get_status_code()
 {
-    static int status;
+    static int status = 0;
     return (&status);
 }
 

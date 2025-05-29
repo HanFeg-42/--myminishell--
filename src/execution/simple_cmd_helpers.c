@@ -135,6 +135,8 @@ char *get_path(char *cmd, char **envp)
 
     if (!cmd || !envp)
         return (NULL);
+    if (!cmd[0])
+        return (NULL);
     if (ft_strchr(cmd, '/'))
     {
         if (access(cmd, X_OK) == 0)
@@ -188,7 +190,7 @@ char *find_path(char **paths, char *cmd)
 void handle_cmd_error(char *command)
 {
     ft_putstr_fd(command, 2);
-    ft_putstr_fd(": command not found", 2);
+    ft_putstr_fd(" : command not found", 2);
     ft_putstr_fd("\n", 2);
     exit(127);
 }

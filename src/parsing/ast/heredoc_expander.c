@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:49:58 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 14:27:40 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/29 21:58:11 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ char	*replace_quotes(char *var)
 
 char	*skip_env_var(char *s)
 {
+	if (*s == '?')
+	{
+		s++;
+		return (s);
+	}
 	while (*s && ft_isalpha(s[0]) && (*s == '_' || ft_isalnum(*s)))
 		s++;
 	return (s);

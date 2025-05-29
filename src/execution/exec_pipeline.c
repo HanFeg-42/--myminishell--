@@ -23,7 +23,6 @@ void execute_pipeline(t_ast *ast)
     i = 0;
     while (current)
     {
-        *get_status_code() = 0;
         execute_command(current, pipeline, i);
         ast_advance(&current);
         i++;
