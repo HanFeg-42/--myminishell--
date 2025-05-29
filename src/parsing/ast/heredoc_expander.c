@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
+#include "../../../include/exec.h"
+
 
 char	*heredoc_expander(char *s)
 {
@@ -96,14 +98,14 @@ char	*skip_env_var(char *s)
 
 char	*ft_getenv(char *var)
 {
-	// t_envp *current;
-	// current = *get_env_head();
-	// while (current)
-	// {
-	//     if (ft_strcmp(current->key, var) == 0)
-	//         return (current->value);
-	//     current = current->next;
-	// }
-	// return (NULL);
-	return (getenv(var));
+	t_envp *current;
+
+	current = *get_env_head();
+	while (current)
+	{
+	    if (ft_strcmp(current->key, var) == 0)
+	        return (current->value);
+	    current = current->next;
+	}
+	return (NULL);
 }

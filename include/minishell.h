@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:18 by hfegrach          #+#    #+#             */
 /*   Updated: 2025/05/28 09:38:06 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:40:41 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +29,7 @@
 #  define BUFFER_SIZE 10
 # endif
 
-// " => 34
-// ' => 39
-
 # include "lexer.h"
-# include "./ast.h"
-// # include "exec.h"
 # include "expander.h"
-// void expand(t_ast *ast);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+         #
+#    By: ghita <ghita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/30 17:35:22 by hfegrach          #+#    #+#              #
-#    Updated: 2025/03/25 09:58:06 by hfegrach         ###   ########.fr        #
+#    Updated: 2025/05/24 13:50:52 by ghita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,10 @@ SRCS	=	ft_isalpha.c \
 			ft_putchar_fd.c \
 			ft_putstr_fd.c \
 			ft_putendl_fd.c \
-			ft_putnbr_fd.c
+			ft_putnbr_fd.c \
+			ft_str_dup.c \
+			ft_str_join.c \
+			ft_sub_str.c
 
 B_SRCS	=	ft_lstnew_bonus.c \
 			ft_lstadd_front_bonus.c \

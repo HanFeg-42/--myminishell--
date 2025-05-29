@@ -1,4 +1,5 @@
 #include "../include/minishell.h"
+#include "../include/exec.h"
 
 const char *prompt(void)
 {
@@ -13,7 +14,7 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	(void)envp;
+    get_new_env(get_env_head(),envp);
 	token = NULL;
 	while (1)
 	{
@@ -24,9 +25,12 @@ int main(int ac, char **av, char **envp)
 		ast = parser(&token);
 		ast_print(ast);
 		*get_parser_check() = true;
+		*get_error_check() = true;
+		execute_compoud(ast);
 		finish(line);
 		free_all();
 	}
+	free_all_env();
 	return (0);
 }
 
