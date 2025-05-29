@@ -133,6 +133,12 @@ int skip_option(char **arg, int *i);
 void execute_echo(char **arg);
 void execute_single_built(int type, t_ast *ast);
 int is_key_valid(char *arg, char *pos);
+void swap_nodes(t_envp *curr, t_envp *node);
 
+void sort_envp(t_envp **head);
+
+void print_sorted_env(t_envp **envp);
+
+t_envp **copy_env(t_envp **envp);
 
 #endif

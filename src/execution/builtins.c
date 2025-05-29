@@ -111,6 +111,71 @@ void execute_env()
         current = current->next;
     }
 }
+
+void swap_nodes(t_envp *curr, t_envp *node)
+{
+    char *temp_key = curr->key;
+    char *temp_value = curr->value;
+
+    curr->key = node->key;
+    curr->value = node->value;
+    node->key = temp_key;
+    node->value = temp_value;
+}
+
+void sort_envp(t_envp **head)
+{
+    t_envp *curr;
+    t_envp *node;
+
+    curr = *head;
+    while (curr)
+    {
+        node = curr->next;
+        while (node)
+        {
+            if (ft_strcmp(curr->key, node->key) > 0)
+                swap_nodes(curr, node);
+            node = node->next;
+        }
+        curr = curr->next;
+    }
+    printf("sort is done \n");
+}
+
+void print_sorted_env(t_envp **envp)
+{
+    t_envp **copy;
+    t_envp *current;
+
+    copy = copy_env(envp);
+    sort_envp(copy);
+    current = *copy;
+    while (current)
+    {
+        printf("declare -x %s", current->key);
+        if (current->value)
+            printf("=\"%s\"", current->value);
+        printf("\n");
+        current = current->next;
+    }
+}
+
+t_envp **copy_env(t_envp **envp)
+{
+    t_envp **copy;
+    t_envp *current;
+
+    current = *envp;
+    *copy = NULL;
+    while (current)
+    {
+        env_add(copy, env_create(current->key, current->value));
+        current = current->next;
+    }
+    printf("copy done \n");
+    return (copy);
+}
 int is_key_valid(char *arg, char *pos)
 {
     int i;
@@ -162,13 +227,12 @@ void execute_export(char **args)
     int i;
 
     envp = get_env_head();
-    if (!*args)
+    i = 1;
+    if (!args[i])
     {
-        // print_sorted_env(envp);
+        print_sorted_env(envp);
         return;
     }
-    i = 0;
-
     while (args[i])
     {
         handle_single_export(args[i], envp);

@@ -83,17 +83,16 @@ char    *skip_env_var(char *s)
 
 char *ft_getenv(char *var)
 {
-	// t_envp *current;
+	t_envp *current;
 
-	// current = *get_env_head();
-	// while (current)
-	// {
-	//     if (ft_strcmp(current->key, var) == 0)
-	//         return (current->value);
-	//     current = current->next;
-	// }
-	// return (NULL);
-	return (getenv(var));
+	current = *get_env_head();
+	while (current)
+	{
+	    if (ft_strcmp(current->key, var) == 0)
+	        return (current->value);
+	    current = current->next;
+	}
+	return (NULL);
 }
 
 int ft_strcmp(const char *s1, const char *s2)
