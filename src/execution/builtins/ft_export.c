@@ -6,7 +6,7 @@ void execute_export(char **args)
     int i;
 
     envp = get_env_head();
-    i = 1;
+    i = 0;
     if (!args[i])
     {
         print_sorted_env(envp);
@@ -54,6 +54,8 @@ void print_sorted_env(t_envp **envp)
     t_envp *current;
 
     copy = copy_env(envp);
+    if(!*get_error_check())
+        return;
     sort_envp(copy);
     current = *copy;
     while (current)
@@ -64,4 +66,5 @@ void print_sorted_env(t_envp **envp)
         printf("\n");
         current = current->next;
     }
+    free_all_env(copy);
 }

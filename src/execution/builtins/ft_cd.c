@@ -1,6 +1,5 @@
 #include "../../../include/exec.h"
 
-
 void execute_cd(char **args)
 {
     char *old_pwd;
@@ -18,13 +17,15 @@ void execute_cd(char **args)
     else
         path = args[1];
     old_pwd = getcwd(NULL, 0);
-    if (!old_pwd)
-        return (set_exec_error("getcwd error", 1));
     if (!args || chdir(path) != 0)
+    {
+        printf("kfdkkslklds\n");
         return (free(old_pwd), set_exec_error("cd", 1));
+    }
     new_pwd = getcwd(NULL, 0);
-    if (!new_pwd)
-        return (set_exec_error("getcwd error", 1));
+
+    printf("beore updatong \n\n\n");
+    printf("old_pwd %s ,   new_pwd %s\n\n\n",old_pwd,new_pwd);
     update_env(old_pwd, new_pwd);
 }
 
@@ -35,9 +36,11 @@ void update_env(char *old_pwd, char *new_pwd)
     elems = ft_malloc(sizeof(char *) * 3);
     if (!elems)
     {
-        set_exec_error("malloc faillure :", 1);
-        free(new_pwd);
-        free(old_pwd);
+        set_exec_error("malloc:", 1);
+        if (new_pwd)
+            free(new_pwd);
+        if (old_pwd)
+            free(old_pwd);
         return;
     }
     elems[0] = ft_strjoin("PWD=", new_pwd);

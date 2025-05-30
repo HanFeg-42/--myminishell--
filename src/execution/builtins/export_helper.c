@@ -40,13 +40,18 @@ t_envp **copy_env(t_envp **envp)
     t_envp *current;
 
     current = *envp;
+    copy=malloc(sizeof(t_envp));
+    if(!copy)
+    {
+        set_exec_error("malloc",1);
+        return(NULL);
+    }
     *copy = NULL;
     while (current)
     {
         env_add(copy, env_create(current->key, current->value));
         current = current->next;
     }
-    printf("copy done \n");
     return (copy);
 }
 
@@ -78,5 +83,4 @@ void sort_envp(t_envp **head)
         }
         curr = curr->next;
     }
-    printf("sort is done \n");
 }

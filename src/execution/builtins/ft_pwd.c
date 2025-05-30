@@ -7,7 +7,8 @@ void execute_pwd()
     cwd = getcwd(NULL, 0);
     if (!cwd)
     {
-        set_exec_error("getcwd error", 1);
+        ft_putstr_fd("pwd: error retrieving current directory: ",2);
+        set_exec_error("getcwd", 1);
         return;
     }
     printf("%s\n", cwd);

@@ -1,51 +1,51 @@
 #include "../../include/exec.h"
 
-void exec_cmd(t_ast *ast, t_pipe *pipeline, int i)
+void exec_cmd(t_ast *ast, t_cmd *cmd)
 {
-    char **envp;
-    char *pathname;
-    int *fds;
-    int num_of_redirect;
-    int type;
-
-    pipeline->counter++;
-    pipeline->pids[pipeline->counter] = fork();
-    if (pipeline->pids[pipeline->counter] < 0)
+    cmd->pipeline->counter++;
+    cmd->pipeline->pids[cmd->pipeline->counter] = fork();
+    if (cmd->pipeline->pids[cmd->pipeline->counter] < 0)
     {
         set_exec_error("fork", 1);
         return;
     }
-    if (pipeline->pids[pipeline->counter] == 0)
+    if (cmd->pipeline->pids[cmd->pipeline->counter] == 0)
     {
         if (!(*get_parser_check()))
         {
-            close_all_pipes(pipeline);
+            close_all_pipes(cmd->pipeline);
             exit(EXIT_FAILURE);
         }
-        if (ast->redirect)
-        {
-            num_of_redirect = num_of_redirects(ast->redirect);
-            fds = open_redirects(ast->redirect);
-            if (!(*get_error_check()))
-                return;
-        }
-        setup_process_pipes(ast, pipeline, i);
-        if (!ast->args)
-            exit(EXIT_SUCCESS);
-        type = type_cmd(ast->args[0]);
-        if (type != -1)
-        {
-            execute_builtins(type, ast->args);
-            exit(*get_status_code());
-        }
-        envp = convert_envp();
-        pathname = get_path(ast->args[0], envp);
-        if (!pathname)
-            handle_cmd_error(ast->args[0]);
-        execve(pathname, ast->args, envp);
-        close_redirect(fds, num_of_redirect);
-        exit(126);
+        handle_process(ast, cmd);
     }
+}
+
+void handle_process(t_ast *ast, t_cmd *cmd)
+{
+    if (ast->redirect)
+    {
+        cmd->num_of_redirect = num_of_redirects(ast->redirect);
+        cmd->fds = open_redirects(ast->redirect);
+        if (!(*get_error_check()))
+            exit(1);
+    }
+    setup_process_pipes(ast, cmd->pipeline, cmd->pos);
+    if (!ast->args)
+        exit(EXIT_SUCCESS);
+    cmd->type = type_cmd(ast->args[0]);
+    if (cmd->type != -1)
+    {
+        execute_builtins(cmd->type, ast->args);
+        free_all();
+        exit(*get_status_code());
+    }
+    cmd->envp = convert_envp();
+    cmd->pathname = get_path(ast->args[0], cmd->envp);
+    if (!cmd->pathname)
+        handle_cmd_error(ast->args[0]);
+    execve(cmd->pathname, ast->args, cmd->envp);
+    close_redirect(cmd->fds, cmd->num_of_redirect);
+    exit(126);
 }
 
 void setup_process_pipes(t_ast *ast, t_pipe *pipeline, int i)
@@ -72,8 +72,6 @@ void setup_process_pipes(t_ast *ast, t_pipe *pipeline, int i)
         }
         close_all_pipes(pipeline);
     }
-    // close(pipeline->saved_stdin);
-    // close(pipeline->saved_stdout);
 }
 
 void close_all_pipes(t_pipe *pipeline)

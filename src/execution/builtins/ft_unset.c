@@ -2,10 +2,8 @@
 
 void execute_unset(char **args)
 {
-    t_envp **envp;
     int i;
-
-    envp = get_env_head();
+    
     i = 0;
     while (args[i])
     {
