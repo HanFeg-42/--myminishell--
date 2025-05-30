@@ -14,6 +14,7 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	signal(SIGINT, SIG_IGN);
     get_new_env(get_env_head(),envp);
 	token = NULL;
 	while (1)
@@ -23,8 +24,6 @@ int main(int ac, char **av, char **envp)
 			break;
 		token = tokenizer(line);
 		ast = parser(&token);
-		// ast_print(ast);
-		// if (*get_parser_check() == false)
 		*get_error_check() = true;
 		execute_compoud(ast);
 		*get_parser_check() = true;
