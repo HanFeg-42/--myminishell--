@@ -27,7 +27,7 @@ void execute_builtins(int type, char **args)
     if (type == PWD)
         return (execute_pwd());
     if (type == EXPORT)
-        return (execute_export(args));
+        return (execute_export(args+1));
     if (type == UNSET)
         return (execute_unset(args));
     if (type == ENV)

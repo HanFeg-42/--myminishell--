@@ -2,45 +2,46 @@
 
 void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
-    int type;
+    t_cmd *cmd;
+
+    cmd = ft_malloc(sizeof(t_cmd));
+    if (!cmd)
+        return (set_exec_error("malloc", 1));
     expand(ast);
+    cmd->pos = i;
+    cmd->pipeline = pipeline;
     if (ast->args)
     {
-        type = type_cmd(ast->args[0]);
-        if (type != -1 && pipeline->num_of_cmds == 1)
+        cmd->type = type_cmd(ast->args[0]);
+        if (cmd->type != -1 && cmd->pipeline->num_of_cmds == 1)
         {
             if (!(*get_parser_check()))
             {
                 *get_status_code() = 1;
-                return ;
+                return;
             }
-            execute_single_built(type, ast);
-            // execute_builtins(type, ast->args);
+            execute_single_built(cmd, ast);
             return;
         }
     }
-    exec_cmd(ast, pipeline, i);
+    exec_cmd(ast, cmd);
 }
 
-void execute_single_built(int type, t_ast *ast)
+void execute_single_built(t_cmd *cmd, t_ast *ast)
 {
-    int saved_stdout;
-    int saved_stdin;
-    int *fds;
-    int num_of_redirect;
-
-    saved_stdin = dup(STDIN_FILENO);
-    saved_stdout = dup(STDOUT_FILENO);
+    cmd->saved_stdin = dup(STDIN_FILENO);
+    cmd->saved_stdout = dup(STDOUT_FILENO);
     if (ast->redirect)
     {
-        num_of_redirect = num_of_redirects(ast->redirect);
-        fds = open_redirects(ast->redirect);
+        cmd->num_of_redirect = num_of_redirects(ast->redirect);
+        printf("   num of redirect %d  \n", cmd->num_of_redirect);
+        cmd->fds = open_redirects(ast->redirect);
         if (!(*get_error_check()))
             return;
+        close_redirect(cmd->fds, cmd->num_of_redirect - 1);
     }
-    execute_builtins(type, ast->args);
-    dup2(saved_stdout, STDOUT_FILENO);
-    dup2(saved_stdin, STDIN_FILENO);
+    execute_builtins(cmd->type, ast->args);
+    restor_standars(cmd);
 }
 int *open_redirects(t_file *redirect)
 {
@@ -117,10 +118,3 @@ void redirect_io(int fd, t_file *file)
     else if (file->type == INPUT_RED || file->type == HERE_DOC)
         dup2(fd, STDIN_FILENO);
 }
-
-// if (ast->redirect)
-// {
-//     open_redirects(ast->redirect);
-//     if (!(*get_error_check()))
-//         return;
-// }

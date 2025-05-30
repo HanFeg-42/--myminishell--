@@ -1,8 +1,8 @@
 #include "../../include/exec.h"
-void cleanup_pipeline(t_pipe *pipeline)
+void restor_standars(t_cmd *cmd)
 {
-    dup2(pipeline->saved_stdout, STDOUT_FILENO);
-    dup2(pipeline->saved_stdin, STDIN_FILENO);
+    dup2(cmd->saved_stdout, STDOUT_FILENO);
+    dup2(cmd->saved_stdin, STDIN_FILENO);
 }
 void execute_pipeline(t_ast *ast)
 {
@@ -58,8 +58,6 @@ t_pipe *init_pipes(t_ast *ast)
     if (!pipeline->pids)
         return (NULL);
     pipeline->counter = -1;
-    // pipeline->saved_stdin = dup(STDIN_FILENO);
-    // pipeline->saved_stdout = dup(STDOUT_FILENO);
     return (pipeline);
 }
 

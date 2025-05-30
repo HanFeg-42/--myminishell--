@@ -30,11 +30,23 @@ typedef struct s_pipe
 	int num_of_cmds;
 	pid_t *pids;
 	int counter;
-	
-	int saved_stdout;
-	int saved_stdin;
 
 } t_pipe;
+
+typedef struct s_cmd
+{
+	int type;
+	int pos;
+	t_pipe *pipeline;
+	char **envp;
+	char *pathname;
+	int *fds;
+	int num_of_redirect;
+	int saved_stdout;
+	int saved_stdin;
+} t_cmd;
+
+
 
 // -------------------------------------- env functions ------------------------------//
 t_envp *env_create(char *key, char *value);
@@ -70,7 +82,7 @@ void close_pipes(t_pipe *pipeline);
 void wait_children(t_pipe *pipeline);
 void	close_all_pipes(t_pipe *pipeline);
 
-void free_all_env();
+void free_all_env(t_envp **envp);
 int envp_size(t_envp **old_envp);
 
 char **convert_envp();
@@ -85,7 +97,7 @@ int type_cmd(char *cmd);
 
 void handle_cmd_error(char *command);
 
-void exec_cmd(t_ast *ast, t_pipe *pipeline, int i);
+void exec_cmd(t_ast *ast, t_cmd *cmd);
 
 int num_of_redirects(t_file *lst);
 
@@ -98,7 +110,7 @@ void create_pipes(t_pipe *pipeline);
 void ast_advance(t_ast **current);
 void execute_subshell(t_ast *ast, t_pipe *pipeline);
 int has_output_redirection(t_file *redirect);
-void cleanup_pipeline(t_pipe *pipeline);
+void restor_standars(t_cmd *cmd);
 void	setup_process_pipes(t_ast *ast, t_pipe *pipeline, int i);
 int num_of_redirects(t_file *lst);
 void close_redirect(int *fds, int num_redirects);
@@ -131,7 +143,7 @@ void execute_unset(char **args);
 int skip_option(char **arg, int *i);
 
 void execute_echo(char **arg);
-void execute_single_built(int type, t_ast *ast);
+void execute_single_built(t_cmd *cmd, t_ast *ast);
 int is_key_valid(char *arg, char *pos);
 void swap_nodes(t_envp *curr, t_envp *node);
 
@@ -140,5 +152,5 @@ void sort_envp(t_envp **head);
 void print_sorted_env(t_envp **envp);
 
 t_envp **copy_env(t_envp **envp);
-
+void handle_process(t_ast *ast, t_cmd *cmd);
 #endif

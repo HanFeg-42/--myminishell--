@@ -30,7 +30,7 @@ int main(int ac, char **av, char **envp)
 		finish(line);
 		free_all();
 	}
-	free_all_env();
+	free_all_env(get_env_head());
 	return (0);
 }
 

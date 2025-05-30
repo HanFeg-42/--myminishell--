@@ -55,8 +55,6 @@ void get_new_env(t_envp **new_envp, char **old_env)
 	char *key;
 	char *value;
 
-    // *new_envp = NULL;
-
 	if (!old_env || !*old_env)
 	{
 		get_basics(new_envp);
@@ -94,12 +92,9 @@ t_envp **get_env_head()
 
 	return (&head);
 }
-void free_all_env()
-{
-	t_envp **envp;
+void free_all_env(t_envp **envp)
+{	
 	t_envp *current;
-
-	envp=get_env_head();
 	current = *envp;
 
 	while(*envp)
