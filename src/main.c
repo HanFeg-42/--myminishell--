@@ -14,6 +14,7 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	signal(SIGINT, SIG_IGN);
     get_new_env(get_env_head(),envp);
 	token = NULL;
 	while (1)

@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
+#include "../../../include/exec.h"
 #include "../../../include/heredoc.h"
+
 
 char	*generate_name(void)
 {
@@ -62,6 +64,7 @@ void	heredoc_handler(char *eof, t_file **redirect)
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
+		// *get_status_code() = WEXITSTATUS(status);
 		*get_heredoc_check() = false;
 		return ;
 	}
@@ -69,12 +72,11 @@ void	heredoc_handler(char *eof, t_file **redirect)
 		redirect_create(HERE_DOC, hd->filename));
 }
 
-// handle if open faild !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 void	sigint_handler(int sig)
 {
 	(void)sig;
 	free_all();
+	printf("\n");
 	exit(130);
 }
 
@@ -86,14 +88,14 @@ void	heredoc_error(char *nb_line, char *lim)
 	ft_putstr_fd(lim, 2);
 	ft_putstr_fd("')\n", 2);
 }
-//warning: here-document at line 1 delimited by end-of-file (wanted `h')
+
 void	heredoc2(t_heredoc *hd)
 {
 	char	*line;
 	int		count;
 
 	signal(SIGINT, sigint_handler);
-	count = 0;
+	count = 1;
 	line = get_next_line(0);
 	if (!line)
 		heredoc_error(ft_itoa(count), hd->eof);
@@ -104,7 +106,6 @@ void	heredoc2(t_heredoc *hd)
 			line = heredoc_expander(line);
 		write(hd->fd, line, ft_strlen(line));
 		free_one(line);
-		write(2,"hi",2);
 		line = get_next_line(0);
 		if (!line)
 			heredoc_error(ft_itoa(count), hd->eof);
@@ -113,36 +114,3 @@ void	heredoc2(t_heredoc *hd)
 	free_all();
 	exit(EXIT_SUCCESS);
 }
-
-// void	heredoc(char *eof, t_file **redirect)
-// {
-// 	// use a struct to keep all these
-// 	char *lim;
-// 	int to_expand;
-// 	int fd;
-// 	char *line;
-// 	char	*filename;
-
-// 	filename = generate_name();
-// 	to_expand = !(is_quoted(eof));
-// 	lim = remove_quotes(eof);
-// 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC , 0777);
-// 	line = get_next_line(0);
-// 	while (line && ft_strcmp(line, lim)) // limmmmm == lim
-// 	{
-// 		if (to_expand)
-// 			line = heredoc_expander(line);
-// 		write(fd, line, ft_strlen(line));
-// 		free_one(line);
-// 		line = get_next_line(0);
-// 	}
-// 	free_one(line);
-// 	close(fd);
-// 	redirect_add(redirect,
-// 		redirect_create(HERE_DOC, filename));
-// 	return ;
-// }
-
-//TODO:======================= is_quoted --> DONE
-//TODO:======================= quote_removal
-//TODO:======================= heredoc_expander

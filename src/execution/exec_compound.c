@@ -30,13 +30,8 @@ void execute_compoud(t_ast *ast)
 {
     t_ast *current;
 
-    if (!ast)
+    if (!ast || !(*get_parser_check()))
         return;
-    if (!(*get_parser_check()))
-    {
-        *get_status_code() = 2;
-		return ;
-    }
     current = ast->first_child;
     while (current)
     {

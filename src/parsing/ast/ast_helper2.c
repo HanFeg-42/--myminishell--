@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
+#include "../../../include/exec.h"
 
 void	add_args(t_token **token, t_ast *simple_cmd)
 {
@@ -26,6 +27,7 @@ void	add_args(t_token **token, t_ast *simple_cmd)
 void	*syntax_error(char *err)
 {
 	*(get_parser_check()) = false;
+	*get_status_code() = 2;
 	if (err)
 	{
 		ft_putstr_fd("syntax error near unexpected token '", 2);
