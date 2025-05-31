@@ -23,13 +23,13 @@ void execute_builtins(int type, char **args)
     if (type == ECHO)
         return (execute_echo(args));
     if (type == CD)
-        return (execute_cd(args));
+        return (execute_cd(args + 1));
     if (type == PWD)
         return (execute_pwd());
     if (type == EXPORT)
         return (execute_export(args+1));
     if (type == UNSET)
-        return (execute_unset(args));
+        return (execute_unset(args + 1));
     if (type == ENV)
         return (execute_env());
     // if(type == EXIT)

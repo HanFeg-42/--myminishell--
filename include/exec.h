@@ -4,6 +4,7 @@
 #include "ast.h"
 #include "lexer.h"
 #include <sys/wait.h>
+#include <errno.h>
 // #include "minishell.h"
 
 

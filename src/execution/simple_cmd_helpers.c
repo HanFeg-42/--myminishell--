@@ -133,7 +133,7 @@ char *get_path(char *cmd, char **envp)
 
     if (!cmd || !envp)
         return (NULL);
-    if (!cmd[0])
+    if (!cmd[0] || cmd[0]=='.')
         return (NULL);
     if (ft_strchr(cmd, '/'))
     {
