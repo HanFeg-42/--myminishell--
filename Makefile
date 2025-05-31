@@ -42,6 +42,7 @@ SRC = src/main.c \
 		src/execution/builtins/ft_echo.c \
 		src/execution/builtins/ft_env.c \
 		src/execution/builtins/ft_pwd.c \
+		src/execution/builtins/ft_exit.c \
 		src/execution/builtins/ft_unset.c \
 		src/execution/exec_subshell.c \
 		src/parsing/expander/expand.c \

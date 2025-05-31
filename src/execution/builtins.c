@@ -14,8 +14,8 @@ int is_builtin(char *cmd)
         return (UNSET);
     if (!ft_strcmp(cmd, "env"))
         return (ENV);
-    // if (!ft_strcmp(cmd, "exit"))
-    //     return (EXIT);
+    if (!ft_strcmp(cmd, "exit"))
+        return (EXIT);
     return (-1);
 }
 void execute_builtins(int type, char **args)
@@ -32,8 +32,8 @@ void execute_builtins(int type, char **args)
         return (execute_unset(args));
     if (type == ENV)
         return (execute_env());
-    // if(type == EXIT)
-    //     return (execute_exit());
+    if(type == EXIT)
+        return (execute_exit(args));
 }
 
 

@@ -139,6 +139,7 @@ t_envp *find_node(char *key);
 void free_env(void *key);
 
 void execute_unset(char **args);
+void    execute_exit(char **av);
 
 int skip_option(char **arg, int *i);
 
