@@ -35,7 +35,7 @@ void execute_compoud(t_ast *ast)
     if (!(*get_parser_check()))
     {
         *get_status_code() = 2;
-		return ;
+        return;
     }
     current = ast->first_child;
     while (current)

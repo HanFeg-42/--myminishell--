@@ -4,6 +4,7 @@ void execute_subshell(t_ast *ast, t_pipe *pipeline)
 {
     int *fds;
 
+    fds = NULL;
     pipeline->counter++;
     pipeline->pids[pipeline->counter]= fork();
     if (pipeline->pids[pipeline->counter] < 0)
@@ -19,5 +20,4 @@ void execute_subshell(t_ast *ast, t_pipe *pipeline)
         close_redirect(fds,num_of_redirects(ast->redirect));
         exit(*get_status_code());
     }
-    
 }
