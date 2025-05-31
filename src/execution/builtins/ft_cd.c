@@ -4,28 +4,24 @@ void execute_cd(char **args)
 {
     char *old_pwd;
     char *new_pwd;
-    char *path;
+    char    *path;
 
-    if (!args[1])
+    if (!args[0] || !ft_strcmp(args[0], "~"))
     {
         path = ft_getenv("HOME");
         if (!path)
             return (set_error("cd: HOME not set\n"));
     }
-    else if (args[2])
+    else if (args[1])
         return (set_error("cd: too many arguments\n"));
     else
-        path = args[1];
+        path = args[0];
     old_pwd = getcwd(NULL, 0);
-    if (!args || chdir(path) != 0)
+    if (chdir(path) != 0 || !old_pwd)
     {
-        printf("kfdkkslklds\n");
-        return (free(old_pwd), set_exec_error("cd", 1));
+        return (free(old_pwd), ft_putstr_fd("cd: ", 2), ft_putstr_fd(path, 2), set_exec_error(" ", 1));
     }
     new_pwd = getcwd(NULL, 0);
-
-    printf("beore updatong \n\n\n");
-    printf("old_pwd %s ,   new_pwd %s\n\n\n",old_pwd,new_pwd);
     update_env(old_pwd, new_pwd);
 }
 
