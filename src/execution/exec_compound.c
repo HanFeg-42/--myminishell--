@@ -1,60 +1,68 @@
 #include "../../include/exec.h"
 
-int *get_status_code()
+int	*get_status_code(void)
 {
-    static int status = 0;
-    return (&status);
+	static int	status = 0;
+
+	return (&status);
 }
 
-int *get_error_check(void)
+void	ast_advance(t_ast **current)
 {
-    static int check = true;
-
-    return (&check);
-}
-void set_exec_error(const char *msg, int nb)
-{
-    if (msg)
-        perror(msg);
-    *get_error_check() = false;
-    *get_status_code() = nb;
+	if (*current)
+		*current = (*current)->next_sibling;
 }
 
-void ast_advance(t_ast **current)
+void	and_or_handler(t_ast *current)
 {
-    if (*current)
-        *current = (*current)->next_sibling;
+	if (current->type == AST_OR)
+	{
+		ast_advance(&current);
+		if (!(*get_status_code()))
+		{
+			while (current && current->type != AST_AND)
+				ast_advance(&current);
+		}
+	}
+	if (current && current->type == AST_AND)
+	{
+		ast_advance(&current);
+		if (current && *get_status_code())
+			ast_advance(&current);
+	}
 }
 
-void execute_compoud(t_ast *ast)
+void	execute_compoud(t_ast *ast)
 {
-    t_ast *current;
+	t_ast	*current;
 
-    if (!ast || !(*get_parser_check()))
-        return;
-    current = ast->first_child;
-    while (current)
-    {
-        execute_pipeline(current);
-        ast_advance(&current);
-        if (current)
-        {
-            if (current->type == AST_OR)
-            {
-                ast_advance(&current);
-                if (!(*get_status_code()))
-                    ast_advance(&current);
-            }
-            if (current && current->type == AST_AND)
-            {
-                ast_advance(&current);
-                if (*get_status_code())
-                    ast_advance(&current);
-            }
-        }
-        else
-            break;
-    }
+	if (!ast || !(*get_parser_check()))
+		return ;
+	current = ast->first_child;
+	while (current)
+	{
+		execute_pipeline(current);
+		ast_advance(&current);
+		if (current)
+		{
+			if (current->type == AST_OR)
+			{
+				ast_advance(&current);
+				if (!(*get_status_code()))
+				{
+					while (current && current->type != AST_AND)
+						ast_advance(&current);
+				}
+			}
+			if (current && current->type == AST_AND)
+			{
+				ast_advance(&current);
+				if (current && *get_status_code())
+					ast_advance(&current);
+			}
+			// and_or_handler(current);
+		}
+		else
+			break ;
+	}
 }
-
-////////////////////////////////////////////////////////////////////////////////////////

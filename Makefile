@@ -42,6 +42,7 @@ SRC = src/main.c \
 		src/execution/builtins/ft_echo.c \
 		src/execution/builtins/ft_env.c \
 		src/execution/builtins/ft_pwd.c \
+		src/execution/builtins/ft_exit.c \
 		src/execution/builtins/ft_unset.c \
 		src/execution/exec_subshell.c \
 		src/parsing/expander/expand.c \
@@ -51,7 +52,12 @@ SRC = src/main.c \
 		src/parsing/expander/expamd_helper2.c \
 		src/parsing/expander/expand_pathname.c \
 		src/parsing/expander/expand_filename.c \
-		src/parsing/expander/quote_removal.c
+		src/parsing/expander/quote_removal.c \
+		src/execution/redirect.c \
+		src/execution/get_path.c \
+		src/execution/error_seters.c \
+		src/execution/env_helpers.c \
+		src/execution/cleanup.c 
 
 # src = $(wildcard folder/f2/*.c) $(wildcard folder/*.c) 
 OBJ = ${SRC:.c=.o}

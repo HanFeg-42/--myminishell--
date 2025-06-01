@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:49:58 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/29 21:58:11 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/05/31 17:44:29 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,7 @@ char	*get_env_name(char *s)
 
 	i = 1;
 	if (s[i] == '?')
-	return (ft_itoa(*get_status_code()));
-	/*
-	zidi $?
-	========================================
-	zidi ila kan s[i] = '$' <-- priority
-	*/
-	if (s[i] == 39 || s[i] == 34)
-		return (NULL);
+		return (ft_itoa(*get_status_code()));
 	while (s[i] && (ft_isalpha(s[1]) || s[1] == '_')
 		&& (s[i] == '_' || ft_isalnum(s[i])))
 		i++;
