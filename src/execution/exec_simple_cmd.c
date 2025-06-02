@@ -34,7 +34,6 @@ void execute_single_built(t_cmd *cmd, t_ast *ast)
     if (ast->redirect)
     {
         cmd->num_of_redirect = num_of_redirects(ast->redirect);
-        printf("   num of redirect %d  \n", cmd->num_of_redirect);
         cmd->fds = open_redirects(ast->redirect);
         if (!(*get_error_check()))
             return;

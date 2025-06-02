@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:18:55 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:30:18 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:00:13 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ void	*ft_malloc(size_t size)
 
 	ret = malloc(size);
 	if (!ret)
-		return (NULL);
+	{
+		perror("malloc");
+		free_all();
+		exit(EXIT_FAILURE);
+	}
 	gc_addback(gc_new(ret));
 	return (ret);
 }
@@ -29,7 +33,11 @@ t_gc	*gc_new(void *content)
 
 	new = malloc(sizeof(t_gc));
 	if (!new)
-		return (NULL);
+	{
+		perror("malloc");
+		free_all();
+		exit(EXIT_FAILURE);
+	}
 	new->addr = content;
 	new->next = NULL;
 	new->prev = NULL;

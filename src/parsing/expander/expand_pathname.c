@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/29 21:54:53 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/01 19:46:06 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	expand_pathname(t_expand *exp)
 	arg = exp->arg;
 	while (arg)
 	{
-		if (ft_strchr(arg->value, -3))
+		if (ft_strchr(arg->value, -3)
+			&& (arg->prev->value
+				&& ft_strcmp("export", arg->prev->value)))
 			arg_traversal(exp, arg);
 		arg = arg->next;
 	}

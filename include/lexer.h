@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:16 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:29:03 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:18:28 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void			token_free_list(t_token *tok);
 int				*get_parser_check(void);
 
 // checkers
-int				is_special(int c);
-int				is_operator(int c);
+int				is_special(t_lexer *lexer, int i);
+int				is_operator(t_lexer *lexer);
 int				is_redirection(int c);
 
 // unwanted function

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 15:08:32 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:39:00 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,18 @@ void	heredoc_handler(char *eof, t_file **redirect)
 	pid_t		pid;
 	int			status;
 
-	if (!(*get_heredoc_check()))
-		return ;
 	hd = init_heredoc(eof);
 	pid = fork();
 	if (pid < 0)
 		perror("faild to fork");//dffdxd
 	if (pid == 0)
-		heredoc2(hd);
+		heredoc(hd);
 	close(hd->fd);
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	// if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	*get_status_code() = WEXITSTATUS(status);
+	if (*get_status_code() == 130)
 	{
-		// *get_status_code() = WEXITSTATUS(status);
 		*get_heredoc_check() = false;
 		return ;
 	}
@@ -82,20 +81,21 @@ void	sigint_handler(int sig)
 
 void	heredoc_error(char *nb_line, char *lim)
 {
-	ft_putstr_fd("warning: here-document at line ", 2);
+	ft_putstr_fd("\nwarning: here-document at line ", 2);
 	ft_putstr_fd(nb_line, 2);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(lim, 2);
 	ft_putstr_fd("')\n", 2);
 }
 
-void	heredoc2(t_heredoc *hd)
+void	heredoc(t_heredoc *hd)
 {
 	char	*line;
 	int		count;
 
 	signal(SIGINT, sigint_handler);
 	count = 1;
+	write(1, "> ", 2);
 	line = get_next_line(0);
 	if (!line)
 		heredoc_error(ft_itoa(count), hd->eof);
@@ -106,6 +106,7 @@ void	heredoc2(t_heredoc *hd)
 			line = heredoc_expander(line);
 		write(hd->fd, line, ft_strlen(line));
 		free_one(line);
+		write(1, "> ", 2);
 		line = get_next_line(0);
 		if (!line)
 			heredoc_error(ft_itoa(count), hd->eof);

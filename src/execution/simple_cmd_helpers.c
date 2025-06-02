@@ -22,6 +22,7 @@ void exec_cmd(t_ast *ast, t_cmd *cmd)
 
 void handle_process(t_ast *ast, t_cmd *cmd)
 {
+    setup_process_pipes(ast, cmd->pipeline, cmd->pos);
     if (ast->redirect)
     {
         cmd->num_of_redirect = num_of_redirects(ast->redirect);
@@ -29,7 +30,6 @@ void handle_process(t_ast *ast, t_cmd *cmd)
         if (!(*get_error_check()))
             exit(1);
     }
-    setup_process_pipes(ast, cmd->pipeline, cmd->pos);
     if (!ast->args)
         exit(EXIT_SUCCESS);
     cmd->type = type_cmd(ast->args[0]);

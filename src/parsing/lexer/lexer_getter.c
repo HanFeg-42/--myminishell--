@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:02 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 12:12:55 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:52:25 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ t_token	*lexer_get_word(t_lexer *lexer)
 
 	word_size = get_word_size(lexer);
 	word = ft_malloc((word_size + 1) * sizeof(char));
-	if (!word)
-		return (NULL);
 	i = 0;
 	while (i < word_size)
 	{
@@ -39,7 +37,7 @@ int	get_word_size(t_lexer *lexer)
 	int	i;
 
 	i = 0;
-	while (!is_special(lexer->line[lexer->i + i]))
+	while (!is_special(lexer, i))
 	{
 		if (lexer->line[lexer->i + i] == '"')
 			advance_to_next_quote(lexer, &i, '"');

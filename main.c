@@ -15,7 +15,7 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	signal(SIGINT, SIG_IGN);
-	get_new_env(get_env_head(), envp);
+    get_new_env(get_env_head(),envp);
 	// token = NULL;
 	while (1)
 	{
@@ -26,6 +26,8 @@ int main(int ac, char **av, char **envp)
 		ast = parser(&token);
 		*get_error_check() = true;
 		execute_compoud(ast);
+		*get_parser_check() = true;
+		*get_heredoc_check() = true;
 		finish(line);
 		free_all();
 	}
@@ -35,8 +37,6 @@ int main(int ac, char **av, char **envp)
 
 void finish(char *line)
 {
-	*get_parser_check() = true;
-	*get_heredoc_check() = true;
 	add_history(line);
 	free(line);
 }
