@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:18:55 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:30:18 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:36:49 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/gc.h"
-
+#include "../include/exec.h"
 void	*ft_malloc(size_t size)
 {
 	void	*ret;
 
 	ret = malloc(size);
 	if (!ret)
-		return (NULL);
+		clean_and_exit("malloc", 1);
 	gc_addback(gc_new(ret));
 	return (ret);
 }

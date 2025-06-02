@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_seters.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:00:47 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:03:40 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 int	*get_error_check(void)
@@ -7,6 +19,7 @@ int	*get_error_check(void)
 	check = true;
 	return (&check);
 }
+
 void	set_exec_error(const char *msg, int nb)
 {
 	if (msg)
@@ -14,11 +27,12 @@ void	set_exec_error(const char *msg, int nb)
 	*get_error_check() = false;
 	*get_status_code() = nb;
 }
-void	handle_cmd_error(char *command,t_ast *ast,t_cmd *cmd)
+
+void	handle_cmd_error(char *command, t_ast *ast, t_cmd *cmd)
 {
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd(" : command not found", 2);
 	ft_putstr_fd("\n", 2);
-	cleanup_process(ast,cmd);
+	cleanup_process(ast, cmd);
 	exit(127);
 }

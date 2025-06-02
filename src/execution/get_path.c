@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_path.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:01:06 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:01:07 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 char	*get_path(char *cmd, char **envp)
@@ -37,7 +49,6 @@ char	*concat_path(char *path, char *cmd)
 	if (!tmp)
 		return (NULL);
 	fullpath = ft_strjoin(tmp, cmd);
-	free(tmp);
 	return (fullpath);
 }
 

@@ -1,10 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_compound.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:00:56 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:03:48 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 int	*get_status_code(void)
 {
-	static int	status = 0;
+	static int	status;
 
 	return (&status);
+}
+
+void	advince_twice(t_ast **current)
+{
+	ast_advance(current);
+	ast_advance(current);
 }
 
 void	ast_advance(t_ast **current)
@@ -13,26 +31,35 @@ void	ast_advance(t_ast **current)
 		*current = (*current)->next_sibling;
 }
 
-void	and_or_handler(t_ast *current)
+void	and_or_handler(t_ast **current)
 {
-	if (current->type == AST_OR)
+	if ((*current)->type == AST_OR)
 	{
-		ast_advance(&current);
+		ast_advance(current);
 		if (!(*get_status_code()))
 		{
-			while (current && current->type != AST_AND)
-				ast_advance(&current);
+			ast_advance(current);
+			while ((*current) && (*current)->type == AST_OR)
+			{
+				advince_twice(current);
+			}
 		}
 	}
-	if (current && current->type == AST_AND)
+	if (*current && (*current)->type == AST_AND)
 	{
-		ast_advance(&current);
-		if (current && *get_status_code())
-			ast_advance(&current);
+		ast_advance(current);
+		if (*get_status_code())
+		{
+			ast_advance(current);
+			while ((*current) && (*current)->type == AST_AND)
+			{
+				advince_twice(current);
+			}
+		}
 	}
 }
 
-void	execute_compoud(t_ast *ast)
+void	execute_compound(t_ast *ast)
 {
 	t_ast	*current;
 
@@ -42,27 +69,10 @@ void	execute_compoud(t_ast *ast)
 	while (current)
 	{
 		execute_pipeline(current);
+		if (!(*get_error_check()))
+			return ;
 		ast_advance(&current);
 		if (current)
-		{
-			if (current->type == AST_OR)
-			{
-				ast_advance(&current);
-				if (!(*get_status_code()))
-				{
-					while (current && current->type != AST_AND)
-						ast_advance(&current);
-				}
-			}
-			if (current && current->type == AST_AND)
-			{
-				ast_advance(&current);
-				if (current && *get_status_code())
-					ast_advance(&current);
-			}
-			// and_or_handler(current);
-		}
-		else
-			break ;
+			and_or_handler(&current);
 	}
 }

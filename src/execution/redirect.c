@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:04:54 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 int	*open_redirects(t_file *redirect)
@@ -9,11 +21,6 @@ int	*open_redirects(t_file *redirect)
 
 	num_of_redirect = num_of_redirects(redirect);
 	fds = ft_malloc(sizeof(int) * num_of_redirect);
-	if (!fds)
-	{
-		set_exec_error("malloc", 1);
-		exit(1);
-	}
 	i = 0;
 	current = redirect;
 	while (current)
@@ -49,7 +56,7 @@ void	close_redirect(int *fds, int i)
 {
 	while (i >= 0)
 	{
-		if(fds[i])
+		if (fds[i])
 			close(fds[i]);
 		i--;
 	}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   simple_cmd_helpers.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:05:04 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 void	exec_cmd(t_ast *ast, t_cmd *cmd)
@@ -26,7 +38,7 @@ void	handle_process(t_ast *ast, t_cmd *cmd)
 	setup_redirects(ast, cmd);
 	if (!ast->args)
 	{
-		cleanup_process(ast,cmd);
+		cleanup_process(ast, cmd);
 		exit(EXIT_SUCCESS);
 	}
 	cmd->type = type_cmd(ast->args[0]);
@@ -39,7 +51,7 @@ void	handle_process(t_ast *ast, t_cmd *cmd)
 	cmd->envp = convert_envp();
 	cmd->pathname = get_path(ast->args[0], cmd->envp);
 	if (!cmd->pathname)
-		handle_cmd_error(ast->args[0],ast,cmd);
+		handle_cmd_error(ast->args[0], ast, cmd);
 	execve(cmd->pathname, ast->args, cmd->envp);
 	cleanup_process(ast, cmd);
 	exit(126);
@@ -58,6 +70,7 @@ int	type_cmd(char *cmd)
 	}
 	return (is_builtin(command));
 }
+
 void	setup_redirects(t_ast *ast, t_cmd *cmd)
 {
 	if (ast->redirect)
@@ -65,12 +78,13 @@ void	setup_redirects(t_ast *ast, t_cmd *cmd)
 		cmd->num_of_redirect = num_of_redirects(ast->redirect);
 		cmd->fds = open_redirects(ast->redirect);
 		if (!(*get_error_check()))
-			{
-				cleanup_process(ast,cmd);
-				exit(1);
-			}
+		{
+			cleanup_process(ast, cmd);
+			exit(1);
+		}
 	}
 }
+
 void	setup_process_pipes(t_pipe *pipeline, int i)
 {
 	if (pipeline->num_of_cmds > 1)

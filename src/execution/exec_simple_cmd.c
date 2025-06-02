@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:04:35 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 void	execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
@@ -5,8 +17,6 @@ void	execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 	t_cmd	*cmd;
 
 	cmd = ft_malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (set_exec_error("malloc", 1));
 	expand(ast);
 	cmd->pos = i;
 	cmd->pipeline = pipeline;
@@ -21,6 +31,7 @@ void	execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 				return ;
 			}
 			execute_single_built(cmd, ast);
+			*get_status_code() = 0;
 			return ;
 		}
 	}
@@ -38,6 +49,7 @@ void	restor_standars(t_cmd *cmd)
 	dup2(cmd->saved_stdout, STDOUT_FILENO);
 	dup2(cmd->saved_stdin, STDIN_FILENO);
 }
+
 void	execute_single_built(t_cmd *cmd, t_ast *ast)
 {
 	dup_standars(cmd);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:00:44 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:07:25 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 t_envp	**get_env_head(void)
@@ -6,30 +18,34 @@ t_envp	**get_env_head(void)
 
 	return (&head);
 }
-char **saved_pwd()
-{
-	static char *pwd;
-	return(&pwd);
-}
-void	get_basics()
-{
-	char **basics;
-	*saved_pwd() = getcwd(NULL,0);
 
-	basics = ft_malloc(sizeof(char *)*5);
-	if(!basics)
+char	**saved_pwd(void)
+{
+	static char	*pwd;
+
+	return (&pwd);
+}
+
+void	get_basics(void)
+{
+	char	**basics;
+
+	*saved_pwd() = getcwd(NULL, 0);
+	basics = ft_malloc(sizeof(char *) * 5);
+	if (!basics)
 	{
-		set_exec_error("malloc",1);
-		return;
+		set_exec_error("malloc", 1);
+		return ;
 	}
-	basics[0]=ft_strjoin("PWD=",*saved_pwd());
-	basics[2]=ft_strdup("PATH=/app/bin:/usr/bin:/bin");
-	basics[1]=ft_strdup("SHLVL=1");
-	basics[3]=ft_strdup("_=./minishell");
-	basics[4]=NULL;
+	basics[0] = ft_strjoin("PWD=", *saved_pwd());
+	basics[2] = ft_strdup("PATH=/app/bin:/usr/bin:/bin");
+	basics[1] = ft_strdup("SHLVL=1");
+	basics[3] = ft_strdup("_=./minishell");
+	basics[4] = NULL;
 	execute_export(basics);
 	return ;
 }
+
 void	get_new_env(t_envp **new_envp, char **old_env)
 {
 	int		i;

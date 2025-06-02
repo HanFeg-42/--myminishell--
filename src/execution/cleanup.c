@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:06:47 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 void	close_all_pipes(t_pipe *pipeline)
@@ -16,7 +28,7 @@ void	close_all_pipes(t_pipe *pipeline)
 void	cleanup_process(t_ast *ast, t_cmd *cmd)
 {
 	if (ast->redirect)
-		close_redirect(cmd->fds, cmd->num_of_redirect);
+		close_redirect(cmd->fds, cmd->num_of_redirect - 1);
 	free_all_env(get_env_head());
 	free_all();
 }
@@ -54,4 +66,13 @@ void	free_all_env(t_envp **envp)
 		*envp = (*envp)->next;
 		free(current);
 	}
+}
+
+void	clean_and_exit(char *str, int nb)
+{
+	if (str)
+		perror(str);
+	free_all_env(get_env_head());
+	free_all();
+	exit(nb);
 }

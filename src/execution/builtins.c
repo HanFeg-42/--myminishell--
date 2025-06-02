@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 16:00:39 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:03:09 by gstitou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/exec.h"
 
 int	is_builtin(char *cmd)
@@ -18,6 +30,7 @@ int	is_builtin(char *cmd)
 		return (EXIT);
 	return (-1);
 }
+
 void	execute_builtins(int type, char **args)
 {
 	if (type == ECHO)
