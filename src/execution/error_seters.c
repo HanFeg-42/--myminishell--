@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_command.c                                     :+:      :+:    :+:   */
+/*   error_seters.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:00:52 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:08:31 by gstitou          ###   ########.fr       */
+/*   Created: 2025/06/02 16:00:47 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/02 16:03:40 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
 
-void	execute_command(t_ast *ast, t_pipe *pipeline, int i)
+int	*get_error_check(void)
 {
-	t_ast	*current;
+	static int	check;
 
-	current = ast->first_child;
-	if (current->type == AST_SIMPLE_CMD)
-	{
-		execute_simple_cmd(current, pipeline, i);
-	}
-	else
-		execute_subshell(current, pipeline);
+	check = true;
+	return (&check);
+}
+
+void	set_exec_error(const char *msg, int nb)
+{
+	if (msg)
+		perror(msg);
+	*get_error_check() = false;
+	*get_status_code() = nb;
+}
+
+void	handle_cmd_error(char *command, t_ast *ast, t_cmd *cmd)
+{
+	ft_putstr_fd(command, 2);
+	ft_putstr_fd(" : command not found", 2);
+	ft_putstr_fd("\n", 2);
+	cleanup_process(ast, cmd);
+	exit(127);
 }

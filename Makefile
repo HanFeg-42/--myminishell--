@@ -4,7 +4,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror# -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -g3 # -fsanitize=address -g3
 
 RLFLAG = -lreadline
 
@@ -52,7 +52,12 @@ SRC = src/main.c \
 		src/parsing/expander/expamd_helper2.c \
 		src/parsing/expander/expand_pathname.c \
 		src/parsing/expander/expand_filename.c \
-		src/parsing/expander/quote_removal.c
+		src/parsing/expander/quote_removal.c \
+		src/execution/redirect.c \
+		src/execution/get_path.c \
+		src/execution/error_seters.c \
+		src/execution/env_helpers.c \
+		src/execution/cleanup.c
 
 # src = $(wildcard folder/f2/*.c) $(wildcard folder/*.c)
 OBJ = ${SRC:.c=.o}
