@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/01 14:39:00 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 00:07:45 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	heredoc_handler(char *eof, t_file **redirect)
 	if (pid == 0)
 		heredoc(hd);
 	close(hd->fd);
+	signal(SIGINT, SIG_IGN);//hit ila madrtihach ghadi ybno juj d readlines c_a_d two lines
 	waitpid(pid, &status, 0);
+	signal(SIGINT, handler_SIGINT);//hadi kan restoriw biha kifach sig int kantkhdm f l parent 
+	
 	// if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	*get_status_code() = WEXITSTATUS(status);
 	if (*get_status_code() == 130)
@@ -79,6 +82,12 @@ void	sigint_handler(int sig)
 	exit(130);
 }
 
+void	sigquit_handler(int sig)
+{
+	(void)sig;
+	printf("\b");
+}
+
 void	heredoc_error(char *nb_line, char *lim)
 {
 	ft_putstr_fd("\nwarning: here-document at line ", 2);
@@ -92,8 +101,13 @@ void	heredoc(t_heredoc *hd)
 {
 	char	*line;
 	int		count;
+	struct termios term;
 
 	signal(SIGINT, sigint_handler);
+	// signal(SIGQUIT, sigquit_handler);
+	// signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_DFL);
+	tcgetattr(1, &term);
 	count = 1;
 	write(1, "> ", 2);
 	line = get_next_line(0);

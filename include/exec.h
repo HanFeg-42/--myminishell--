@@ -16,7 +16,7 @@ typedef struct s_envp
 
 typedef enum s_builtin_type
 {
-	ECHO,
+	ECHOO,
 	CD,
 	PWD,
 	EXPORT,

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 17:40:43 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 00:03:55 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,14 @@ const char	*prompt(void)
 {
 	return ("\001\033[38;2;255;105;180m\002Minishell > \001\033[0m\002");
 }
-
+void handler_SIGINT(int sig)
+{
+    (void)sig;
+    printf("\n");
+    rl_replace_line("", 0); // hadi kima glt ma3ndha tachi dawr flhayat
+    rl_on_new_line();
+    rl_redisplay();
+}
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
@@ -26,7 +33,8 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handler_SIGINT);
+	signal(SIGQUIT, SIG_IGN);
 	get_new_env(get_env_head(), envp);
 	// token = NULL;
 	while (1)
@@ -37,9 +45,7 @@ int	main(int ac, char **av, char **envp)
 		token = tokenizer(line);
 		ast = parser(&token);
 		*get_error_check() = true;
-		execute_compoud(ast);
 		execute_compound(ast);
-		*get_parser_check() = true;
 		finish(line);
 		free_all();
 	}

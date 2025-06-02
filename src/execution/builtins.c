@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:39 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:03:09 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/02 23:49:58 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo"))
-		return (ECHO);
+		return (ECHOO);
 	if (!ft_strcmp(cmd, "cd"))
 		return (CD);
 	if (!ft_strcmp(cmd, "pwd"))
@@ -33,7 +33,7 @@ int	is_builtin(char *cmd)
 
 void	execute_builtins(int type, char **args)
 {
-	if (type == ECHO)
+	if (type == ECHOO)
 		return (execute_echo(args));
 	if (type == CD)
 		return (execute_cd(args + 1));

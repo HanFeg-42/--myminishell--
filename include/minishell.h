@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 09:38:06 by hfegrach         ###   ########.fr       */
-/*   Updated: 2025/05/23 15:40:41 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/03 00:05:36 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <termios.h>
 # include "../libft/libft.h"
 # include "gc.h"
 
@@ -31,5 +32,7 @@
 
 # include "lexer.h"
 # include "expander.h"
+
+void handler_SIGINT(int sig);
 
 #endif
