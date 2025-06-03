@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:18 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:00:19 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:51:47 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,49 @@ void	execute_export(char **args)
 	}
 }
 
-void	handle_single_export(char *arg, t_envp **envp)
+void	is_valid(char *arg)
 {
-	char	*key;
-	char	*value;
-	char	*pos;
+	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putchar_fd('\'', 2);
+	return (set_error(": not a valid identifier\n"));
+}
+
+void	update_export(t_envp **envp, char *key, char *value)
+{
 	t_envp	*node;
 
-	pos = ft_strchr(arg, '=');
-	if (!pos)
-		return ;
-	if (pos == arg || !is_key_valid(arg, pos))
-	{
-		ft_putstr_fd("export: `", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putchar_fd('\'', 2);
-		return (set_error(": not a valid identifier\n"));
-	}
-	key = ft_substr(arg, 0, pos - arg);
-	value = ft_strdup(pos + 1);
 	node = find_node(key);
 	if (!node)
 		env_add(envp, env_create(key, value));
 	else
 	{
-		free(node->value);
+		if (node->value)
+			free(node->value);
 		node->value = ft_str_dup(value);
 	}
+}
+
+void	handle_single_export(char *arg, t_envp **envp)
+{
+	char	*key;
+	char	*value;
+	char	*pos;
+
+	pos = ft_strchr(arg, '=');
+	if (pos == arg || !is_key_valid(arg))
+		return (is_valid(arg));
+	if (pos)
+	{
+		key = ft_substr(arg, 0, pos - arg);
+		value = ft_strdup(pos + 1);
+	}
+	else
+	{
+		key = ft_strdup(arg);
+		value = NULL;
+	}
+	update_export(envp, key, value);
 }
 
 void	print_sorted_env(t_envp **envp)
@@ -79,4 +95,5 @@ void	print_sorted_env(t_envp **envp)
 		current = current->next;
 	}
 	free_all_env(copy);
+	free(copy);
 }

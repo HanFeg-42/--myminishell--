@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:56 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:03:48 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/02 16:42:14 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	*get_status_code(void)
 {
-	static int	status;
+	static int	status = 0;
 
 	return (&status);
 }

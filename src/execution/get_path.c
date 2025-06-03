@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:06 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:01:07 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 00:58:00 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_path(char *cmd, char **envp)
 
 	if (!cmd || !envp)
 		return (NULL);
-	if (!cmd[0] || cmd[0] == '.')
+	if (!cmd[0] || (cmd[0] == '.' && ft_strlen(cmd) == 1))
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{

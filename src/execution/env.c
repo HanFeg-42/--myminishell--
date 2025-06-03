@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:44 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:07:25 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:11:11 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ void	get_basics(void)
 	return ;
 }
 
+void	free_key_value(char *key, char *value)
+{
+	if (key)
+		free (key);
+	if (value)
+		free (value);
+}
+
 void	get_new_env(t_envp **new_envp, char **old_env)
 {
 	int		i;
@@ -57,12 +65,19 @@ void	get_new_env(t_envp **new_envp, char **old_env)
 	while (old_env[i])
 	{
 		equal_pos = ft_strchr(old_env[i], '=');
-		key = ft_sub_str(old_env[i], 0, equal_pos - old_env[i]);
-		value = ft_str_dup(equal_pos + 1);
+		if (!equal_pos)
+		{
+			key = ft_str_dup(old_env[i]);
+			value = NULL;
+		}
+		else
+		{
+			key = ft_sub_str(old_env[i], 0, equal_pos - old_env[i]);
+			value = ft_str_dup(equal_pos + 1);
+		}
 		env_add(new_envp, env_create(key, value));
 		i++;
-		free(key);
-		free(value);
+		free_key_value(key, value);
 	}
 	get_basics();
 	return ;
