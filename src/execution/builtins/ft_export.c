@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:18 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 13:51:47 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:48:37 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ void	execute_export(char **args)
 		handle_single_export(args[i], envp);
 		i++;
 	}
-}
-
-void	is_valid(char *arg)
-{
-	ft_putstr_fd("export: `", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putchar_fd('\'', 2);
-	return (set_error(": not a valid identifier\n"));
 }
 
 void	update_export(t_envp **envp, char *key, char *value)
@@ -62,7 +54,14 @@ void	handle_single_export(char *arg, t_envp **envp)
 
 	pos = ft_strchr(arg, '=');
 	if (pos == arg || !is_key_valid(arg))
-		return (is_valid(arg));
+	{
+		ft_putstr_fd("export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putchar_fd('\'', 2);
+		ft_putstr_fd(": not a valid identifier\n", 2);
+		set_exec_error (NULL, 1);
+		return ;
+	}
 	if (pos)
 	{
 		key = ft_substr(arg, 0, pos - arg);

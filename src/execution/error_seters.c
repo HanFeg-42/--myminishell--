@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:47 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 14:17:39 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:47:22 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ void	set_exec_error(const char *msg, int nb)
 void	handle_cmd_error(char *command, t_ast *ast, t_cmd *cmd)
 {
 	ft_putstr_fd(command, 2);
+	if (!ft_strncmp(command, "/", 1))
+	{
+		ft_putstr_fd(" : Is a directory", 2);
+		ft_putstr_fd("\n", 2);
+		cleanup_process(ast, cmd);
+		exit(126);
+	}
 	ft_putstr_fd(" : command not found", 2);
 	ft_putstr_fd("\n", 2);
 	cleanup_process(ast, cmd);

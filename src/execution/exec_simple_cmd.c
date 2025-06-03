@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 17:40:03 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:10:27 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 				*get_status_code() = 1;
 				return ;
 			}
-			execute_single_built(cmd, ast);
 			*get_status_code() = 0;
+			execute_single_built(cmd, ast);
 			return ;
 		}
 	}
