@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 15:10:27 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 19:35:24 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,23 @@ void	execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 	expand(ast);
 	cmd->pos = i;
 	cmd->pipeline = pipeline;
-	if (ast->args)
+	if (ast->args == NULL)
+		return ;
+	//if (ast->args)
+	//{
+	cmd->type = type_cmd(ast->args[0]);
+	if (cmd->type != -1 && cmd->pipeline->num_of_cmds == 1)
 	{
-		cmd->type = type_cmd(ast->args[0]);
-		if (cmd->type != -1 && cmd->pipeline->num_of_cmds == 1)
+		if (!(*get_parser_check()))
 		{
-			if (!(*get_parser_check()))
-			{
-				*get_status_code() = 1;
-				return ;
-			}
-			*get_status_code() = 0;
-			execute_single_built(cmd, ast);
+			*get_status_code() = 1;
 			return ;
 		}
+		*get_status_code() = 0; // TODO: update exit status code after execution.
+ 		execute_single_built(cmd, ast);
+		return ;
 	}
+	//}
 	exec_cmd(ast, cmd);
 }
 

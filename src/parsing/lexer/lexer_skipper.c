@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:05 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 15:13:53 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:14:24 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	is_operator(t_lexer *lexer)
 	int	c_next;
 
 	c = lexer->c;
+	if (!c)
+		return (0);
 	c_next = lexer->line[lexer->i + 1];
 	if (c == '|' || (c == '&' && c_next == '&')
 		|| c == '(' || c == ')')

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 16:58:28 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 19:26:15 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	cleanup_process(t_ast *ast, t_cmd *cmd)
 {
 	if (ast->redirect)
 		close_redirect(cmd->fds, cmd->num_of_redirect - 1);
+	free(*saved_pwd());
 	free_all_env(get_env_head());
 	free_all();
 }
@@ -39,18 +40,18 @@ void	wait_children(t_pipe *pipeline)
 	int	status;
 
 	i = 0;
-	while (i <= pipeline->counter)
+	status = 0;
+	if (pipeline->counter == -1)
+		return ;
+	waitpid(pipeline->pids[pipeline->counter], &status, 0);
+	while (i < pipeline->counter)
 	{
-		waitpid(pipeline->pids[i], &status, 0);
-		if (i == pipeline->counter)
-		{
-			if (WIFEXITED(status))
-				*get_status_code() = WEXITSTATUS(status);
-		}
+		wait(NULL);
 		i++;
 	}
-	if (WIFSIGNALED(status)
-		&& (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT))
+	if (WIFEXITED(status))
+		*get_status_code() = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
 			write(2, "\n", 1);
@@ -81,6 +82,7 @@ void	clean_and_exit(char *str, int nb)
 {
 	if (str)
 		perror(str);
+	free(*saved_pwd());
 	free_all_env(get_env_head());
 	free_all();
 	exit(nb);

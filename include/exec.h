@@ -27,10 +27,9 @@ typedef enum s_builtin_type
 typedef struct s_pipe
 {
 	int				**pipes;
-	int				num_of_cmds;
 	pid_t			*pids;
+	int				num_of_cmds;
 	int				counter;
-
 }					t_pipe;
 
 typedef struct s_cmd

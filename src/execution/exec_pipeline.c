@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:06:29 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 19:30:04 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ t_pipe	*init_pipes(t_ast *ast)
 
 	pipeline = ft_malloc(sizeof(t_pipe));
 	pipeline->num_of_cmds = ast_size(ast);
-	if (pipeline->num_of_cmds != 1)
-		alloc_pipe_fds(pipeline);
+	// printf("%d\n", pipeline->num_of_cmds );
+	//if (pipeline->num_of_cmds > 1)
+	alloc_pipe_fds(pipeline);
 	pipeline->pids = ft_malloc(sizeof(int) * pipeline->num_of_cmds);
 	pipeline->counter = -1;
 	return (pipeline);

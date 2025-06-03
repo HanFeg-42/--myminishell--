@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 16:45:43 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:57:56 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
 
 void	exec_cmd(t_ast *ast, t_cmd *cmd)
-{
+{ 
 	cmd->pipeline->counter++;
 	cmd->pipeline->pids[cmd->pipeline->counter] = fork();
 	if (cmd->pipeline->pids[cmd->pipeline->counter] < 0)
@@ -23,6 +23,7 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 	}
 	if (cmd->pipeline->pids[cmd->pipeline->counter] == 0)
 	{
+		//TODO: setup signals -> signal(SIGINT, SIG_DEF), signal(SIGQUIT, SIG_DEF), signal(SIGTERM, SIG_DEF)
 		if (!(*get_parser_check()))
 		{
 			close_all_pipes(cmd->pipeline);
