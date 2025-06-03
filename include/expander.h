@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/02 15:38:41 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:48:23 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ void ambiguous_redirect(char *err);
 void	arg_traversal(t_expand *exp, t_arg *arg);
 void	track_positions(char **star, char **p_pos, char **s, char **p);
 int	hidden_file_size(char **files);
+int	append_to_array(char ***var, size_t *size, char *append);
+char	**get_dirs(void);
 
 #endif

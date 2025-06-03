@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:07 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/01 15:52:19 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:40:22 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ t_token	*lexer_next_token(t_lexer *lexer)
 			return (NULL);
 		if (!is_special(lexer, 0))
 			return (lexer_advance_with(lexer, lexer_get_word(lexer)));
-		// if (lexer->i == lexer->line_size - 1)
-		// 	return (init_token(ft_strdup("newline"), EOI));
 	}
 	return (NULL);
 }

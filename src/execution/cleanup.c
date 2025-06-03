@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 14:04:28 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:04:41 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	wait_children(t_pipe *pipeline)
 		}
 		i++;
 	}
-	if (WIFSIGNALED(status))
+	if (WIFSIGNALED(status) &&
+		(WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT))
 	{
 		if (WTERMSIG(status) == SIGINT)
 			write(2, "\n", 1);

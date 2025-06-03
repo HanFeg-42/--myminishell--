@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/01 19:46:06 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:55:41 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	arg_traversal(t_expand *exp, t_arg *arg)
 
 	if (arg->value[0] == -3)
 		files = remove_hidden_files(exp->dir_files);
+	else if (arg->value[0] == '/')
+		files = get_dirs();
 	else
 		files = exp->dir_files;
 	if (!files)
@@ -47,8 +49,6 @@ void	arg_traversal(t_expand *exp, t_arg *arg)
 		if (is_match(files[i], remove_quotes(arg->value)))
 		{
 			arg->file = ft_realloc(arg->file, sizeof(char *) * (size + 2));
-			if (!arg->file)
-				return ;
 			arg->file[size++] = ft_strdup(files[i]);
 			arg->file[size] = NULL;
 		}
@@ -113,9 +113,34 @@ char	**get_files(void)
 	while (entry)
 	{
 		ret = ft_realloc(ret, sizeof(char *) * (i + 2));
-		if (!ret)
-			return (NULL);
 		ret[i++] = ft_strdup(entry->d_name);
+		ret[i] = NULL;
+		entry = readdir(dir);
+	}
+	closedir(dir);
+	return (ret);
+}
+
+char	**get_dirs(void)
+{
+	struct dirent	*entry;
+	DIR				*dir;
+	char			**ret;
+	int				i;
+
+	dir = opendir("/");
+	if (!dir)
+	{
+		perror("opendir failed");
+		return (NULL);
+	}
+	ret = NULL;
+	i = 0;
+	entry = readdir(dir);
+	while (entry)
+	{
+		ret = ft_realloc(ret, sizeof(char *) * (i + 2));
+		ret[i++] = ft_strjoin("/", entry->d_name);
 		ret[i] = NULL;
 		entry = readdir(dir);
 	}

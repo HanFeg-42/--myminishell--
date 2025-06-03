@@ -6,13 +6,12 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:49:58 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/31 17:44:29 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:20:43 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
 #include "../../../include/exec.h"
-
 
 char	*heredoc_expander(char *s)
 {
@@ -96,14 +95,14 @@ char	*skip_env_var(char *s)
 
 char	*ft_getenv(char *var)
 {
-	t_envp *current;
+	t_envp	*current;
 
 	current = *get_env_head();
 	while (current)
 	{
-	    if (ft_strcmp(current->key, var) == 0)
-	        return (current->value);
-	    current = current->next;
+		if (ft_strcmp(current->key, var) == 0)
+			return (current->value);
+		current = current->next;
 	}
 	return (NULL);
 }

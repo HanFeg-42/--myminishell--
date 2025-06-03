@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:10 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/01 13:09:06 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:40:05 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_token	*init_token(char *value, t_token_type type)
 	t_token	*tok;
 
 	tok = ft_malloc(sizeof(t_token));
-	if (!tok)
-		return (NULL);
 	tok->value = value;
 	tok->type = type;
 	tok->next = NULL;
@@ -34,7 +32,6 @@ t_token	*tokenizer(char *line)
 
 	lexer = init_lexer(line);
 	tok_head = NULL;
-	// token = NULL;
 	token = lexer_next_token(lexer);
 	while (token)
 	{
@@ -71,29 +68,3 @@ t_token	*token_last(t_token *tok_head)
 		current = current->next;
 	return (current);
 }
-
-void	token_print(t_token *tok)
-{
-	if (!tok)
-		printf("no token");
-	while (tok)
-	{
-		printf("%s \t-- its type : %d | ", tok->value, tok->type);
-		tok = tok->next;
-	}
-}
-
-// void token_free_list(t_token *tok)
-// {
-//     t_token *next;
-
-//     while (tok)
-//     {
-//         next = tok->next;
-//         if (tok->value && tok->type != EXPANSION)
-//             free(tok->value);
-//         if (tok)
-//             free(tok);
-//         tok = next;
-//     }
-// }

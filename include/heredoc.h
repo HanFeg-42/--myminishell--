@@ -18,5 +18,6 @@ void    	heredoc_handler(char *eof, t_file **redirect);
 t_heredoc	*init_heredoc(char *eof);
 void		heredoc(t_heredoc *hd);
 int	*get_heredoc_check(void);
+void	heredoc_error(char *nb_line, char *lim);
 
 #endif

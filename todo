@@ -4,9 +4,7 @@
 [done] export y=$x (x="a     b") {understand prb then fix it}
 [done] touch x=hi export x=* {do not expand}
 [done] fix is_numeric
-[ ] fix '/*' '*/' '*/*' etc (use entry)
-[ ] fix sigquit in heredoc
-[ ] fix is_numeric in exit
+[done] fix sigquit in heredoc
 [ ] fix '/*' '*/' '*/*' etc (use entry)
 [ ] fix syscall failure behavior
 [ ] fix norminette

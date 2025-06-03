@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 11:39:31 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:36:50 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ char	**copy_arr(char **arg)
 	while (arg[i])
 		i++;
 	ret = ft_malloc(sizeof(char *) * (i + 1));
-	if (!ret)
-		return (NULL);
 	i = 0;
 	while (arg[i])
 	{
@@ -75,8 +73,6 @@ t_arg	*arg_create(char *value)
 	if (!value)
 		return (NULL);
 	new = ft_malloc(sizeof(t_arg));
-	if (!new)
-		return (NULL);
 	new->value = value;
 	new->file = NULL;
 	new->next = NULL;

@@ -6,18 +6,11 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:05 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/01 15:51:29 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:13:53 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-t_token	*lexer_skip_comment(t_lexer *lexer)
-{
-	while (lexer->c)
-		lexer_advance(lexer);
-	return (NULL);
-}
 
 void	lexer_skip_whitespaces(t_lexer *lexer)
 {
@@ -25,7 +18,7 @@ void	lexer_skip_whitespaces(t_lexer *lexer)
 		lexer_advance(lexer);
 }
 
-int is_metacharacter(int c)
+int	is_metacharacter(int c)
 {
 	if (c == '\0' || ft_issapce(c)
 		|| c == '&' || c == '|'
