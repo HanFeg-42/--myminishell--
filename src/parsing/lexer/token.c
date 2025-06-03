@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:10 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/27 20:42:00 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:09:06 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token	*tokenizer(char *line)
 
 	lexer = init_lexer(line);
 	tok_head = NULL;
-	token = NULL;
+	// token = NULL;
 	token = lexer_next_token(lexer);
 	while (token)
 	{

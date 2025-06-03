@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 10:38:18 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:28:37 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,17 @@ void	wait_children(t_pipe *pipeline)
 		if (i == pipeline->counter)
 		{
 			if (WIFEXITED(status))
-				*get_status_code() = WEXITSTATUS(status);
+			*get_status_code() = WEXITSTATUS(status);
 		}
 		i++;
+	}
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			write(2, "\n", 1);
+		else if (WTERMSIG(status) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+		*get_status_code() = 128 + WTERMSIG(status);
 	}
 }
 

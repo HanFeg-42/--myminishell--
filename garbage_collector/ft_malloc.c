@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:18:55 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/02 15:36:49 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/02 17:39:23 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ t_gc	*gc_new(void *content)
 
 	new = malloc(sizeof(t_gc));
 	if (!new)
-		return (NULL);
+	{
+		perror("malloc");
+		free_all();
+		exit(EXIT_FAILURE);
+	}
 	new->addr = content;
 	new->next = NULL;
 	new->prev = NULL;

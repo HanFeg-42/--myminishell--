@@ -6,20 +6,33 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:16 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 11:23:32 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:28:08 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/exec.h"
 
-int	is_numeric(char *nbr)
+int	is_numeric(const char *a)
 {
-	int	i;
+	int		i;
+	int		sign;
+	long	res;
 
 	i = 0;
-	while (nbr[i])
+	sign = 1;
+	res = 0;
+	if (a[i] == '-' || a[i] == '+')
 	{
-		if (!ft_isdigit(nbr[i]))
+		if (a[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	if (!(a[i] >= '0' && a[i] <= '9'))
+		return (false);
+	while (a[i] >= '0' && a[i] <= '9')
+	{
+		res = res * 10 + a[i] - '0';
+		if (res > INT_MAX || res * sign < INT_MIN)
 			return (false);
 		i++;
 	}

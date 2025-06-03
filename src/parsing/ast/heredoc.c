@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 15:08:32 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:12:33 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,42 @@ t_heredoc	*init_heredoc(char *eof)
 	return (hd);
 }
 
+
+void  debug(int sig){
+	(void)sig;
+	write(2, "here\n", 6);
+}
+
 void	heredoc_handler(char *eof, t_file **redirect)
 {
 	t_heredoc	*hd;
 	pid_t		pid;
 	int			status;
+    // struct termios dflattr;
+    // struct termios modattr;
 
-	if (!(*get_heredoc_check()))
-		return ;
+	// tcgetattr(1, &dflattr);
+	// modattr = dflattr;
+	// modattr.c_cflag &= ~ECHOCTL;
+	// tcsetattr(1, TCSANOW,&modattr);
 	hd = init_heredoc(eof);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 		perror("faild to fork");//dffdxd
 	if (pid == 0)
-		heredoc2(hd);
+		heredoc(hd);
 	close(hd->fd);
+	signal(SIGINT, SIG_IGN);//hit ila madrtihach ghadi ybno juj d readlines c_a_d two lines
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	// tcgetattr(1, &dflattr);
+	// signal(SIGQUIT, SIG_IGN);
+
+	// if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	*get_status_code() = WEXITSTATUS(status);
+	if (*get_status_code() == 130)
 	{
-		// *get_status_code() = WEXITSTATUS(status);
 		*get_heredoc_check() = false;
 		return ;
 	}
@@ -76,8 +93,14 @@ void	sigint_handler(int sig)
 {
 	(void)sig;
 	free_all();
-	printf("\n");
+	write(1, "\n", 1);
 	exit(130);
+}
+
+void	sigquit_handler(int sig)
+{
+	(void)sig;
+	printf("\b");
 }
 
 void	heredoc_error(char *nb_line, char *lim)
@@ -89,28 +112,53 @@ void	heredoc_error(char *nb_line, char *lim)
 	ft_putstr_fd("')\n", 2);
 }
 
-void	heredoc2(t_heredoc *hd)
+// void	heredoc(t_heredoc *hd)
+// {
+// 	char	*line;
+// 	int		count;
+// 	signal(SIGINT, sigint_handler);
+// 	signal(SIGQUIT, SIG_IGN);
+// 	count = 1;
+// 	write(1, "> ", 2);
+// 	line = get_next_line(0);
+// 	if (!line)
+// 	heredoc_error(ft_itoa(count), hd->eof);
+// 	while (line && ft_strcmp(line, hd->lim))
+// 	{
+// 		count++;
+// 		if (hd->to_expand)
+// 			line = heredoc_expander(line);
+// 		write(hd->fd, line, ft_strlen(line));
+// 		free_one(line);
+// 		write(1, "> ", 2);
+// 		line = get_next_line(0);
+// 		if (!line)
+// 			heredoc_error(ft_itoa(count), hd->eof);
+// 	}
+// 	free_one(line);
+// 	free_all();
+// 	exit(EXIT_SUCCESS);
+// }
+void	heredoc(t_heredoc *hd)
 {
 	char	*line;
 	int		count;
-
 	signal(SIGINT, sigint_handler);
 	count = 1;
-	line = get_next_line(0);
+	line = readline("> ");
 	if (!line)
 		heredoc_error(ft_itoa(count), hd->eof);
-	while (line && ft_strcmp(line, hd->lim))
+	while (line && ft_strcmp(line, hd->eof))
 	{
 		count++;
 		if (hd->to_expand)
 			line = heredoc_expander(line);
-		write(hd->fd, line, ft_strlen(line));
-		free_one(line);
-		line = get_next_line(0);
+		write(hd->fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
+		free(line);
+		line = readline("> ");
 		if (!line)
 			heredoc_error(ft_itoa(count), hd->eof);
 	}
-	free_one(line);
 	free_all();
 	exit(EXIT_SUCCESS);
 }

@@ -59,7 +59,7 @@ SRC = src/main.c \
 		src/execution/env_helpers.c \
 		src/execution/cleanup.c
 
-# src = $(wildcard folder/f2/*.c) $(wildcard folder/*.c) 
+# src = $(wildcard folder/f2/*.c) $(wildcard folder/*.c)
 OBJ = ${SRC:.c=.o}
 
 LIBFT_DIR = ./libft

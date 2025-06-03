@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:05 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:45:10 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:51:29 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	lexer_skip_whitespaces(t_lexer *lexer)
 		lexer_advance(lexer);
 }
 
-int	is_special(int c)
+int is_metacharacter(int c)
 {
 	if (c == '\0' || ft_issapce(c)
 		|| c == '&' || c == '|'
@@ -36,9 +36,23 @@ int	is_special(int c)
 	return (0);
 }
 
-int	is_operator(int c)
+int	is_special(t_lexer *lexer, int i)
 {
-	if (c == '|' || c == '&' || c == '(' || c == ')')
+	if (lexer->line[lexer->i + i] == '&'
+		&& lexer->line[lexer->i + i + 1] != '&')
+		return (0);
+	return (is_metacharacter(lexer->line[lexer->i + i]));
+}
+
+int	is_operator(t_lexer *lexer)
+{
+	int	c;
+	int	c_next;
+
+	c = lexer->c;
+	c_next = lexer->line[lexer->i + 1];
+	if (c == '|' || (c == '&' && c_next == '&')
+		|| c == '(' || c == ')')
 		return (1);
 	return (0);
 }

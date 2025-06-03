@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:03 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/23 15:13:00 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/01 14:08:28 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char			*get_next_line(int fd);
 /*************************************/
 /*				herdoc				 */
 /*************************************/
-void			heredoc(char *eof, t_file **redirect);
+// void			heredoc(char *eof, t_file **redirect);
 int				is_quoted(char *eof);
 char			*remove_quotes(char *str);
 char			*heredoc_expander(char *s);

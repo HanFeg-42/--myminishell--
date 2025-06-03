@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:28:27 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 09:32:48 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:10:36 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_ast	*ast_simple_command(t_token **tokens)
 		if (is_token_redirect(*tokens))
 		{
 			io_redirect(tokens, simple_cmd);
-			if (!(*get_parser_check()))
+			if (!(*get_parser_check()) || !(*get_heredoc_check()))
 				return (NULL);
 		}
 		else if ((*tokens) && (*tokens)->type == WORD)

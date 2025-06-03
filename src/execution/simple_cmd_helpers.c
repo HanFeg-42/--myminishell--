@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:05:04 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:46:16 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
+
+void exec_sigint_handler(int sig)
+{
+	(void)sig;
+	free_all();
+	write(1, "\n", 1);
+	exit(130);
+}
 
 void	exec_cmd(t_ast *ast, t_cmd *cmd)
 {
@@ -28,8 +36,10 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 			close_all_pipes(cmd->pipeline);
 			exit(EXIT_FAILURE);
 		}
+		// signal(SIGINT, exec_sigint_handler);
 		handle_process(ast, cmd);
 	}
+	signal(SIGINT, SIG_IGN);
 }
 
 void	handle_process(t_ast *ast, t_cmd *cmd)
@@ -52,6 +62,7 @@ void	handle_process(t_ast *ast, t_cmd *cmd)
 	cmd->pathname = get_path(ast->args[0], cmd->envp);
 	if (!cmd->pathname)
 		handle_cmd_error(ast->args[0], ast, cmd);
+	signal(SIGQUIT, SIG_DFL);
 	execve(cmd->pathname, ast->args, cmd->envp);
 	cleanup_process(ast, cmd);
 	exit(126);
