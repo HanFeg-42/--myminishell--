@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 13:45:27 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:12:33 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	heredoc_handler(char *eof, t_file **redirect)
 	if (pid == 0)
 		heredoc(hd);
 	close(hd->fd);
+	signal(SIGINT, SIG_IGN);//hit ila madrtihach ghadi ybno juj d readlines c_a_d two lines
 	waitpid(pid, &status, 0);
 	// tcgetattr(1, &dflattr);
 	// signal(SIGQUIT, SIG_IGN);
@@ -96,9 +97,15 @@ void	sigint_handler(int sig)
 	exit(130);
 }
 
+void	sigquit_handler(int sig)
+{
+	(void)sig;
+	printf("\b");
+}
+
 void	heredoc_error(char *nb_line, char *lim)
 {
-	ft_putstr_fd("\nwarning: here-document at line ", 2);
+	ft_putstr_fd("warning: here-document at line ", 2);
 	ft_putstr_fd(nb_line, 2);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(lim, 2);
@@ -137,7 +144,6 @@ void	heredoc(t_heredoc *hd)
 	char	*line;
 	int		count;
 	signal(SIGINT, sigint_handler);
-	// signal(SIGQUIT, SIG_IGN);
 	count = 1;
 	line = readline("> ");
 	if (!line)
