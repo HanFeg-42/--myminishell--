@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 13:46:16 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:45:43 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
-
-void exec_sigint_handler(int sig)
-{
-	(void)sig;
-	free_all();
-	write(1, "\n", 1);
-	exit(130);
-}
 
 void	exec_cmd(t_ast *ast, t_cmd *cmd)
 {
@@ -36,7 +28,6 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 			close_all_pipes(cmd->pipeline);
 			exit(EXIT_FAILURE);
 		}
-		// signal(SIGINT, exec_sigint_handler);
 		handle_process(ast, cmd);
 	}
 	signal(SIGINT, SIG_IGN);

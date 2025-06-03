@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:42 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:00:43 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:18:31 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_envp	*env_create(char *key, char *value)
 	new->key = ft_str_dup(key);
 	if (value)
 		new->value = ft_str_dup(value);
+	else
+		new->value = NULL;
 	new->next = NULL;
 	return (new);
 }

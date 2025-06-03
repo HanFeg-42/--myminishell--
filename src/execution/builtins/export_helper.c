@@ -6,13 +6,13 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:59:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:08:11 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/03 10:41:58 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/exec.h"
 
-int	is_key_valid(char *arg, char *pos)
+int	is_key_valid(char *arg)
 {
 	int	i;
 
@@ -22,9 +22,9 @@ int	is_key_valid(char *arg, char *pos)
 	if (!(ft_isalpha(arg[i]) || arg[i] == '_'))
 		return (false);
 	i++;
-	while (arg[i] && (arg[i] == '_' || ft_isalnum(arg[i])) && &arg[i] < pos)
+	while (arg[i] && (arg[i] == '_' || ft_isalnum(arg[i])) && arg[i] != 61)
 		i++;
-	if (&arg[i] < pos)
+	if (arg[i] && arg[i] != 61)
 		return (false);
 	return (true);
 }
