@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ghita <ghita@student.42.fr>                +#+  +:+       +#+         #
+#    By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/30 17:35:22 by hfegrach          #+#    #+#              #
-#    Updated: 2025/05/24 13:50:52 by ghita            ###   ########.fr        #
+#    Updated: 2025/06/03 13:08:58 by hfegrach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	libft.a
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -fPIE
 RM		=	rm -f
 AR		=	ar -rcs
 SRCS	=	ft_isalpha.c \
@@ -70,7 +70,7 @@ B_OBJS	=	${B_SRCS:.c=.o}
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	$(AR) $(NAME)  $(OBJS)
 
 bonus: all $(B_OBJS)
 	$(AR) $(NAME) $(B_OBJS)
