@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 14:36:21 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:24:01 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**remove_hidden_files(char **files)
 	i = 0;
 	while (files[i])
 	{
-		if (files[i][0] != '.')
+		if (files[i][0] != '.' || !ft_strncmp(files[i], "/.", 2))
 			ret[j++] = ft_strdup(files[i]);
 		i++;
 	}

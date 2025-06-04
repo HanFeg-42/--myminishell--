@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 15:26:16 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:39:21 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_heredoc	*init_heredoc(char *eof)
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	free_all();
+	clean_and_exit("malloc", 1);
 	write(2, "\n", 1);
 	exit(130);
 }

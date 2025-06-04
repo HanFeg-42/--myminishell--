@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:19:47 by marvin            #+#    #+#             */
-/*   Updated: 2025/03/21 15:21:30 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:41:58 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_s1 = ft_strlen(s1);
 	size_s2 = ft_strlen(s2);
 	join = (char *)ft_malloc(sizeof(char) * size_s1 + size_s2 + 1);
-	if (!join)
-		return (NULL);
 	i = 0;
 	while (i < size_s1)
 	{

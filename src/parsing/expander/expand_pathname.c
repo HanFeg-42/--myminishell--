@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 16:55:41 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:19:03 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	expand_pathname(t_expand *exp)
 	while (arg)
 	{
 		if (ft_strchr(arg->value, -3)
-			&& (arg->prev->value
-				&& ft_strcmp("export", arg->prev->value)))
+			&& arg->prev != NULL
+			&& arg->prev->value != NULL
+			&& ft_strcmp("export", arg->prev->value))
 			arg_traversal(exp, arg);
 		arg = arg->next;
 	}
@@ -94,6 +95,28 @@ void	track_positions(char **star, char **p_pos, char **s, char **p)
 	}
 }
 
+void sort_strings(char **arr)
+{
+    int i;
+    char *tmp;
+    int sorted;
+
+	sorted = 0;
+    while (!sorted) {
+        sorted = 1;
+        i = 0;
+        while (arr[i + 1]) {
+            if (ft_strcmp(arr[i], arr[i + 1]) > 0) {
+                tmp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = tmp;
+                sorted = 0;
+            }
+            i++;
+        }
+    }
+}
+
 char	**get_files(void)
 {
 	struct dirent	*entry;
@@ -118,6 +141,7 @@ char	**get_files(void)
 		entry = readdir(dir);
 	}
 	closedir(dir);
+	sort_strings(ret);
 	return (ret);
 }
 
@@ -145,5 +169,6 @@ char	**get_dirs(void)
 		entry = readdir(dir);
 	}
 	closedir(dir);
-	return (ret);
+	sort_strings(ret);
+	return (remove_hidden_files(ret));
 }

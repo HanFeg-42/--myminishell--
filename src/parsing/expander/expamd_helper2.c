@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 14:36:50 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:26:18 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ t_arg	*arg_create(char *value)
 	new->value = value;
 	new->file = NULL;
 	new->next = NULL;
+	new->prev = NULL;
 	return (new);
 }
