@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 15:26:01 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:27:07 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,9 @@ void	heredoc(t_heredoc *hd)
 		if (hd->to_expand)
 			line = heredoc_expander(line);
 		write(hd->fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
-		free(line);
 		line = readline("> ");
 		if (!line)
 			heredoc_error(ft_itoa(count), hd->eof);
 	}
-	free_all();
-	exit(EXIT_SUCCESS);
+	clean_and_exit(NULL, EXIT_SUCCESS);
 }

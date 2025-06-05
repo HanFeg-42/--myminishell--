@@ -48,7 +48,7 @@ SRC = src/main.c \
 		src/parsing/expander/expand_param.c \
 		src/parsing/expander/field_split.c \
 		src/parsing/expander/expand_helper.c \
-		src/parsing/expander/expamd_helper2.c \
+		src/parsing/expander/expand_helper2.c \
 		src/parsing/expander/expand_pathname.c \
 		src/parsing/expander/expand_filename.c \
 		src/parsing/expander/quote_removal.c \

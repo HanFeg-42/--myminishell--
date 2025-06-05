@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 14:09:28 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/05 07:55:12 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include "../libft/libft.h"
 # include "gc.h"
 

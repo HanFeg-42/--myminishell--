@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:25 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 18:26:07 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:56:48 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*get_field(t_expand *exp)
 	if (!exp->word || !(*exp->word))
 		return (NULL);
 	ifs_pos = first_ifs_occ(exp->word);
-	if (!ifs_pos || (exp->args[exp->i - 1]
+	if (!ifs_pos || (exp->i > 1 && exp->args[exp->i - 1]
 			&& !ft_strcmp("export", exp->args[exp->i - 1])))
 	{
 		ret = ft_strdup(exp->word);

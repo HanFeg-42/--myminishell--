@@ -11,6 +11,6 @@
 [ ] understand Anci quoting |  positional parameters
 [ ] understand signals
 [ ] ...
-
+[] fix: exit should not print when it it forked
 [] we should not setup all pipes at once, we should set them up while forking. fork dup close repeat
 [] make one cleanup function and call it in heredoc and child process.

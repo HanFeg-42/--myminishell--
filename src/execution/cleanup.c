@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 19:26:15 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:26:20 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void	clean_and_exit(char *str, int nb)
 {
 	if (str)
 		perror(str);
-	free(*saved_pwd());
+	if (*saved_pwd())
+		free(*saved_pwd());
 	free_all_env(get_env_head());
 	free_all();
 	exit(nb);

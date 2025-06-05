@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 16:48:23 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:14:02 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_expand
 char				**expander(char **args);
 t_expand			*init_expand(char **args);
 void				expand_param(t_expand *exp);
+char	**get_dirs(void);
 // void				copy_characters_until_quote(t_expand *exp);
 // void				expand_inside_double_quote(t_expand *exp);
 // void				expand_unquoted(t_expand *exp);
@@ -78,6 +79,6 @@ void	arg_traversal(t_expand *exp, t_arg *arg);
 void	track_positions(char **star, char **p_pos, char **s, char **p);
 int	hidden_file_size(char **files);
 int	append_to_array(char ***var, size_t *size, char *append);
-char	**get_dirs(void);
+char	**get_root_dirs(void);
 
 #endif

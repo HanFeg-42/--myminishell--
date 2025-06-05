@@ -6,11 +6,12 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/04 13:19:03 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:13:29 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/expander.h"
+#include <dirent.h>
 
 void	expand_pathname(t_expand *exp)
 {
@@ -21,9 +22,10 @@ void	expand_pathname(t_expand *exp)
 	while (arg)
 	{
 		if (ft_strchr(arg->value, -3)
-			&& arg->prev != NULL
-			&& arg->prev->value != NULL
-			&& ft_strcmp("export", arg->prev->value))
+			&& (arg->prev == NULL
+				|| (arg->prev != NULL
+				&& arg->prev->value != NULL
+				&& ft_strcmp("export", arg->prev->value))))
 			arg_traversal(exp, arg);
 		arg = arg->next;
 	}
@@ -38,6 +40,8 @@ void	arg_traversal(t_expand *exp, t_arg *arg)
 	if (arg->value[0] == -3)
 		files = remove_hidden_files(exp->dir_files);
 	else if (arg->value[0] == '/')
+		files = get_root_dirs();
+	else if (*(arg->value + ft_strlen(arg->value) - 1) == '/')
 		files = get_dirs();
 	else
 		files = exp->dir_files;
@@ -145,7 +149,7 @@ char	**get_files(void)
 	return (ret);
 }
 
-char	**get_dirs(void)
+char	**get_root_dirs(void)
 {
 	struct dirent	*entry;
 	DIR				*dir;
@@ -171,4 +175,46 @@ char	**get_dirs(void)
 	closedir(dir);
 	sort_strings(ret);
 	return (remove_hidden_files(ret));
+}
+
+int	is_directory(char *pathname)
+{
+	struct stat	statbuf;
+
+	stat(pathname, &statbuf);
+	return (S_ISDIR(statbuf.st_mode));
+}
+
+char	**get_dirs(void)
+{
+	struct dirent	*entry;
+	DIR				*dir;
+	char			**ret;
+	int				i;
+
+	dir = opendir(".");
+	if (!dir)
+	{
+		perror("opendir failed");
+		return (NULL);
+	}
+	ret = NULL;
+	i = 0;
+	entry = readdir(dir);
+	while (entry)
+	{
+		ret = ft_realloc(ret, sizeof(char *) * (i + 2));
+		if (is_directory(entry->d_name))
+		{
+			ret[i++] = ft_strjoin(entry->d_name, "/");
+			printf("dirr\n");
+			ret[i] = NULL;
+		}
+		entry = readdir(dir);
+	}
+	closedir(dir);
+	sort_strings(ret);
+	if (!ret)
+		printf("khawia\n");
+	return (ret);
 }
