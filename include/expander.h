@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/04 16:14:02 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:22:23 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_expand
 char				**expander(char **args);
 t_expand			*init_expand(char **args);
 void				expand_param(t_expand *exp);
-char	**get_dirs(void);
+char	**get_dirs(char	**files);
 // void				copy_characters_until_quote(t_expand *exp);
 // void				expand_inside_double_quote(t_expand *exp);
 // void				expand_unquoted(t_expand *exp);
@@ -62,7 +62,7 @@ void				match_star(t_expand *exp, char **files, t_arg *arg);
 char				**remove_hidden_files(char **files);
 t_arg				*arg_addmid(t_arg **head, t_arg *mid, t_arg *new);
 void				replace_unquoted_asterisk(t_expand *exp);
-char				**get_files(void);
+char				**get_cwd_files(void);
 char				**remove_quotes_from_all(t_expand *exp);
 char				*undo_char_changes(char *str);
 int					arg_size(t_arg *arg);

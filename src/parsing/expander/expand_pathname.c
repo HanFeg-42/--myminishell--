@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/05 08:13:29 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:25:24 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,34 @@ void	expand_pathname(t_expand *exp)
 	}
 }
 
+char	**get_files(t_expand *exp, t_arg *arg)
+{
+	if (arg->value[0] == -3 && !ft_strchr(arg->value, '/'))
+		return(remove_hidden_files(exp->dir_files));
+	else if (arg->value[0] == '/')
+		return(get_root_dirs());
+	else if (*(arg->value + ft_strlen(arg->value) - 1) == '/')
+		return(get_dirs(exp->dir_files));
+	else
+		return(exp->dir_files);
+	return (NULL);
+}
+
 void	arg_traversal(t_expand *exp, t_arg *arg)
 {
 	int		i;
 	int		size;
 	char	**files;
 
-	if (arg->value[0] == -3)
-		files = remove_hidden_files(exp->dir_files);
-	else if (arg->value[0] == '/')
-		files = get_root_dirs();
-	else if (*(arg->value + ft_strlen(arg->value) - 1) == '/')
-		files = get_dirs();
-	else
-		files = exp->dir_files;
+	// if (arg->value[0] == -3)
+	// 	files = remove_hidden_files(exp->dir_files);
+	// else if (arg->value[0] == '/')
+	// 	files = get_root_dirs();
+	// else if (*(arg->value + ft_strlen(arg->value) - 1) == '/')
+	// 	files = get_dirs(exp->dir_files);
+	// else
+	// 	files = exp->dir_files;
+	files = get_files(exp, arg);
 	if (!files)
 		return ;
 	i = 0;
@@ -121,7 +135,7 @@ void sort_strings(char **arr)
     }
 }
 
-char	**get_files(void)
+char	**get_cwd_files(void)
 {
 	struct dirent	*entry;
 	DIR				*dir;
@@ -181,40 +195,30 @@ int	is_directory(char *pathname)
 {
 	struct stat	statbuf;
 
-	stat(pathname, &statbuf);
-	return (S_ISDIR(statbuf.st_mode));
+	if (!stat(pathname, &statbuf))
+		return (S_ISDIR(statbuf.st_mode));
+	return (false);
 }
 
-char	**get_dirs(void)
+char	**get_dirs(char	**files)
 {
-	struct dirent	*entry;
-	DIR				*dir;
 	char			**ret;
 	int				i;
+	int				j;
 
-	dir = opendir(".");
-	if (!dir)
-	{
-		perror("opendir failed");
-		return (NULL);
-	}
 	ret = NULL;
 	i = 0;
-	entry = readdir(dir);
-	while (entry)
+	j = 0;
+	while (files[j])
 	{
-		ret = ft_realloc(ret, sizeof(char *) * (i + 2));
-		if (is_directory(entry->d_name))
+		if (is_directory(files[j]))
 		{
-			ret[i++] = ft_strjoin(entry->d_name, "/");
-			printf("dirr\n");
+			ret = ft_realloc(ret, sizeof(char *) * (i + 2));
+			ret[i++] = ft_strjoin(files[j], "/");
 			ret[i] = NULL;
 		}
-		entry = readdir(dir);
+		j++;
 	}
-	closedir(dir);
 	sort_strings(ret);
-	if (!ret)
-		printf("khawia\n");
-	return (ret);
+	return (remove_hidden_files(ret));
 }
