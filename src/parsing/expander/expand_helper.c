@@ -27,7 +27,7 @@ char	**remove_hidden_files(char **files)
 	i = 0;
 	while (files[i])
 	{
-		if (files[i][0] != '.' || !ft_strncmp(files[i], "/.", 2))
+		if (files[i][0] != '.' && ft_strncmp(files[i], "/.", 2))
 			ret[j++] = ft_strdup(files[i]);
 		i++;
 	}
@@ -44,7 +44,7 @@ int	hidden_file_size(char **files)
 	i = 0;
 	while (files[i])
 	{
-		if (files[i][0] != '.')
+		if (files[i][0] != '.' && ft_strncmp(files[i], "/.", 2))
 			size++;
 		i++;
 	}

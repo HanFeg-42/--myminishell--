@@ -36,7 +36,7 @@ char	**get_files(t_expand *exp, t_arg *arg)
 	if (arg->value[0] == -3 && !ft_strchr(arg->value, '/'))
 		return(remove_hidden_files(exp->dir_files));
 	else if (arg->value[0] == '/')
-		return(get_root_dirs());
+		return(remove_hidden_files(get_root_dirs()));
 	else if (*(arg->value + ft_strlen(arg->value) - 1) == '/')
 		return(get_dirs(exp->dir_files));
 	else
@@ -50,14 +50,6 @@ void	arg_traversal(t_expand *exp, t_arg *arg)
 	int		size;
 	char	**files;
 
-	// if (arg->value[0] == -3)
-	// 	files = remove_hidden_files(exp->dir_files);
-	// else if (arg->value[0] == '/')
-	// 	files = get_root_dirs();
-	// else if (*(arg->value + ft_strlen(arg->value) - 1) == '/')
-	// 	files = get_dirs(exp->dir_files);
-	// else
-	// 	files = exp->dir_files;
 	files = get_files(exp, arg);
 	if (!files)
 		return ;
@@ -188,7 +180,7 @@ char	**get_root_dirs(void)
 	}
 	closedir(dir);
 	sort_strings(ret);
-	return (remove_hidden_files(ret));
+	return (ret);
 }
 
 int	is_directory(char *pathname)
