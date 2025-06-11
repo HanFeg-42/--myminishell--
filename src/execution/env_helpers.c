@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:42 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 14:18:31 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**convert_envp(void)
 
 	old_envp = get_env_head();
 	size = envp_size(old_envp);
-	envp = ft_malloc(sizeof(char *) * (size + 1));
+	envp = gc_alloc(sizeof(char *) * (size + 1));
 	if (!envp)
 		return (NULL);
 	current = *old_envp;

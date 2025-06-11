@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:12:37 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 15:12:55 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*remove_quotes(char *str)
 	char	*ret;
 
 	int (stat), (i), (j);
-	ret = ft_malloc(sizeof(char) * (ft_strlen(str) + 1));
+	ret = gc_alloc(sizeof(char) * (ft_strlen(str) + 1));
 	stat = 0;
 	i = 0;
 	j = 0;
@@ -68,9 +68,7 @@ char	*remove_quotes(char *str)
 
 int	is_quoted(char *eof)
 {
-	if (ft_strchr(eof, 34) || ft_strchr(eof, 39))
-		return (true);
-	return (false);
+	return (ft_strchr(eof, 34) || ft_strchr(eof, 39));
 }
 
 char	*undo_char_changes(char *str)

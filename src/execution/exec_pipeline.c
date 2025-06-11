@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 19:30:04 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	alloc_pipe_fds(t_pipe *pipeline)
 	int	i;
 
 	i = 0;
-	pipeline->pipes = ft_malloc(sizeof(int *) * (pipeline->num_of_cmds - 1));
+	pipeline->pipes = gc_alloc(sizeof(int *) * (pipeline->num_of_cmds - 1));
 	while (i < pipeline->num_of_cmds - 1)
 	{
-		pipeline->pipes[i] = ft_malloc(sizeof(int) * 2);
+		pipeline->pipes[i] = gc_alloc(sizeof(int) * 2);
 		i++;
 	}
 }
@@ -51,12 +51,12 @@ t_pipe	*init_pipes(t_ast *ast)
 {
 	t_pipe	*pipeline;
 
-	pipeline = ft_malloc(sizeof(t_pipe));
+	pipeline = gc_alloc(sizeof(t_pipe));
 	pipeline->num_of_cmds = ast_size(ast);
 	// printf("%d\n", pipeline->num_of_cmds );
 	//if (pipeline->num_of_cmds > 1)
 	alloc_pipe_fds(pipeline);
-	pipeline->pids = ft_malloc(sizeof(int) * pipeline->num_of_cmds);
+	pipeline->pids = gc_alloc(sizeof(int) * pipeline->num_of_cmds);
 	pipeline->counter = -1;
 	return (pipeline);
 }

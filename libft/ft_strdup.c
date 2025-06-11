@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 00:38:51 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/03 21:42:59 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup(const char *str)
 	char	*ret;
 	int		i;
 
-	ret = ft_malloc(sizeof(char) * (ft_strlen(str) + 1));
+	ret = gc_alloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!ret)
 		return (NULL);
 	i = 0;

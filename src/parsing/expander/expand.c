@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:00:42 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/05 20:22:48 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_expand	*init_expand(char **args)
 {
 	t_expand	*exp;
 
-	exp = ft_malloc(sizeof(t_expand));
+	exp = gc_alloc(sizeof(t_expand));
 	exp->arg = NULL;
 	exp->args = copy_arr(args);
 	exp->i = 0;

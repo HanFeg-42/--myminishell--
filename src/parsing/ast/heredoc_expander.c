@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:49:58 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 15:20:43 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:58:59 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*replace_quotes(char *var)
 
 	if (!var)
 		return (NULL);
-	ret = ft_malloc(sizeof(char) * (ft_strlen(var) + 1));
+	ret = gc_alloc(sizeof(char) * (ft_strlen(var) + 1));
 	if (!ret)
 		return (NULL);
 	i = 0;

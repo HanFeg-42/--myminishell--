@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:44 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 15:19:26 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	get_basics(void)
 	char	**basics;
 
 	*saved_pwd() = getcwd(NULL, 0);
-	basics = ft_malloc(sizeof(char *) * 5);
+	basics = gc_alloc(sizeof(char *) * 5);
 	if (!basics)
 	{
 		set_exec_error("malloc", 1);

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:10 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 14:40:05 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*init_token(char *value, t_token_type type)
 {
 	t_token	*tok;
 
-	tok = ft_malloc(sizeof(t_token));
+	tok = gc_alloc(sizeof(t_token));
 	tok->value = value;
 	tok->type = type;
 	tok->next = NULL;

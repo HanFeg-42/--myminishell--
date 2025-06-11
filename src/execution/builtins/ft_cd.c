@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:06 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 01:20:10 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	update_env(char *old_pwd, char *new_pwd)
 {
 	char	**elems;
 
-	elems = ft_malloc(sizeof(char *) * 3);
+	elems = gc_alloc(sizeof(char *) * 3);
 	if (!elems)
 	{
 		set_exec_error("malloc:", 1);

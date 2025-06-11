@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/04 20:27:07 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:22:14 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	heredoc_handler(char *eof, t_file **redirect)
 	if (pid == 0)
 		heredoc(hd);
 	close(hd->fd);
-	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	*get_status_code() = WEXITSTATUS(status);
 	if (*get_status_code() == 130)

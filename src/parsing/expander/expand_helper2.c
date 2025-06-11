@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expamd_helper2.c                                   :+:      :+:    :+:   */
+/*   expand_helper2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/04 12:26:18 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**copy_arr(char **arg)
 	i = 0;
 	while (arg[i])
 		i++;
-	ret = ft_malloc(sizeof(char *) * (i + 1));
+	ret = gc_alloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (arg[i])
 	{
@@ -72,7 +72,7 @@ t_arg	*arg_create(char *value)
 
 	if (!value)
 		return (NULL);
-	new = ft_malloc(sizeof(t_arg));
+	new = gc_alloc(sizeof(t_arg));
 	new->value = value;
 	new->file = NULL;
 	new->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:48:12 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 09:48:48 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_ast	*ast_create(t_ast_type type)
 {
 	t_ast	*new;
 
-	new = ft_malloc(sizeof(t_ast));
+	new = gc_alloc(sizeof(t_ast));
 	if (!new)
 		return (NULL);
 	new->type = type;

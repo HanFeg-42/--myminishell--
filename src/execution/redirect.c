@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:04:54 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	*open_redirects(t_file *redirect)
 	int		num_of_redirect;
 
 	num_of_redirect = num_of_redirects(redirect);
-	fds = ft_malloc(sizeof(int) * num_of_redirect);
+	fds = gc_alloc(sizeof(int) * num_of_redirect);
 	i = 0;
 	current = redirect;
 	while (current)

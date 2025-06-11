@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:07 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 14:40:22 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_lexer	*init_lexer(char *line)
 {
 	t_lexer	*lexer;
 
-	lexer = ft_malloc(sizeof(t_lexer));
+	lexer = gc_alloc(sizeof(t_lexer));
 	lexer->line = ft_strdup(line);
 	lexer->i = 0;
 	lexer->c = line[0];

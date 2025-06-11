@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:23 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:00:24 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/06 09:58:26 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,14 @@ void	free_env(void *key)
 	if (!ft_strcmp(curr->key, key))
 	{
 		*envp = (*envp)->next;
-		free(curr);
-		return ;
+		return (free(curr->key), free(curr->value), free(curr)); // fix norm
 	}
 	while (curr)
 	{
 		if (!ft_strcmp(curr->key, key))
 		{
 			prev->next = curr->next;
-			return (free(curr));
+			return (free(curr->key), free(curr->value), free(curr)); //fix norm
 		}
 		prev = curr;
 		curr = curr->next;

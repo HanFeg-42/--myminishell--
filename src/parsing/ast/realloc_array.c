@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:03:38 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 14:37:07 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	*ft_realloc(void *ptr, size_t size)
 	char	**new_ptr;
 
 	if (!ptr)
-		return (ft_malloc(size));
-	new_ptr = ft_malloc(size);
+		return (gc_alloc(size));
+	new_ptr = gc_alloc(size);
 	copy_ptr(ptr, new_ptr, size);
 	free_old_ptr(ptr);
 	return (new_ptr);

@@ -6,12 +6,11 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/05 20:25:24 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:24:04 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/expander.h"
-#include <dirent.h>
 
 void	expand_pathname(t_expand *exp)
 {

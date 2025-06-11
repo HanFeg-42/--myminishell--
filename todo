@@ -36,7 +36,7 @@ Minishell > echo *
 ==7116==    by 0x10963C: main (main.c:50)
 ==7116==  Address 0x4b5b0f0 is 0 bytes after a block of size 80 alloc'd
 ==7116==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==7116==    by 0x10A2E1: ft_malloc (ft_malloc.c:19)
+==7116==    by 0x10A2E1: gc_alloc (gc_alloc.c:19)
 ==7116==    by 0x10DFE8: remove_hidden_files (expand_helper.c:25)
 ==7116==    by 0x10E58F: get_files (expand_pathname.c:37)
 ==7116==    by 0x10E61A: arg_traversal (expand_pathname.c:53)

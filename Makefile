@@ -17,7 +17,7 @@ SRC = src/main.c \
 		src/parsing/lexer/getters.c \
 		garbage_collector/free_address.c \
 		garbage_collector/free_all.c \
-		garbage_collector/ft_malloc.c \
+		garbage_collector/gc_alloc.c \
 		garbage_collector/getter.c  \
 		src/parsing/ast/ast.c \
 		src/parsing/ast/ast_redirect.c \

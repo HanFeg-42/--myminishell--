@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/27 20:07:18 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:56:41 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	expand_param(t_expand *exp)
 	exp->word = ft_strdup("");
 	while (exp->pos < (int)ft_strlen(word) && word[exp->pos])
 	{
-		if (word[exp->pos] == 34 && exp->stat == 0)
+		if (word[exp->pos] == '"' && exp->stat == 0)
 			expand_inside_double_quote(exp, word);
-		else if ((word[exp->pos] == 34 && exp->stat == 1)
-			|| (word[exp->pos] == 39 && exp->stat == 2))
+		else if ((word[exp->pos] == '"' && exp->stat == 1)
+			|| (word[exp->pos] == '\'' && exp->stat == 2))
 			expand_unquoted(exp, word);
-		else if (word[exp->pos] == 39 && exp->stat == 0)
+		else if (word[exp->pos] == '\'' && exp->stat == 0)
 			copy_characters_until_quote(exp, word);
 		else
 			expand_unquoted(exp, word);
@@ -39,12 +39,12 @@ void	copy_characters_until_quote(t_expand *exp, char *file)
 
 	exp->stat = 2;
 	curr_pos = file + exp->pos;
-	sq_pos = ft_strchr(curr_pos + 1, 39);
+	sq_pos = ft_strchr(curr_pos + 1, '\'');
 	exp->word = ft_strjoin(exp->word,
 			ft_substr(curr_pos, 0, sq_pos - curr_pos));
 	exp->pos += sq_pos - curr_pos;
 }
-
+//A refaire
 void	expand_inside_double_quote(t_expand *exp, char *file)
 {
 	char	*dq_pos;
@@ -70,7 +70,7 @@ void	expand_inside_double_quote(t_expand *exp, char *file)
 	}
 	exp->pos += dq_pos - file - exp->pos;
 }
-
+//A refaire
 void	expand_unquoted(t_expand *exp, char *file)
 {
 	char	*dollar_pos;

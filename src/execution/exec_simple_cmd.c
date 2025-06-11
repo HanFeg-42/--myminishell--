@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/04 20:03:31 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
 	t_cmd	*cmd;
 
-	cmd = ft_malloc(sizeof(t_cmd));
+	cmd = gc_alloc(sizeof(t_cmd));
 	expand(ast);
 	cmd->pos = i;
 	cmd->pipeline = pipeline;

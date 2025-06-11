@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:28:27 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/01 14:11:43 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_file	*redirect_create(int type, char *filename)
 {
 	t_file	*redirect_file;
 
-	redirect_file = ft_malloc(sizeof(t_file));
+	redirect_file = gc_alloc(sizeof(t_file));
 	if (!redirect_file)
 		return (NULL);
 	redirect_file->filename = ft_strdup(filename);

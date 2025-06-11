@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 21:39:21 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_heredoc	*init_heredoc(char *eof)
 {
 	t_heredoc	*hd;
 
-	hd = ft_malloc(sizeof(t_heredoc));
+	hd = gc_alloc(sizeof(t_heredoc));
 	if (!hd)
 		return (NULL);
 	hd->eof = remove_quotes(eof);
@@ -48,9 +48,8 @@ t_heredoc	*init_heredoc(char *eof)
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	clean_and_exit("malloc", 1);
 	write(2, "\n", 1);
-	exit(130);
+	clean_and_exit(NULL, 130);
 }
 
 void	heredoc_error(char *nb_line, char *lim)

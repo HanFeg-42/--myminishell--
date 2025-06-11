@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 06:15:40 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/09 13:47:00 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_itoa(int nbr)
 	i = 0;
 	n = nbr;
 	d = 1;
-	s = ft_malloc(sizeof(char) * (nbr_size(n, d) + 1));
+	s = gc_alloc(sizeof(char) * (nbr_size(n, d) + 1));
 	if (!s)
 		return (NULL);
 	if (n < 0)

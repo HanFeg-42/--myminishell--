@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 21:22:18 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/01 20:56:52 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**ft_split(char const *s, char c)
 	a = 0;
 	if (!s)
 		return (NULL);
-	ret = ft_malloc(sizeof(char *) * (ft_countword(s, c) + 1));
+	ret = gc_alloc(sizeof(char *) * (ft_countword(s, c) + 1));
 	if (!ret)
 		return (NULL);
 	ret = ft_slices(ret, s, c, a);

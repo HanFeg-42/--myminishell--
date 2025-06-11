@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.c                                        :+:      :+:    :+:   */
+/*   gc_alloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:18:55 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/02 17:39:23 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:31:32 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/gc.h"
 #include "../include/exec.h"
-void	*ft_malloc(size_t size)
+void	*gc_alloc(size_t size)
 {
 	void	*ret;
 

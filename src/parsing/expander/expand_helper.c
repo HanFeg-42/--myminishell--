@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/05 20:27:27 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**remove_hidden_files(char **files)
 
 	i = 0;
 	ret = NULL;
-	ret = ft_malloc(sizeof(char *) * (hidden_file_size(files) + 1));
+	ret = gc_alloc(sizeof(char *) * (hidden_file_size(files) + 1));
 	j = 0;
 	i = 0;
 	while (files[i])

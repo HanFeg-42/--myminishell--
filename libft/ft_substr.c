@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:19:50 by marvin            #+#    #+#             */
-/*   Updated: 2025/03/21 15:20:16 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size = ft_strlen(s);
 	if (start >= size)
 	{
-		ret = ft_malloc(1);
+		ret = gc_alloc(1);
 		if (!ret)
 			return (NULL);
 		ret[0] = '\0';
@@ -31,7 +31,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	if (len > size - start)
 		len = size - start;
-	ret = ft_malloc(sizeof(char) * (len + 1));
+	ret = gc_alloc(sizeof(char) * (len + 1));
 	if (!ret)
 		return (NULL);
 	i = 0;

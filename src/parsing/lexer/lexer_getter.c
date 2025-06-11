@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:02 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/03 14:42:01 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*lexer_get_word(t_lexer *lexer)
 	int		i;
 
 	word_size = get_word_size(lexer);
-	word = ft_malloc((word_size + 1) * sizeof(char));
+	word = gc_alloc((word_size + 1) * sizeof(char));
 	i = 0;
 	while (i < word_size)
 	{
