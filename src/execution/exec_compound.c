@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:56 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 18:23:24 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:04:29 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_compound(t_ast *ast)
 {
 	t_ast	*current;
 
-	if (!ast || !(*get_parser_check()))
+	if (!ast)
 		return ;
 	current = ast->first_child;
 	while (current)

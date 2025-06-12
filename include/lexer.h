@@ -6,14 +6,13 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:16 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/01 15:18:28 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:42:06 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-// About token
 typedef enum e_token_type
 {
 	ID,
@@ -30,7 +29,6 @@ typedef enum e_token_type
 	EOI
 }					t_token_type;
 
-//token
 typedef struct s_token
 {
 	char			*value;
@@ -77,8 +75,6 @@ int				is_operator(t_lexer *lexer);
 int				is_redirection(int c);
 
 // unwanted function
-void			throw_error(char *err);
-void			finish(char *line);
 int				get_word_size(t_lexer *lexer);
 void			advance_to_next_quote(t_lexer *lexer, int *i, int quote);
 int				ft_strcmp(const char *s1, const char *s2);

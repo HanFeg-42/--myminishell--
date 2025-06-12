@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_seters.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:47 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 16:47:22 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/12 16:24:04 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int	*get_error_check(void)
 {
-	static int	check;
+	static int	check = true;
 
-	check = true;
 	return (&check);
 }
 

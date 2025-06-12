@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getters.c                                          :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:41:56 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/27 20:42:43 by hfegrach         ###   ########.fr       */
+/*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/12 17:12:23 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "../../include/exec.h"
+#include "../../include/minishell.h"
 
-int	*get_parser_check(void)
+void handler_SIGINT(int sig)
 {
-	static int	check = true;
-
-	return (&check);
+    (void)sig;
+	write(1, "\n", 1);
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
+	*get_status_code() = 130;
 }
-
-int	*get_heredoc_check(void)
+void	restore_signal_handler()
 {
-	static int	check = true;
-
-	return (&check);
+	signal(SIGINT, handler_SIGINT);
 }

@@ -14,7 +14,8 @@ SRC = src/main.c \
 		src/parsing/lexer/lexer_advancer.c \
 		src/parsing/lexer/lexer_getter.c \
 		src/parsing/lexer/lexer_skipper.c \
-		src/parsing/lexer/getters.c \
+		src/getters/getters.c \
+		src/getters/reset_getter.c \
 		garbage_collector/free_address.c \
 		garbage_collector/free_all.c \
 		garbage_collector/gc_alloc.c \
@@ -56,7 +57,8 @@ SRC = src/main.c \
 		src/execution/get_path.c \
 		src/execution/error_seters.c \
 		src/execution/env_helpers.c \
-		src/execution/cleanup.c
+		src/execution/cleanup.c \
+		src/signals/signal.c
 
 # src = $(wildcard folder/f2/*.c) $(wildcard folder/*.c)
 OBJ = ${SRC:.c=.o}

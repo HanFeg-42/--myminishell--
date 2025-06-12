@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/05 07:55:12 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:13:39 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@
 
 void    handler_SIGINT(int sig);
 void	sigint_handler(int sig);
+void	restore_signal_handler();
+void	reset_checker_state();
 #endif
