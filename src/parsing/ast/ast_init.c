@@ -62,3 +62,14 @@ void	token_advance(t_token **token)
 		return ;
 	*token = (*token)->next;
 }
+
+void	add_args(t_token **token, t_ast *simple_cmd)
+{
+	simple_cmd->args = ft_realloc(simple_cmd->args,
+			sizeof(char *) * (simple_cmd->i + 2));
+	if (!simple_cmd->args)
+		return ;
+	simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
+	simple_cmd->args[simple_cmd->i] = NULL;
+	token_advance(token);
+}

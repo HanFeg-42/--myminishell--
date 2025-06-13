@@ -23,12 +23,10 @@ SRC = src/main.c \
 		src/parsing/ast/ast.c \
 		src/parsing/ast/ast_redirect.c \
 		src/parsing/ast/ast_init.c \
-		src/parsing/ast/ast_helper2.c \
+		src/parsing/ast/ast_utils.c \
 		src/parsing/ast/parser.c \
 		src/parsing/ast/heredoc.c \
 		src/expansion/utils.c \
-		src/parsing/ast/heredoc_helper.c \
-		src/parsing/ast/realloc_array.c \
 		src/execution/env.c \
 		src/execution/exec_compound.c \
 		src/execution/exec_command.c \

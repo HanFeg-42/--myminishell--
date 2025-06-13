@@ -34,7 +34,9 @@
 # include "expander.h"
 
 void    handler_SIGINT(int sig);
-void	sigint_handler(int sig);
+void	sigint_handler_in_heredoc(int sig);
 void	restore_signal_handler();
 void	reset_checker_state();
+void	setup_signals();
+
 #endif

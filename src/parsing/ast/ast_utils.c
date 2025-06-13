@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   realloc_array.c                                    :+:      :+:    :+:   */
+/*   ast_helper2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:03:38 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 01:25:47 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
+#include "../../../include/exec.h"
+
+int	is_empty_cmd(t_ast *simple_cmd)
+{
+	return (!simple_cmd->args && !simple_cmd->redirect);
+}
+
+int	check_and_or_token(t_token *token)
+{
+	if (!token)
+		return (-1);
+	if (token->type == AND)
+		return (AST_AND);
+	else if (token->type == OR)
+		return (AST_OR);
+	return (-1);
+}
 
 void	*ft_realloc(void *ptr, size_t size)
 {

@@ -22,7 +22,21 @@ void handler_SIGINT(int sig)
     rl_redisplay();
 	*get_status_code() = 130;
 }
+
 void	restore_signal_handler()
 {
 	signal(SIGINT, handler_SIGINT);
 }
+
+void	setup_signals()
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+void	sigint_handler_in_heredoc(int sig)
+{
+	(void)sig;
+	write(2, "\n", 1);
+	clean_and_exit(NULL, 130);
+}
+

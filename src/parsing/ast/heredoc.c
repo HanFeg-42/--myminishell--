@@ -14,6 +14,37 @@
 #include "../../../include/exec.h"
 #include "../../../include/heredoc.h"
 
+char	*generate_name(void)
+{
+	char	*name;
+	char	*tmp;
+	int		i;
+
+	tmp = ft_strdup("/tmp/tmp_heredoc_");
+	i = 0;
+	name = ft_strjoin(tmp, ft_itoa(i));
+	while (!access(name, F_OK))
+		name = ft_strjoin(tmp, ft_itoa(++i));
+	return (name);
+}
+
+t_heredoc	*heredoc_init(char *eof)
+{
+	t_heredoc	*hd;
+
+	hd = gc_alloc(sizeof(t_heredoc));
+	if (!hd)
+		return (NULL);
+	hd->eof = remove_quotes(eof);
+	hd->filename = generate_name();
+	hd->to_expand = !(is_quoted(eof));
+	hd->lim = ft_strjoin(hd->eof, "\n");
+	hd->fd = open(hd->filename, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	if (!hd->fd)
+		perror("failed to open");
+	return (hd);
+}
+
 // TODO: s shoud be freed after using it
 char	*heredoc_expander(char *s)
 {
@@ -46,7 +77,7 @@ void	heredoc(t_heredoc *hd)
 	char	*saved_line;
 	int		count;
 
-	signal(SIGINT, sigint_handler);
+	signal(SIGINT, sigint_handler_in_heredoc);
 	count = 1;
 	saved_line = NULL;
 	line = readline("> ");
@@ -65,6 +96,7 @@ void	heredoc(t_heredoc *hd)
 		if (!line)
 			heredoc_error(ft_itoa(count), hd->eof);
 	}
+	close(hd->fd);
 	clean_and_exit(NULL, EXIT_SUCCESS);
 }
 
@@ -74,9 +106,8 @@ void	heredoc_handler(char *eof, t_file **redirect)
 	pid_t		pid;
 	int			status;
 
-	hd = init_heredoc(eof);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	hd = heredoc_init(eof);
+	setup_signals();
 	pid = fork();
 	if (pid < 0)
 		perror("faild to fork");
