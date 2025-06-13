@@ -1,41 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_expander.c                                 :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:49:58 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:58:59 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 01:24:43 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/ast.h"
-#include "../../../include/exec.h"
-
-char	*heredoc_expander(char *s)
-{
-	char	*ret;
-	char	*dollar_pos;
-
-	if (!s)
-		return (NULL);
-	ret = ft_strdup("");
-	while (*s)
-	{
-		dollar_pos = ft_strchr(s, '$');
-		if (!dollar_pos)
-		{
-			ret = ft_strjoin(ret, s);
-			break ;
-		}
-		ret = ft_strjoin(ret,
-				ft_substr(s, 0, dollar_pos - s));
-		ret = ft_strjoin(ret, get_env_name(dollar_pos));
-		s = skip_env_var(dollar_pos + 1);
-	}
-	return (ret);
-}
+#include "../../include/ast.h"
+#include "../../include/exec.h"
 
 char	*get_env_name(char *s)
 {
@@ -69,9 +45,9 @@ char	*replace_quotes(char *var)
 	i = 0;
 	while (var[i])
 	{
-		if (var[i] == 39)
+		if (var[i] == '\'')
 			ret[i] = -1;
-		else if (var[i] == 34)
+		else if (var[i] == '"')
 			ret[i] = -2;
 		else
 			ret[i] = var[i];

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_helper.c                                       :+:      :+:    :+:   */
+/*   ast_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:48:12 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 01:12:26 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ t_ast	*ast_create(t_ast_type type)
 	return (new);
 }
 
+t_ast	*ast_last(t_ast *ast)
+{
+	if (!ast)
+		return (NULL);
+	while (ast)
+	{
+		if (ast->next_sibling == NULL)
+			break ;
+		ast = ast->next_sibling;
+	}
+	return (ast);
+}
+
 void	ast_add(t_ast *head, t_ast *child)
 {
 	t_ast	*last;
@@ -41,19 +54,6 @@ void	ast_add(t_ast *head, t_ast *child)
 	}
 	last = ast_last(head->first_child);
 	last->next_sibling = child;
-}
-
-t_ast	*ast_last(t_ast *ast)
-{
-	if (!ast)
-		return (NULL);
-	while (ast)
-	{
-		if (ast->next_sibling == NULL)
-			break ;
-		ast = ast->next_sibling;
-	}
-	return (ast);
 }
 
 void	token_advance(t_token **token)

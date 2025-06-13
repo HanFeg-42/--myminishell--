@@ -6,17 +6,24 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:00:42 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 01:52:17 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/expander.h"
+#include "../../include/expander.h"
 
-void	expand(t_ast *ast)
+t_expand	*init_expand(char **args)
 {
-	*get_parser_check() = true;
-	ast->args = expander(ast->args);
-	expand_file(ast->redirect);
+	t_expand	*exp;
+
+	exp = gc_alloc(sizeof(t_expand));
+	exp->arg = NULL;
+	exp->args = copy_arr(args);
+	exp->i = 0;
+	exp->stat = 0;
+	exp->pos = 0;
+	exp->dir_files = get_cwd_files();
+	return (exp);
 }
 
 char	**expander(char **args)
@@ -36,16 +43,9 @@ char	**expander(char **args)
 	return (remove_quotes_from_all(expand));
 }
 
-t_expand	*init_expand(char **args)
+void	expand(t_ast *ast)
 {
-	t_expand	*exp;
-
-	exp = gc_alloc(sizeof(t_expand));
-	exp->arg = NULL;
-	exp->args = copy_arr(args);
-	exp->i = 0;
-	exp->stat = 0;
-	exp->pos = 0;
-	exp->dir_files = get_cwd_files();
-	return (exp);
+	*get_parser_check() = true;
+	ast->args = expander(ast->args);
+	expand_file(ast->redirect);
 }

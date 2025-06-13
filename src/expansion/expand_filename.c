@@ -6,11 +6,11 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:04:29 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/28 14:53:52 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:03:24 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/expander.h"
+#include "../../include/expander.h"
 
 void	expand_file(t_file *red)
 {
@@ -41,12 +41,12 @@ void	paramter_expansion(char *file, t_expand *exp)
 	exp->word = ft_strdup("");
 	while (exp->pos < (int)ft_strlen(file) && file[exp->pos])
 	{
-		if (file[exp->pos] == 34 && exp->stat == 0)
+		if (file[exp->pos] == '"' && exp->stat == 0)
 			expand_inside_double_quote(exp, file);
-		else if ((file[exp->pos] == 34 && exp->stat == 1)
-			|| (file[exp->pos] == 39 && exp->stat == 2))
+		else if ((file[exp->pos] == '"' && exp->stat == 1)
+			|| (file[exp->pos] == '\'' && exp->stat == 2))
 			expand_unquoted(exp, file);
-		else if (file[exp->pos] == 39 && exp->stat == 0)
+		else if (file[exp->pos] == '\'' && exp->stat == 0)
 			copy_characters_until_quote(exp, file);
 		else
 			expand_unquoted(exp, file);

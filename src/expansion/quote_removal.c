@@ -6,11 +6,11 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:12:37 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:04:03 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/expander.h"
+#include "../../include/expander.h"
 
 char	**remove_quotes_from_all(t_expand *exp)
 {
@@ -52,11 +52,11 @@ char	*remove_quotes(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == 34 && stat == 0)
+		if (str[i] == '"' && stat == 0)
 			stat = 1;
-		else if ((str[i] == 34 && stat == 1) || (str[i] == 39 && stat == 2))
+		else if ((str[i] == '"' && stat == 1) || (str[i] == '\'' && stat == 2))
 			stat = 0;
-		else if (str[i] == 39 && stat == 0)
+		else if (str[i] == '\'' && stat == 0)
 			stat = 2;
 		else
 			ret[j++] = str[i];
@@ -68,7 +68,7 @@ char	*remove_quotes(char *str)
 
 int	is_quoted(char *eof)
 {
-	return (ft_strchr(eof, 34) || ft_strchr(eof, 39));
+	return (ft_strchr(eof, '"') || ft_strchr(eof, '\''));
 }
 
 char	*undo_char_changes(char *str)
@@ -79,9 +79,9 @@ char	*undo_char_changes(char *str)
 	while (str[i])
 	{
 		if (str[i] == -1)
-			str[i] = 39;
+			str[i] = '\'';
 		if (str[i] == -2)
-			str[i] = 34;
+			str[i] = '"';
 		if (str[i] == -3)
 			str[i] = '*';
 		i++;

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:33:55 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 16:11:36 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:09:08 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_ast	*parser(t_token **token)
 	ast = ast_compound(token);
 	if (!ast)
 	{
-		if (!(*get_heredoc_check()))
+		if (!(*get_heredoc_check()))// A big '?' here
 			return (NULL);
 		if ((*token))
 			syntax_error((*token)->value);

@@ -6,13 +6,67 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:22:14 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 01:42:40 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
 #include "../../../include/exec.h"
 #include "../../../include/heredoc.h"
+
+// TODO: s shoud be freed after using it
+char	*heredoc_expander(char *s)
+{
+	char	*ret;
+	char	*dollar_pos;
+
+	if (!s)
+		return (NULL);
+	ret = ft_strdup("");
+	while (*s)
+	{
+		dollar_pos = ft_strchr(s, '$');
+		if (!dollar_pos)
+		{
+			ret = ft_strjoin(ret, s);
+			break ;
+		}
+		ret = ft_strjoin(ret,
+				ft_substr(s, 0, dollar_pos - s));
+		ret = ft_strjoin(ret, get_env_name(dollar_pos));
+		s = skip_env_var(dollar_pos + 1);
+	}
+	return (ret);
+}
+
+// TODO: i need to free line!!!
+void	heredoc(t_heredoc *hd)
+{
+	char	*line;
+	char	*saved_line;
+	int		count;
+
+	signal(SIGINT, sigint_handler);
+	count = 1;
+	saved_line = NULL;
+	line = readline("> ");
+	if (!line)
+		heredoc_error(ft_itoa(count), hd->eof);
+	while (line && ft_strcmp(line, hd->eof))
+	{
+		saved_line = line;
+		count++;
+		if (hd->to_expand)
+			line = heredoc_expander(line);
+		// TODO: s shoud be freed after using it up & down
+		write(hd->fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
+		free(saved_line);
+		line = readline("> ");
+		if (!line)
+			heredoc_error(ft_itoa(count), hd->eof);
+	}
+	clean_and_exit(NULL, EXIT_SUCCESS);
+}
 
 void	heredoc_handler(char *eof, t_file **redirect)
 {
@@ -38,27 +92,4 @@ void	heredoc_handler(char *eof, t_file **redirect)
 	}
 	redirect_add(redirect,
 		redirect_create(HERE_DOC, hd->filename));
-}
-
-void	heredoc(t_heredoc *hd)
-{
-	char	*line;
-	int		count;
-
-	signal(SIGINT, sigint_handler);
-	count = 1;
-	line = readline("> ");
-	if (!line)
-		heredoc_error(ft_itoa(count), hd->eof);
-	while (line && ft_strcmp(line, hd->eof))
-	{
-		count++;
-		if (hd->to_expand)
-			line = heredoc_expander(line);
-		write(hd->fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
-		line = readline("> ");
-		if (!line)
-			heredoc_error(ft_itoa(count), hd->eof);
-	}
-	clean_and_exit(NULL, EXIT_SUCCESS);
 }

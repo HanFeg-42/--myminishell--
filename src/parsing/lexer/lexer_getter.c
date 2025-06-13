@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:02 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:58:29 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_word_size(t_lexer *lexer)
 		if (lexer->line[lexer->i + i] == '"')
 			advance_to_next_quote(lexer, &i, '"');
 		else if (lexer->line[lexer->i + i] == '\'')
-			advance_to_next_quote(lexer, &i, 39);
+			advance_to_next_quote(lexer, &i, '\'');
 		if (lexer->line[lexer->i + i] == '\0')
 			break ;
 		i++;

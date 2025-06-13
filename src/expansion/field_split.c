@@ -6,11 +6,11 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:25 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/04 15:56:48 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:03:59 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/expander.h"
+#include "../../include/expander.h"
 
 void	field_split(t_expand *exp)
 {
@@ -64,11 +64,11 @@ char	*first_ifs_occ(char *s)
 	stat = 0;
 	while (*s)
 	{
-		if (*s == 39 && !stat)
+		if (*s == '\'' && !stat)
 			stat = 2;
-		else if (*s == 34 && !stat)
+		else if (*s == '"' && !stat)
 			stat = 1;
-		else if ((*s == 34 && stat == 1) || (*s == 39 && stat == 2))
+		else if ((*s == '"' && stat == 1) || (*s == '\'' && stat == 2))
 			stat = 0;
 		else if (ft_issapce(*s) && !stat)
 			return (s);

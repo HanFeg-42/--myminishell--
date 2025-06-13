@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 01:19:16 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,4 @@ void	sigint_handler(int sig)
 	clean_and_exit(NULL, 130);
 }
 
-void	heredoc_error(char *nb_line, char *lim)
-{
-	ft_putstr_fd("warning: here-document at line ", 2);
-	ft_putstr_fd(nb_line, 2);
-	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
-	ft_putstr_fd(lim, 2);
-	ft_putstr_fd("')\n", 2);
-}
+

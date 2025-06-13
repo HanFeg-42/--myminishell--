@@ -6,11 +6,11 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:03:36 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/expander.h"
+#include "../../include/expander.h"
 
 //=============pathname expansion=================================
 
@@ -66,11 +66,11 @@ void	replace_unquoted_asterisk(t_expand *exp)
 		i = 0;
 		while (tmp[i])
 		{
-			if (tmp[i] == 34 && stat == 0)
+			if (tmp[i] == '"' && stat == 0)
 				stat = 1;
-			else if ((tmp[i] == 34 && stat == 1) || (tmp[i] == 39 && stat == 2))
+			else if ((tmp[i] == '"' && stat == 1) || (tmp[i] == '\'' && stat == 2))
 				stat = 0;
-			else if (tmp[i] == 39 && stat == 0)
+			else if (tmp[i] == '\'' && stat == 0)
 				stat = 2;
 			else if (tmp[i] == '*' && stat == 0)
 				tmp[i] = -3;

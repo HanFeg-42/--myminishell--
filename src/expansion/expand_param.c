@@ -6,11 +6,11 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:56:41 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:03:47 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/expander.h"
+#include "../../include/expander.h"
 
 void	expand_param(t_expand *exp)
 {
@@ -53,7 +53,7 @@ void	expand_inside_double_quote(t_expand *exp, char *file)
 
 	exp->stat = 1;
 	curr_pos = file + exp->pos;
-	dq_pos = ft_strchr(curr_pos + 1, 34);
+	dq_pos = ft_strchr(curr_pos + 1, '"');
 	while (*curr_pos && curr_pos < dq_pos)
 	{
 		dollar_pos = ft_strnchr(curr_pos, '$', dq_pos - curr_pos);
@@ -104,8 +104,8 @@ char	*first_quote_occ(char *str)
 	char	*sq_pos;
 	char	*dq_pos;
 
-	sq_pos = ft_strchr(str, 39);
-	dq_pos = ft_strchr(str, 34);
+	sq_pos = ft_strchr(str, '\'');
+	dq_pos = ft_strchr(str, '"');
 	if (sq_pos && dq_pos)
 	{
 		if (sq_pos < dq_pos)
