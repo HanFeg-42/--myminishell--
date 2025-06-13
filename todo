@@ -99,3 +99,10 @@ If that doesn't help, please report this bug to: www.valgrind.org
 
 In the bug report, send all the above text, the valgrind
 version, and what OS and version you are using.  Thanks.
+
+
+
+
+
+
+case S_IFDIR:  printf("directory\n");               break

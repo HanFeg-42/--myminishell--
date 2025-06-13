@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/04 20:21:19 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:34:12 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ int	main(int ac, char **av, char **envp)
 		signal(SIGINT, handler_SIGINT);
 	}
 	ft_putendl_fd("exit", 1);
-	if (*saved_pwd())
-		free(*saved_pwd());
-	free_all_env(get_env_head());
-	free_all();
+	cleanup();
 	return (*get_status_code());
 }
 

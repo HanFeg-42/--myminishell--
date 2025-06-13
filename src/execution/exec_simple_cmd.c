@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:10:26 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,25 @@ void	execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 	cmd->pos = i;
 	cmd->pipeline = pipeline;
 	if (ast->args == NULL)
+	{
+		if(ast->redirect)
+		{
+			exec_cmd(ast,cmd);
+		}
+		return;
+	}
+	if (!(*get_parser_check()))
+	{
+		*get_status_code() = 1;
 		return ;
-	//if (ast->args)
-	//{
+	}
 	cmd->type = type_cmd(ast->args[0]);
 	if (cmd->type != -1 && cmd->pipeline->num_of_cmds == 1)
 	{
-		if (!(*get_parser_check()))
-		{
-			*get_status_code() = 1;
-			return ;
-		}
-		*get_status_code() = 0; // TODO: update exit status code after execution.
- 		execute_single_built(cmd, ast);
+		// TODO: update exit status code after execution.
+ 		*get_status_code() = execute_single_built(cmd, ast);
 		return ;
 	}
-	//}
 	exec_cmd(ast, cmd);
 }
 
@@ -52,7 +55,7 @@ void	restor_standars(t_cmd *cmd)
 	dup2(cmd->saved_stdin, STDIN_FILENO);
 }
 
-void	execute_single_built(t_cmd *cmd, t_ast *ast)
+int	execute_single_built(t_cmd *cmd, t_ast *ast)
 {
 	dup_standars(cmd);
 	if (ast->redirect)
@@ -62,10 +65,11 @@ void	execute_single_built(t_cmd *cmd, t_ast *ast)
 		if (!(*get_error_check()))
 		{
 			restor_standars(cmd);
-			return ;
+			return(*get_status_code()) ;
 		}
 		close_redirect(cmd->fds, cmd->num_of_redirect - 1);
 	}
 	execute_builtins(cmd->type, ast->args);
 	restor_standars(cmd);
+	return (0);
 }

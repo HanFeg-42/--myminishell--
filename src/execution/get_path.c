@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:06 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 16:54:28 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/13 21:59:33 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,32 @@ char	*get_path(char *cmd, char **envp)
 {
 	char	**paths;
 	int		i;
+	struct stat path_stat;
+	int status;
 
 	if (!cmd || !envp)
 		return (NULL);
+
 	if (!cmd[0] || (cmd[0] == '.' && ft_strlen(cmd) == 1))
 		return (NULL);
+	status = stat(cmd,&path_stat);
+	printf("statuus %d\n",status);
+	if(!status)
+	{
+		if(S_ISDIR(path_stat.st_mode))
+		{
+			ft_putstr_fd(cmd, 2);
+			ft_putstr_fd(" : Is a directory", 2);
+			ft_putstr_fd("\n", 2);
+			cleanup();
+			exit(126);
+		}
+	}
+	write(2,"hooonaaaa\n",11);
 	if (ft_strchr(cmd, '/'))
 	{
-		if (!strcmp("/bin", cmd))
-			return (NULL);
+		// if (!strcmp("/bin", cmd))
+		// 	return (NULL);
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);

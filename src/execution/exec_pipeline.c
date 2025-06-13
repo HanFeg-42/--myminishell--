@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:44:04 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
+
+void swap_pipes(t_pipe *pipeline)
+{
+	int *tmp;
+	
+	tmp = pipeline->prev_pipe;
+	pipeline->prev_pipe = pipeline->curr_pipe;
+	pipeline->curr_pipe = tmp;
+}
 
 void	execute_pipeline(t_ast *ast)
 {
@@ -18,8 +27,7 @@ void	execute_pipeline(t_ast *ast)
 	t_ast	*current;
 	int		i;
 
-	pipeline = init_pipes(ast);
-	create_pipes(pipeline);
+	pipeline = init_pipeline(ast);
 	if (!(*get_error_check()))
 		return ;
 	current = ast->first_child;
@@ -27,52 +35,33 @@ void	execute_pipeline(t_ast *ast)
 	while (current)
 	{
 		execute_command(current, pipeline, i);
+		swap_pipes(pipeline);
 		ast_advance(&current);
 		i++;
 	}
-	close_all_pipes(pipeline);
+	if (pipeline->num_of_cmds > 1)
+		close_all_pipes(pipeline);
 	wait_children(pipeline);
 }
 
-void	alloc_pipe_fds(t_pipe *pipeline)
-{
-	int	i;
-
-	i = 0;
-	pipeline->pipes = gc_alloc(sizeof(int *) * (pipeline->num_of_cmds - 1));
-	while (i < pipeline->num_of_cmds - 1)
-	{
-		pipeline->pipes[i] = gc_alloc(sizeof(int) * 2);
-		i++;
-	}
-}
-
-t_pipe	*init_pipes(t_ast *ast)
+t_pipe	*init_pipeline(t_ast *ast)
 {
 	t_pipe	*pipeline;
 
 	pipeline = gc_alloc(sizeof(t_pipe));
 	pipeline->num_of_cmds = ast_size(ast);
-	// printf("%d\n", pipeline->num_of_cmds );
-	//if (pipeline->num_of_cmds > 1)
-	alloc_pipe_fds(pipeline);
+	if (pipeline->num_of_cmds > 1)
+	{
+		pipeline->curr_pipe = gc_alloc(sizeof(int) * 2);
+		pipeline->prev_pipe = gc_alloc(sizeof(int) * 2);
+		if (pipe(pipeline->prev_pipe) < 0 || pipe(pipeline->curr_pipe) < 0)
+			set_exec_error("pipe", 1);
+	}
 	pipeline->pids = gc_alloc(sizeof(int) * pipeline->num_of_cmds);
 	pipeline->counter = -1;
 	return (pipeline);
 }
 
-void	create_pipes(t_pipe *pipeline)
-{
-	int	i;
-
-	i = 0;
-	while (i < pipeline->num_of_cmds - 1)
-	{
-		if (pipe(pipeline->pipes[i]) < 0)
-			set_exec_error("pipe", 1);
-		i++;
-	}
-}
 
 int	ast_size(t_ast *ast)
 {

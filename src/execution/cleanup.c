@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/04 20:26:20 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:29:59 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,17 @@
 
 void	close_all_pipes(t_pipe *pipeline)
 {
-	int	i;
-
-	i = 0;
-	while (i < pipeline->num_of_cmds - 1)
-	{
-		close(pipeline->pipes[i][0]);
-		close(pipeline->pipes[i][1]);
-		i++;
-	}
+	
+	close(pipeline->prev_pipe[0]);
+	close(pipeline->prev_pipe[1]);
+	close(pipeline->curr_pipe[0]);
+	close(pipeline->curr_pipe[1]);
 }
 
-void	cleanup_process(t_ast *ast, t_cmd *cmd)
+void	cleanup()
 {
-	if (ast->redirect)
-		close_redirect(cmd->fds, cmd->num_of_redirect - 1);
-	free(*saved_pwd());
+	if (*saved_pwd())
+		free(*saved_pwd());
 	free_all_env(get_env_head());
 	free_all();
 }

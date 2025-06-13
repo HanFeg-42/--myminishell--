@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 18:57:56 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:06:14 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,18 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 void	handle_process(t_ast *ast, t_cmd *cmd)
 {
 	setup_process_pipes(cmd->pipeline, cmd->pos);
-	setup_redirects(ast, cmd);
+	setup_redirects(ast,cmd);
 	if (!ast->args)
 	{
-		cleanup_process(ast, cmd);
+		close_redirect(cmd->fds,cmd->num_of_redirect - 1);
+		cleanup();
 		exit(EXIT_SUCCESS);
 	}
 	cmd->type = type_cmd(ast->args[0]);
 	if (cmd->type != -1)
 	{
 		execute_builtins(cmd->type, ast->args);
-		cleanup_process(ast, cmd);
+		cleanup();
 		exit(*get_status_code());
 	}
 	cmd->envp = convert_envp();
@@ -56,7 +57,7 @@ void	handle_process(t_ast *ast, t_cmd *cmd)
 		handle_cmd_error(ast->args[0], ast, cmd);
 	signal(SIGQUIT, SIG_DFL);
 	execve(cmd->pathname, ast->args, cmd->envp);
-	cleanup_process(ast, cmd);
+	cleanup();
 	exit(126);
 }
 
@@ -74,7 +75,7 @@ int	type_cmd(char *cmd)
 	return (is_builtin(command));
 }
 
-void	setup_redirects(t_ast *ast, t_cmd *cmd)
+void	setup_redirects(t_ast *ast ,t_cmd *cmd)
 {
 	if (ast->redirect)
 	{
@@ -82,7 +83,7 @@ void	setup_redirects(t_ast *ast, t_cmd *cmd)
 		cmd->fds = open_redirects(ast->redirect);
 		if (!(*get_error_check()))
 		{
-			cleanup_process(ast, cmd);
+			cleanup();
 			exit(1);
 		}
 	}
@@ -94,16 +95,16 @@ void	setup_process_pipes(t_pipe *pipeline, int i)
 	{
 		if (i == 0)
 		{
-			dup2(pipeline->pipes[i][1], STDOUT_FILENO);
+			dup2(pipeline->curr_pipe[1], STDOUT_FILENO);
 		}
 		else if (i == pipeline->num_of_cmds - 1)
 		{
-			dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
+			dup2(pipeline->prev_pipe[0], STDIN_FILENO);
 		}
 		else
 		{
-			dup2(pipeline->pipes[i - 1][0], STDIN_FILENO);
-			dup2(pipeline->pipes[i][1], STDOUT_FILENO);
+			dup2(pipeline->prev_pipe[0], STDIN_FILENO);
+			dup2(pipeline->curr_pipe[1], STDOUT_FILENO);
 		}
 		close_all_pipes(pipeline);
 	}

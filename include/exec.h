@@ -5,6 +5,7 @@
 # include "lexer.h"
 # include <errno.h>
 # include <sys/wait.h>
+#include <sys/stat.h>
 
 typedef struct s_envp
 {
@@ -26,7 +27,8 @@ typedef enum s_builtin_type
 
 typedef struct s_pipe
 {
-	int				**pipes;
+	int				*curr_pipe;
+	int				*prev_pipe;
 	pid_t			*pids;
 	int				num_of_cmds;
 	int				counter;
@@ -60,7 +62,6 @@ int					*get_status_code(void);
 int					*get_error_check(void);
 void				set_exec_error(const char *msg, int nb);
 int					ast_size(t_ast *ast);
-t_pipe				*init_pipes(t_ast *ast);
 void				wait_children(t_pipe *pipeline);
 void				close_all_pipes(t_pipe *pipeline);
 void				free_all_env(t_envp **envp);
@@ -72,18 +73,17 @@ char				*get_path(char *cmd, char **envp);
 int					type_cmd(char *cmd);
 void				handle_cmd_error(char *command, t_ast *ast, t_cmd *cmd);
 void				exec_cmd(t_ast *ast, t_cmd *cmd);
-int					num_of_redirects(t_file *lst);
 void				open_file(t_file *file, int *fds, int i);
+int					num_of_redirects(t_file *lst);
 int					*open_redirects(t_file *redirect);
 void				execute_builtins(int type, char **args);
 void				redirect_io(int fd, t_file *file);
-void				create_pipes(t_pipe *pipeline);
 void				ast_advance(t_ast **current);
 void				execute_subshell(t_ast *ast, t_pipe *pipeline);
 void				restor_standars(t_cmd *cmd);
 void				setup_process_pipes(t_pipe *pipeline, int i);
-int					num_of_redirects(t_file *lst);
 void				close_redirect(int *fds, int num_redirects);
+
 char				*ft_getenv(char *var);
 void				set_error(char *str);
 void				update_env(char *old_pwd, char *new_pwd);
@@ -98,16 +98,15 @@ void				execute_unset(char **args);
 void				execute_exit(char **av);
 int					skip_option(char **arg, int *i);
 void				execute_echo(char **arg);
-void				execute_single_built(t_cmd *cmd, t_ast *ast);
+int					execute_single_built(t_cmd *cmd, t_ast *ast);
 int					is_key_valid(char *arg);
 void				swap_nodes(t_envp *curr, t_envp *node);
 void				sort_envp(t_envp **head);
 void				print_sorted_env(t_envp **envp);
 t_envp				**copy_env(t_envp **envp);
 void				handle_process(t_ast *ast, t_cmd *cmd);
-void				setup_redirects(t_ast *ast, t_cmd *cmd);
-void				cleanup_process(t_ast *ast, t_cmd *cmd);
-void				alloc_pipe_fds(t_pipe *pipeline);
+void				setup_redirects(t_ast *ast,t_cmd *cmd);
+void				cleanup();
 void				and_or_handler(t_ast **current);
 char				**saved_pwd(void);
 void				set_error(char *str);
@@ -116,4 +115,5 @@ void				change_dir(char *path);
 void				print_error1(char *args);
 void				print_error2(char *args);
 void				update_export(t_envp **envp, char *key, char *value);
+t_pipe	*init_pipeline(t_ast *ast);
 #endif
