@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 21:16:06 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 21:46:05 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,11 @@ void	setup_process_pipes(t_pipe *pipeline, int i)
 		{
 			dup2(pipeline->pipefd[1], STDOUT_FILENO);
 		}
-		else if (i == pipeline->num_of_cmds - 1)
+		else if (i < pipeline->num_of_cmds - 1)
 		{
-			dup2(pipeline->pipefd[0], STDIN_FILENO);
-		}
-		else
-		{
-			dup2(pipeline->pipefd[0], STDIN_FILENO);
 			dup2(pipeline->pipefd[1], STDOUT_FILENO);
 		}
 		close_pipe(pipeline->pipefd);
-		close(pipeline->saved_stdin)
+		close(pipeline->saved_stdin);
 	}
 }

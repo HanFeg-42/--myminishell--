@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 21:18:01 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 21:48:13 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	close_pipe(int *pipefd)
 	close(pipefd[0]);
 	close(pipefd[1]);
 }
-
 
 t_pipe *init_pipeline(t_ast *ast)
 {
@@ -56,9 +55,9 @@ void execute_pipeline(t_ast *ast)
 	while (current)
 	{
 		execute_command(current, pipeline, i);
-		if(++i < pipeline->num_of_cmds -1 )
+		if(i < pipeline->num_of_cmds -1 )
 		{
-			dup2(pipeline->pipefd[0],0);
+			dup2(pipeline->pipefd[0],0);	
 			close_pipe(pipeline->pipefd);
 			if (pipe(pipeline->pipefd) < 0)
 			{
@@ -67,6 +66,7 @@ void execute_pipeline(t_ast *ast)
 			}
 		}
 		ast_advance(&current);
+		i++;
 	}
 	if (pipeline->num_of_cmds > 1)
 		close_pipe(pipeline->pipefd);
