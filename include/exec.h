@@ -80,7 +80,8 @@ void				execute_builtins(int type, char **args);
 void				redirect_io(int fd, t_file *file);
 void				ast_advance(t_ast **current);
 void				execute_subshell(t_ast *ast, t_pipe *pipeline);
-void				restor_standars(t_cmd *cmd);
+void				restore_standards(t_cmd *cmd);
+void dup_standards(t_cmd *cmd);
 void				setup_process_pipes(t_pipe *pipeline, int i);
 void				close_redirect(int *fds, int num_redirects);
 
@@ -116,4 +117,6 @@ void				print_error1(char *args);
 void				print_error2(char *args);
 void				update_export(t_envp **envp, char *key, char *value);
 t_pipe	*init_pipeline(t_ast *ast);
+void	check_directory_(char *cmd);
+void	close_pipe(int *pipefd);
 #endif

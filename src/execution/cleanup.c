@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 20:29:59 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:55:57 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void	close_all_pipes(t_pipe *pipeline)
 {
-	
-	close(pipeline->prev_pipe[0]);
-	close(pipeline->prev_pipe[1]);
-	close(pipeline->curr_pipe[0]);
-	close(pipeline->curr_pipe[1]);
+	close_pipe(pipeline->prev_pipe);
+	close_pipe(pipeline->curr_pipe);
 }
 
 void	cleanup()

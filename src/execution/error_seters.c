@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_seters.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:47 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 21:55:56 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 17:11:08 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	set_exec_error(const char *msg, int nb)
 void	handle_cmd_error(char *command, t_ast *ast, t_cmd *cmd)
 {
 	ft_putstr_fd(command, 2);
-	if (!ft_strncmp(command, "/", 1))
+	if (!ft_strchr(command, '/'))
 		ft_putstr_fd(" : No such file or directory", 2);
 	else
 		ft_putstr_fd(" : command not found", 2);

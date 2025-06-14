@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:18 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 16:48:37 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:53:28 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	execute_export(char **args)
 		handle_single_export(args[i], envp);
 		i++;
 	}
+	if(*get_error_check())
+		*get_status_code() = 0;
 }
 
 void	update_export(t_envp **envp, char *key, char *value)

@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:19:36 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
-
-int	*open_redirects(t_file *redirect)
-{
-	t_file	*current;
-	int		*fds;
-	int		i;
-	int		num_of_redirect;
-
-	num_of_redirect = num_of_redirects(redirect);
-	fds = gc_alloc(sizeof(int) * num_of_redirect);
-	i = 0;
-	current = redirect;
-	while (current)
-	{
-		open_file(current, fds, i);
-		if (!(*get_error_check()))
-			return (NULL);
-		redirect_io(fds[i], current);
-		i++;
-		current = current->next;
-	}
-	return (fds);
-}
 
 int	num_of_redirects(t_file *lst)
 {
@@ -50,16 +27,6 @@ int	num_of_redirects(t_file *lst)
 		len++;
 	}
 	return (len);
-}
-
-void	close_redirect(int *fds, int i)
-{
-	while (i >= 0)
-	{
-		if (fds[i])
-			close(fds[i]);
-		i--;
-	}
 }
 
 void	open_file(t_file *file, int *fds, int i)
@@ -84,3 +51,39 @@ void	redirect_io(int fd, t_file *file)
 	else if (file->type == INPUT_RED || file->type == HERE_DOC)
 		dup2(fd, STDIN_FILENO);
 }
+
+int	*open_redirects(t_file *redirect)
+{
+	t_file	*current;
+	int		*fds;
+	int		i;
+	int		num_of_redirect;
+
+	num_of_redirect = num_of_redirects(redirect);
+	fds = gc_alloc(sizeof(int) * num_of_redirect);
+	i = 0;
+	current = redirect;
+	while (current)
+	{
+		open_file(current, fds, i);
+		if (!(*get_error_check()))
+			return (NULL);
+		redirect_io(fds[i], current);
+		i++;
+		current = current->next;
+	}
+	return (fds);
+}
+
+
+void	close_redirect(int *fds, int i)
+{
+	while (i >= 0)
+	{
+		if (fds[i])
+			close(fds[i]);
+		i--;
+	}
+}
+
+

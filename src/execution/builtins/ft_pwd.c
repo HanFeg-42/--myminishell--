@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:21 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:00:22 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:53:34 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,6 @@ void	execute_pwd(void)
 	}
 	printf("%s\n", cwd);
 	free(cwd);
+	if(*get_error_check())
+		*get_status_code() = 0;
 }
