@@ -6,33 +6,14 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:49:58 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 18:39:40 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:37:28 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ast.h"
 #include "../../include/exec.h"
 
-char	*get_env_name(char *s)
-{
-	char	*var;
-	int		i;
-
-	i = 1;
-	if (s[i] == '?')
-		return (ft_itoa(*get_status_code()));
-	while (s[i] && (ft_isalpha(s[1]) || s[1] == '_')
-		&& (s[i] == '_' || ft_isalnum(s[i])))
-		i++;
-	if (i == 1)
-		return (ft_strdup("$"));
-	var = ft_substr(s, 1, i - 1);
-	var = ft_getenv(var);
-	var = replace_quotes(var);
-	return (var);
-}
-
-char	*replace_quotes(char *var)
+static char	*replace_quotes(char *var)
 {
 	char	*ret;
 	int		i;
@@ -55,6 +36,25 @@ char	*replace_quotes(char *var)
 	}
 	ret[i] = '\0';
 	return (ret);
+}
+
+char	*get_env_name(char *s)
+{
+	char	*var;
+	int		i;
+
+	i = 1;
+	if (s[i] == '?')
+		return (ft_itoa(*get_status_code()));
+	while (s[i] && (ft_isalpha(s[1]) || s[1] == '_')
+		&& (s[i] == '_' || ft_isalnum(s[i])))
+		i++;
+	if (i == 1)
+		return (ft_strdup("$"));
+	var = ft_substr(s, 1, i - 1);
+	var = ft_getenv(var);
+	var = replace_quotes(var);
+	return (var);
 }
 
 char	*skip_env_var(char *s)

@@ -6,10 +6,9 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 17:13:39 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:40:31 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -25,18 +24,14 @@
 # include <sys/stat.h>
 # include "../libft/libft.h"
 # include "gc.h"
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
-
 # include "lexer.h"
 # include "expander.h"
 
-void    handler_SIGINT(int sig);
+void	sigint_handler_in_main(int sig);
 void	sigint_handler_in_heredoc(int sig);
-void	restore_signal_handler();
-void	reset_checker_state();
-void	setup_signals();
+void	reset_checker_state(void);
+void	setup_signals(void);
+void	ignore_signals(void);
+int		*get_heredoc_check(void);
 
 #endif

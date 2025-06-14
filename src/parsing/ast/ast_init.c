@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:48:12 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 01:12:26 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:52:02 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_ast	*ast_create(t_ast_type type)
 	return (new);
 }
 
-t_ast	*ast_last(t_ast *ast)
+static t_ast	*ast_last(t_ast *ast)
 {
 	if (!ast)
 		return (NULL);

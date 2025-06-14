@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:16 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 18:56:28 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:45:03 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_lexer
 	int				line_size;
 }					t_lexer;
 
-// ==================--------lexer-------=============================
 void			lexer_advance(t_lexer *lexer);
 void			lexer_skip_whitespaces(t_lexer *lexer);
 t_token			*lexer_get_word(t_lexer *lexer);
@@ -53,22 +52,11 @@ t_token			*lexer_advance_current(t_lexer *lexer, t_token_type type);
 t_token			*lexer_advance_with(t_lexer *lexer, t_token *token);
 t_token			*lexer_advance_with2(t_lexer *lexer, t_token *token);
 t_token			*lexer_next_token(t_lexer *lexer);
-
-// ==================--------token-------=============================
 t_token			*tokenizer(char *line);
 t_token			*init_token(char *value, t_token_type type);
-
-// ------------------------getters------------------
 int				*get_parser_check(void);
-
-// checkers
 int				is_special(t_lexer *lexer, int i);
 int				is_operator(t_lexer *lexer);
 int				is_redirection(int c);
-
-// unwanted function
-int				get_word_size(t_lexer *lexer);
-void			advance_to_next_quote(t_lexer *lexer, int *i, int quote);
-int				ft_strcmp(const char *s1, const char *s2);
 
 #endif

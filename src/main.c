@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/12 17:13:15 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:22:50 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	init_shell(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	signal(SIGINT, handler_SIGINT);
+	signal(SIGINT, sigint_handler_in_main);
 	signal(SIGQUIT, SIG_IGN);
 	get_new_env(get_env_head(), envp);
 }
@@ -33,7 +33,7 @@ static void	clean_cmd_resources(char *line)
 	add_history(line);
 	free(line);
 	free_all();
-	restore_signal_handler();
+	signal(SIGINT, sigint_handler_in_main);
 }
 
 int	main(int ac, char **av, char **envp)

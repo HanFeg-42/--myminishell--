@@ -6,13 +6,13 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 22:38:29 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:29:56 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expander.h"
 
-void	track_positions(char **star, char **p_pos, char **s, char **p)
+static void	track_positions(char **star, char **p_pos, char **s, char **p)
 {
 	if (*(*p) == STAR)
 	{
@@ -26,7 +26,7 @@ void	track_positions(char **star, char **p_pos, char **s, char **p)
 	}
 }
 
-int	is_match(char *filename, char *pattern)
+static int	is_match(char *filename, char *pattern)
 {
 	char	*asterisk;
 	char	*track_pos;
@@ -50,7 +50,7 @@ int	is_match(char *filename, char *pattern)
 	return (*pattern == '\0');
 }
 
-void	arg_traversal(t_expand *exp, t_arg *arg)
+static void	arg_traversal(t_expand *exp, t_arg *arg)
 {
 	int			i;
 	size_t		size;

@@ -6,33 +6,32 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:02 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 15:13:46 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:42:16 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-t_token	*lexer_get_word(t_lexer *lexer)
+static void	advance_to_next_quote(t_lexer *lexer, int *i, int quote)
 {
-	char	*word;
-	int		word_size;
-	int		i;
-
-	word_size = get_word_size(lexer);
-	word = gc_alloc((word_size + 1) * sizeof(char));
-	i = 0;
-	while (i < word_size)
+	if (*get_parser_check() == false)
+		return ;
+	(*i)++;
+	if (lexer->line[lexer->i + (*i)] == '\0')
 	{
-		word[i] = lexer->c;
-		i++;
-		if (i < word_size)
-			lexer_advance(lexer);
+		syntax_error("unclosed quote");
+		return ;
 	}
-	word[i] = '\0';
-	return (init_token(word, WORD));
+	while (lexer->line[lexer->i + (*i)]
+		&& lexer->line[lexer->i + (*i)] != quote)
+	{
+		if (lexer->i + (*i) == lexer->line_size - 1)
+			syntax_error("unclosed quote");
+		(*i)++;
+	}
 }
 
-int	get_word_size(t_lexer *lexer)
+static int	get_word_size(t_lexer *lexer)
 {
 	int	i;
 
@@ -52,21 +51,22 @@ int	get_word_size(t_lexer *lexer)
 	return (i);
 }
 
-void	advance_to_next_quote(t_lexer *lexer, int *i, int quote)
+t_token	*lexer_get_word(t_lexer *lexer)
 {
-	if (*get_parser_check() == false)
-		return ;
-	(*i)++;
-	if (lexer->line[lexer->i + (*i)] == '\0')
+	char	*word;
+	int		word_size;
+	int		i;
+
+	word_size = get_word_size(lexer);
+	word = gc_alloc((word_size + 1) * sizeof(char));
+	i = 0;
+	while (i < word_size)
 	{
-		syntax_error("unclosed quote");
-		return ;
+		word[i] = lexer->c;
+		i++;
+		if (i < word_size)
+			lexer_advance(lexer);
 	}
-	while (lexer->line[lexer->i + (*i)]
-		&& lexer->line[lexer->i + (*i)] != quote)
-	{
-		if (lexer->i + (*i) == lexer->line_size - 1)
-			syntax_error("unclosed quote");
-		(*i)++;
-	}
+	word[i] = '\0';
+	return (init_token(word, WORD));
 }

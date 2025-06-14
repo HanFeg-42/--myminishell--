@@ -9,17 +9,17 @@ CFLAGS = -Wall -Wextra -Werror -g3 # -fsanitize=address -g3
 RLFLAG = -lreadline
 
 SRC = src/main.c \
-		garbage_collector/free_address.c \
-		garbage_collector/free_all.c \
+		garbage_collector/gc_free_address.c \
+		garbage_collector/gc_free_all.c \
 		garbage_collector/gc_alloc.c \
-		garbage_collector/getter.c  \
+		garbage_collector/gc_head.c  \
 		src/getters/getters.c \
 		src/getters/reset_getter.c \
 		src/parsing/lexer/token.c \
 		src/parsing/lexer/lexer.c \
 		src/parsing/lexer/lexer_advancer.c \
 		src/parsing/lexer/lexer_getter.c \
-		src/parsing/lexer/lexer_skipper.c \
+		src/parsing/lexer/lexer_checker.c \
 		src/parsing/ast/ast.c \
 		src/parsing/ast/ast_redirect.c \
 		src/parsing/ast/ast_init.c \
@@ -57,8 +57,8 @@ SRC = src/main.c \
 		src/execution/error_seters.c \
 		src/execution/env_helpers.c \
 		src/execution/cleanup.c \
-		src/signals/signal.c \
-		src/errors/errors.c \
+		src/signal.c \
+		src/errors.c \
 		src/expansion/expand_pathname_utils.c
 
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_parameter.c                                     :+:      :+:    :+:   */
+/*   expand_parameter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:52:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 16:13:50 by hfegrach         ###   ########.fr       */
+/*   Created: 2025/06/14 15:45:58 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/06/14 15:46:28 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	copy_characters_until_quote(t_expand *exp, char *file)
 
 static void	expand_token(t_expand *exp, char **file, char **quote_pos)
 {
-	char *curr;
-	char *quote;
-	char *dollar_pos;
+	char	*curr;
+	char	*quote;
+	char	*dollar_pos;
 
 	curr = *file + exp->pos;
 	quote = *quote_pos;

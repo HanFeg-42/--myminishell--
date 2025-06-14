@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/03 18:57:56 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:17:06 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 	if (cmd->pipeline->pids[cmd->pipeline->counter] == 0)
 	{
 		//TODO: setup signals -> signal(SIGINT, SIG_DEF), signal(SIGQUIT, SIG_DEF), signal(SIGTERM, SIG_DEF)
+		setup_signals();
 		if (!(*get_parser_check()))
 		{
 			close_all_pipes(cmd->pipeline);
@@ -31,7 +32,7 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 		}
 		handle_process(ast, cmd);
 	}
-	signal(SIGINT, SIG_IGN);
+	ignore_signals();
 }
 
 void	handle_process(t_ast *ast, t_cmd *cmd)
@@ -54,7 +55,7 @@ void	handle_process(t_ast *ast, t_cmd *cmd)
 	cmd->pathname = get_path(ast->args[0], cmd->envp);
 	if (!cmd->pathname)
 		handle_cmd_error(ast->args[0], ast, cmd);
-	signal(SIGQUIT, SIG_DFL);
+	// signal(SIGQUIT, SIG_DFL);
 	execve(cmd->pathname, ast->args, cmd->envp);
 	cleanup_process(ast, cmd);
 	exit(126);

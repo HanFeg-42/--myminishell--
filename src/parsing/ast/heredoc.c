@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 15:51:12 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:48:47 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../../include/exec.h"
 #include "../../../include/heredoc.h"
 
-char	*generate_name(void)
+static char	*generate_name(void)
 {
 	char	*name;
 	char	*tmp;
@@ -28,7 +28,7 @@ char	*generate_name(void)
 	return (name);
 }
 
-t_heredoc	*heredoc_init(char *eof)
+static t_heredoc	*heredoc_init(char *eof)
 {
 	t_heredoc	*hd;
 
@@ -38,15 +38,13 @@ t_heredoc	*heredoc_init(char *eof)
 	hd->eof = remove_quotes(eof);
 	hd->filename = generate_name();
 	hd->to_expand = !(is_quoted(eof));
-	hd->lim = ft_strjoin(hd->eof, "\n");
 	hd->fd = open(hd->filename, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (!hd->fd)
 		perror("failed to open");
 	return (hd);
 }
 
-// TODO: s shoud be freed after using it
-char	*heredoc_expander(char *s)
+static char	*heredoc_expander(char *s)
 {
 	char	*ret;
 	char	*dollar_pos;
@@ -105,7 +103,7 @@ void	heredoc_handler(char *eof, t_file **redirect)
 	int			status;
 
 	hd = heredoc_init(eof);
-	setup_signals();
+	ignore_signals();
 	pid = fork();
 	if (pid < 0)
 		perror("faild to fork");

@@ -6,11 +6,12 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:33:55 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 15:47:39 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:41:58 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
+#include "../../../include/heredoc.h"
 
 t_ast	*parser(t_token **token)
 {
@@ -21,7 +22,6 @@ t_ast	*parser(t_token **token)
 	ast = ast_compound(token);
 	if (!ast)
 	{
-		// TODO: A big '?' here
 		if (!(*get_heredoc_check()))
 			return (NULL);
 		if ((*token))

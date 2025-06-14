@@ -6,13 +6,13 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:28:27 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 23:23:53 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:57:30 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
 
-t_ast	*ast_subshell(t_token **token)
+static t_ast	*ast_subshell(t_token **token)
 {
 	t_ast	*subshell;
 	t_ast	*compound;
@@ -37,7 +37,7 @@ t_ast	*ast_subshell(t_token **token)
 	return (subshell);
 }
 
-t_ast	*ast_simple_command(t_token **tokens)
+static t_ast	*ast_simple_command(t_token **tokens)
 {
 	t_ast	*simple_cmd;
 
@@ -64,7 +64,7 @@ t_ast	*ast_simple_command(t_token **tokens)
 	return (simple_cmd);
 }
 
-t_ast	*ast_command(t_token **tokens)
+static t_ast	*ast_command(t_token **tokens)
 {
 	t_ast	*command;
 	t_ast	*result;
@@ -87,7 +87,7 @@ t_ast	*ast_command(t_token **tokens)
 	return (command);
 }
 
-t_ast	*ast_pipeline(t_token **tokens)
+static t_ast	*ast_pipeline(t_token **tokens)
 {
 	t_ast	*pipeline;
 	t_ast	*command;
