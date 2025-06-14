@@ -6,11 +6,12 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 21:48:13 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 22:18:15 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
+
 
 void	close_pipe(int *pipefd)
 {

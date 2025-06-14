@@ -63,7 +63,6 @@ int					*get_error_check(void);
 void				set_exec_error(const char *msg, int nb);
 int					ast_size(t_ast *ast);
 void				wait_children(t_pipe *pipeline);
-void				close_all_pipes(t_pipe *pipeline);
 void				free_all_env(t_envp **envp);
 int					envp_size(t_envp **old_envp);
 char				**convert_envp(void);

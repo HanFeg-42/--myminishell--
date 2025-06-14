@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 10:21:19 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/14 22:17:04 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
+
+void setup_only_redirect(t_file *redirect, t_cmd *cmd)
+{
+	dup_standards(cmd);
+	cmd->num_of_redirect = num_of_redirects(redirect);
+	cmd->fds = open_redirects(redirect);
+	if (!(*get_error_check()))
+	{
+		restore_standards(cmd);
+		return;
+	}
+	close_redirect(cmd->fds, cmd->num_of_redirect - 1);
+	restore_standards(cmd);
+}
 
 void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 {
@@ -24,21 +38,11 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 	if (ast->args == NULL)
 	{
 		if (ast->redirect)
-		{
-			dup_standards(cmd);
-			cmd->num_of_redirect = num_of_redirects(ast->redirect);
-			cmd->fds = open_redirects(ast->redirect);
-			if (!(*get_error_check()))
-			{
-				restore_standards(cmd);
-				*get_status_code() = 1;
-				return;
-			}
-			close_redirect(cmd->fds, cmd->num_of_redirect - 1);
-			restore_standards(cmd);
-		}
+			setup_only_redirect(ast->redirect, cmd);
+		if (!(*get_error_check()))
+			return;
 		*get_status_code() = 0;
-        return;
+		return;
 	}
 	if (!(*get_parser_check()))
 	{
@@ -48,7 +52,6 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 	cmd->type = type_cmd(ast->args[0]);
 	if (cmd->type != -1 && cmd->pipeline->num_of_cmds == 1)
 	{
-		// TODO: update exit status code after execution.
 		*get_status_code() = execute_single_built(cmd, ast);
 		return;
 	}
