@@ -6,12 +6,89 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:12:37 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 23:04:03 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:30:47 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expander.h"
 
+char	*remove_quotes(char *str)
+{
+	char	*ret;
+
+	int (stat), (i), (j);
+	ret = gc_alloc(sizeof(char) * (ft_strlen(str) + 1));
+	stat = NORMAL;
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '"' && stat == NORMAL)
+			stat = DOUBLE_QUOTED;
+		else if ((str[i] == '"' && stat == DOUBLE_QUOTED)
+			|| (str[i] == '\'' && stat == SINGLE_QUOTED))
+			stat = NORMAL;
+		else if (str[i] == '\'' && stat == NORMAL)
+			stat = SINGLE_QUOTED;
+		else
+			ret[j++] = str[i];
+		i++;
+	}
+	ret[j] = '\0';
+	return (ret);
+}
+
+char	*undo_char_changes(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == SQ)
+			str[i] = '\'';
+		if (str[i] == DQ)
+			str[i] = '"';
+		if (str[i] == STAR)
+			str[i] = '*';
+		i++;
+	}
+	return (str);
+}
+
+void	append_to_array(char ***var, size_t *size, char *append)
+{
+	char	**arr;
+
+	arr = NULL;
+	arr = *var;
+	arr = ft_realloc(arr, sizeof(char *) * (*size + 2));
+	arr[(*size)++] = append;
+	arr[*size] = NULL;
+	*var = arr;
+}
+// zakaiahanana\0\0
+void	erase(char *str, size_t i)
+{
+	if (i >= ft_strlen(str) || !str)
+		return ;
+	while (str[i])
+	{
+		str[i] = str[i + 1];
+		i++;
+	}
+}
+// while (str[i])
+/*
+is_double ; is_single;
+{
+	if (str[i] == '"' && !is_double)
+	{
+		erase(str[i], i); is_double = true; continue;
+	}
+	// 
+	i++;
+}*/
 char	**remove_quotes_from_all(t_expand *exp)
 {
 	char	**result;
@@ -27,77 +104,15 @@ char	**remove_quotes_from_all(t_expand *exp)
 			j = 0;
 			while (exp->arg->file[j])
 			{
-				if (!append_to_array(&result, &i,
-						ft_strdup(exp->arg->file[j])))
-					return (NULL);
+				append_to_array(&result, &i,
+					ft_strdup(exp->arg->file[j]));
 				j++;
 			}
 		}
-		else if (!append_to_array(&result, &i,
-				undo_char_changes(remove_quotes(exp->arg->value))))
-			return (NULL);
+		else
+			append_to_array(&result, &i,
+				undo_char_changes(remove_quotes(exp->arg->value)));
 		exp->arg = exp->arg->next;
 	}
 	return (result);
-}
-
-char	*remove_quotes(char *str)
-{
-	char	*ret;
-
-	int (stat), (i), (j);
-	ret = gc_alloc(sizeof(char) * (ft_strlen(str) + 1));
-	stat = 0;
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == '"' && stat == 0)
-			stat = 1;
-		else if ((str[i] == '"' && stat == 1) || (str[i] == '\'' && stat == 2))
-			stat = 0;
-		else if (str[i] == '\'' && stat == 0)
-			stat = 2;
-		else
-			ret[j++] = str[i];
-		i++;
-	}
-	ret[j] = '\0';
-	return (ret);
-}
-
-int	is_quoted(char *eof)
-{
-	return (ft_strchr(eof, '"') || ft_strchr(eof, '\''));
-}
-
-char	*undo_char_changes(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == -1)
-			str[i] = '\'';
-		if (str[i] == -2)
-			str[i] = '"';
-		if (str[i] == -3)
-			str[i] = '*';
-		i++;
-	}
-	return (str);
-}
-
-int	append_to_array(char ***var, size_t *size, char *append)
-{
-	char	**arr;
-
-	arr = NULL;
-	arr = *var;
-	arr = ft_realloc(arr, sizeof(char *) * (*size + 2));
-	arr[(*size)++] = append;
-	arr[*size] = NULL;
-	*var = arr;
-	return (true);
 }

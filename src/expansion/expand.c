@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:00:42 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 01:52:17 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:51:10 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_expand	*init_expand(char **args)
 	exp->i = 0;
 	exp->stat = 0;
 	exp->pos = 0;
-	exp->dir_files = get_cwd_files();
+	exp->cwd_files = get_cwd_files();
 	return (exp);
 }
 
@@ -35,7 +35,7 @@ char	**expander(char **args)
 	expand = init_expand(args);
 	while (expand && expand->args && expand->args[expand->i])
 	{
-		expand_param(expand);
+		expand_parameter(expand);
 		field_split(expand);
 		expand->i++;
 	}

@@ -6,38 +6,40 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:25 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 23:03:59 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:23:21 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expander.h"
 
-void	field_split(t_expand *exp)
+static void	exp_skip_ifs(t_expand *exp)
 {
-	t_arg	*arg;
-
-	exp->pos = 0;
-	arg = get_next_field(exp);
-	while (arg)
-	{
-		arg_add(&exp->arg, arg);
-		arg = get_next_field(exp);
-	}
-}
-
-t_arg	*get_next_field(t_expand *exp)
-{
-	exp_skip_whitespaces(exp);
-	return (arg_create(get_field(exp)));
-}
-
-void	exp_skip_whitespaces(t_expand *exp)
-{
-	while (ft_issapce(*exp->word))
+	while (is_ifs(*exp->word))
 		exp->word++;
 }
 
-char	*get_field(t_expand *exp)
+static char	*first_ifs_occ(char *s)
+{
+	int	stat;
+
+	stat = NORMAL;
+	while (*s)
+	{
+		if (*s == '\'' && stat == NORMAL)
+			stat = SINGLE_QUOTED;
+		else if (*s == '"' && stat == NORMAL)
+			stat = DOUBLE_QUOTED;
+		else if ((*s == '"' && stat == DOUBLE_QUOTED)
+			|| (*s == '\'' && stat == SINGLE_QUOTED))
+			stat = NORMAL;
+		else if (is_ifs(*s) && stat == NORMAL)
+			return (s);
+		s++;
+	}
+	return (NULL);
+}
+
+static char	*get_field(t_expand *exp)
 {
 	char	*ret;
 	char	*ifs_pos;
@@ -57,22 +59,21 @@ char	*get_field(t_expand *exp)
 	return (ret);
 }
 
-char	*first_ifs_occ(char *s)
+static t_arg	*get_next_field(t_expand *exp)
 {
-	int	stat;
+	exp_skip_ifs(exp);
+	return (arg_create(get_field(exp)));
+}
 
-	stat = 0;
-	while (*s)
+void	field_split(t_expand *exp)
+{
+	t_arg	*arg;
+
+	exp->pos = 0;
+	arg = get_next_field(exp);
+	while (arg)
 	{
-		if (*s == '\'' && !stat)
-			stat = 2;
-		else if (*s == '"' && !stat)
-			stat = 1;
-		else if ((*s == '"' && stat == 1) || (*s == '\'' && stat == 2))
-			stat = 0;
-		else if (ft_issapce(*s) && !stat)
-			return (s);
-		s++;
+		arg_add(&exp->arg, arg);
+		arg = get_next_field(exp);
 	}
-	return (NULL);
 }

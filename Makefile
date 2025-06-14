@@ -26,7 +26,7 @@ SRC = src/main.c \
 		src/parsing/ast/ast_utils.c \
 		src/parsing/ast/parser.c \
 		src/parsing/ast/heredoc.c \
-		src/expansion/utils.c \
+		src/expansion/expansion_utils.c \
 		src/execution/env.c \
 		src/execution/exec_compound.c \
 		src/execution/exec_command.c \
@@ -44,20 +44,23 @@ SRC = src/main.c \
 		src/execution/builtins/ft_unset.c \
 		src/execution/exec_subshell.c \
 		src/expansion/expand.c \
-		src/expansion/expand_param.c \
+		src/expansion/expand_parameter.c \
 		src/expansion/field_split.c \
 		src/expansion/expand_helper.c \
-		src/expansion/expand_helper2.c \
+		src/expansion/field_split_utils.c \
 		src/expansion/expand_filename.c \
 		src/expansion/quote_removal.c \
 		src/expansion/expand_pathname.c \
+		src/expansion/checkers.c \
 		src/execution/redirect.c \
 		src/execution/get_path.c \
 		src/execution/error_seters.c \
 		src/execution/env_helpers.c \
 		src/execution/cleanup.c \
 		src/signals/signal.c \
-		src/errors/errors.c
+		src/errors/errors.c \
+		src/expansion/expand_pathname_utils.c
+
 
 # src = $(wildcard folder/f2/*.c) $(wildcard folder/*.c)
 OBJ = ${SRC:.c=.o}

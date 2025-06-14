@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 01:42:40 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:51:12 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ char	*heredoc_expander(char *s)
 	return (ret);
 }
 
-// TODO: i need to free line!!!
 void	heredoc(t_heredoc *hd)
 {
 	char	*line;
@@ -89,7 +88,6 @@ void	heredoc(t_heredoc *hd)
 		count++;
 		if (hd->to_expand)
 			line = heredoc_expander(line);
-		// TODO: s shoud be freed after using it up & down
 		write(hd->fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
 		free(saved_line);
 		line = readline("> ");

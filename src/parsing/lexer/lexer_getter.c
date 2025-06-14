@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:02 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 17:58:29 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:13:46 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	advance_to_next_quote(t_lexer *lexer, int *i, int quote)
 	(*i)++;
 	if (lexer->line[lexer->i + (*i)] == '\0')
 	{
-		syntax_error("Unclosed quote");
+		syntax_error("unclosed quote");
 		return ;
 	}
 	while (lexer->line[lexer->i + (*i)]
