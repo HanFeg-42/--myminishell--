@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 20:41:47 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 19:14:14 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 		//TODO: setup signals -> signal(SIGINT, SIG_DEF), signal(SIGQUIT, SIG_DEF), signal(SIGTERM, SIG_DEF)
 		if (!(*get_parser_check()))
 		{
-			close_all_pipes(cmd->pipeline);
+			close_pipe(cmd->pipeline->curr_pipe);
 			exit(EXIT_FAILURE);
 		}
 		handle_process(ast, cmd);
@@ -166,7 +166,7 @@ void	setup_process_pipes(t_pipe *pipeline, int i)
 			dup2(pipeline->prev_pipe[0], STDIN_FILENO);
 			dup2(pipeline->curr_pipe[1], STDOUT_FILENO);
 		}
-		close_all_pipes(pipeline);
+		close_allpipes(pipeline);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 21:06:14 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 21:16:06 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 		//TODO: setup signals -> signal(SIGINT, SIG_DEF), signal(SIGQUIT, SIG_DEF), signal(SIGTERM, SIG_DEF)
 		if (!(*get_parser_check()))
 		{
-			close_all_pipes(cmd->pipeline);
+			close_pipe(cmd->pipeline->pipefd);
 			exit(EXIT_FAILURE);
 		}
 		handle_process(ast, cmd);
@@ -95,17 +95,18 @@ void	setup_process_pipes(t_pipe *pipeline, int i)
 	{
 		if (i == 0)
 		{
-			dup2(pipeline->curr_pipe[1], STDOUT_FILENO);
+			dup2(pipeline->pipefd[1], STDOUT_FILENO);
 		}
 		else if (i == pipeline->num_of_cmds - 1)
 		{
-			dup2(pipeline->prev_pipe[0], STDIN_FILENO);
+			dup2(pipeline->pipefd[0], STDIN_FILENO);
 		}
 		else
 		{
-			dup2(pipeline->prev_pipe[0], STDIN_FILENO);
-			dup2(pipeline->curr_pipe[1], STDOUT_FILENO);
+			dup2(pipeline->pipefd[0], STDIN_FILENO);
+			dup2(pipeline->pipefd[1], STDOUT_FILENO);
 		}
-		close_all_pipes(pipeline);
+		close_pipe(pipeline->pipefd);
+		close(pipeline->saved_stdin)
 	}
 }

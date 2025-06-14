@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:06 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 15:52:30 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/14 18:49:23 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	update_env(char *old_pwd, char *new_pwd)
 	elems[1] = ft_strjoin("OLDPWD=", old_pwd);
 	elems[2] = NULL;
 	execute_export(elems);
+	free(old_pwd);
+	free(new_pwd);
 	if(*get_error_check())
 		*get_status_code() = 0;
 }

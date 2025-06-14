@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 15:55:57 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/14 21:06:00 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
-
-void	close_all_pipes(t_pipe *pipeline)
-{
-	close_pipe(pipeline->prev_pipe);
-	close_pipe(pipeline->curr_pipe);
-}
 
 void	cleanup()
 {
