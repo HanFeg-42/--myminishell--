@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 01:54:22 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 20:14:53 by hfegrach         ###   ########.fr       */
+/*   Created: 2025/05/15 11:41:56 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/06/12 17:10:49 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_issapce(int c)
+int	*get_parser_check(void)
 {
-	return ((c >= 9 && c < 14) || c == ' ');
+	static int	check = true;
+
+	return (&check);
+}
+
+int	*get_heredoc_check(void)
+{
+	static int	check = true;
+
+	return (&check);
 }

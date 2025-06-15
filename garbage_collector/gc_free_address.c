@@ -6,13 +6,13 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:18:49 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/15 11:30:06 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:28:29 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/gc.h"
 
-void	gc_detach(t_gc *node)
+static void	gc_detach(t_gc *node)
 {
 	t_gc	**head;
 

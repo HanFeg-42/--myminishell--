@@ -12,18 +12,8 @@
 
 #include "../include/gc.h"
 #include "../include/exec.h"
-void	*gc_alloc(size_t size)
-{
-	void	*ret;
 
-	ret = malloc(size);
-	if (!ret)
-		clean_and_exit("malloc", 1);
-	gc_addback(gc_new(ret));
-	return (ret);
-}
-
-t_gc	*gc_new(void *content)
+static t_gc	*gc_new(void *content)
 {
 	t_gc	*new;
 
@@ -40,7 +30,16 @@ t_gc	*gc_new(void *content)
 	return (new);
 }
 
-void	gc_addback(t_gc *new)
+static t_gc	*gc_last(t_gc *head)
+{
+	if (!head)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
+}
+
+static void	gc_addback(t_gc *new)
 {
 	t_gc	*last;
 	t_gc	**head;
@@ -58,21 +57,23 @@ void	gc_addback(t_gc *new)
 	new->prev = last;
 }
 
-t_gc	*gc_last(t_gc *head)
+void	*gc_alloc(size_t size)
 {
-	if (!head)
-		return (NULL);
-	while (head->next)
-		head = head->next;
-	return (head);
+	void	*ret;
+
+	ret = malloc(size);
+	if (!ret)
+		clean_and_exit("malloc", 1);
+	gc_addback(gc_new(ret));
+	return (ret);
 }
 
-void	gc_print(t_gc *head)
-{
-	while (head)
-	{
-		printf("node = %p\tvalue = %p\tnext = %p\tprev = %p\n",
-			head, head->addr, head->next, head->prev);
-		head = head->next;
-	}
-}
+// void	gc_print(t_gc *head)
+// {
+// 	while (head)
+// 	{
+// 		printf("node = %p\tvalue = %p\tnext = %p\tprev = %p\n",
+// 			head, head->addr, head->next, head->prev);
+// 		head = head->next;
+// 	}
+// }

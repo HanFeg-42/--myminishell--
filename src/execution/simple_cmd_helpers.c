@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 21:06:14 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/15 17:04:52 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 	}
 	if (cmd->pipeline->pids[cmd->pipeline->counter] == 0)
 	{
-		//TODO: setup signals -> signal(SIGINT, SIG_DEF), signal(SIGQUIT, SIG_DEF), signal(SIGTERM, SIG_DEF)
+		setup_signals();
 		if (!(*get_parser_check()))
 		{
 			close_all_pipes(cmd->pipeline);
@@ -31,7 +31,7 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 		}
 		handle_process(ast, cmd);
 	}
-	signal(SIGINT, SIG_IGN);
+	ignore_signals();
 }
 
 void	handle_process(t_ast *ast, t_cmd *cmd)
@@ -55,7 +55,6 @@ void	handle_process(t_ast *ast, t_cmd *cmd)
 	cmd->pathname = get_path(ast->args[0], cmd->envp);
 	if (!cmd->pathname)
 		handle_cmd_error(ast->args[0], ast, cmd);
-	signal(SIGQUIT, SIG_DFL);
 	execve(cmd->pathname, ast->args, cmd->envp);
 	cleanup();
 	exit(126);

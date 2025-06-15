@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   reset_getter.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 01:54:22 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 20:14:53 by hfegrach         ###   ########.fr       */
+/*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/14 16:19:02 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/exec.h"
+#include "../../include/minishell.h"
 
-int	ft_issapce(int c)
+void	reset_checker_state(void)
 {
-	return ((c >= 9 && c < 14) || c == ' ');
+	*get_error_check() = true;
+	*get_parser_check() = true;
+	*get_heredoc_check() = true;
 }

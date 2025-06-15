@@ -1,51 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   realloc_array.c                                    :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:03:38 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:22:00 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/ast.h"
+#include "../include/ast.h"
+#include "../include/exec.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+void	*syntax_error(char *err)
 {
-	char	**new_ptr;
-
-	if (!ptr)
-		return (gc_alloc(size));
-	new_ptr = gc_alloc(size);
-	copy_ptr(ptr, new_ptr, size);
-	free_old_ptr(ptr);
-	return (new_ptr);
+	*(get_parser_check()) = false;
+	*get_status_code() = 2;
+	if (err)
+	{
+		ft_putstr_fd("syntax error near unexpected token '", 2);
+		ft_putstr_fd(err, 2);
+		ft_putstr_fd("'\n", 2);
+	}
+	return (NULL);
 }
 
-void	copy_ptr(char **ptr, char **new_ptr, int size)
+void	heredoc_error(char *nb_line, char *lim)
 {
-	int	i;
-
-	i = 0;
-	while (ptr[i] && i < size - 1)
-	{
-		new_ptr[i] = ft_strdup(ptr[i]);
-		i++;
-	}
-	new_ptr[i] = NULL;
-}
-
-void	free_old_ptr(char **ptr)
-{
-	int	i;
-
-	i = 0;
-	while (ptr[i])
-	{
-		free_one(ptr[i]);
-		i++;
-	}
-	free_one(ptr);
+	ft_putstr_fd("warning: here-document at line ", 2);
+	ft_putstr_fd(nb_line, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(lim, 2);
+	ft_putstr_fd("')\n", 2);
 }

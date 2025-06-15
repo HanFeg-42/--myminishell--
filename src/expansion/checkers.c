@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getters.c                                          :+:      :+:    :+:   */
+/*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:41:56 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/05/27 20:42:43 by hfegrach         ###   ########.fr       */
+/*   Created: 2025/06/13 16:54:15 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/06/13 23:21:10 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "../../include/expander.h"
+#include "../../include/exec.h"
 
-int	*get_parser_check(void)
+int	is_ifs(int c)
 {
-	static int	check = true;
-
-	return (&check);
+	return (c == ' ' || c == '\t');
 }
 
-int	*get_heredoc_check(void)
+int	is_quoted(char *eof)
 {
-	static int	check = true;
+	return (ft_strchr(eof, '"') || ft_strchr(eof, '\''));
+}
 
-	return (&check);
+int	is_directory(char *pathname)
+{
+	struct stat	statbuf;
+
+	if (!stat(pathname, &statbuf))
+		return (S_ISDIR(statbuf.st_mode));
+	return (false);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/14 17:49:38 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/06/14 18:26:02 by hfegrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef HEREDOC_H
 # define HEREDOC_H
 
@@ -5,19 +17,15 @@
 
 typedef struct s_heredoc
 {
-	char		*lim;
-	int			to_expand;
-	int			fd;
+	t_file		**redirect;
 	char		*filename;
 	char		*eof;
-	t_file		**redirect;
-}               t_heredoc;
+	int			to_expand;
+	int			fd;
+}				t_heredoc;
 
-char		*generate_name(void);
-void    	heredoc_handler(char *eof, t_file **redirect);
-t_heredoc	*init_heredoc(char *eof);
+void		heredoc_handler(char *eof, t_file **redirect);
 void		heredoc(t_heredoc *hd);
-int	*get_heredoc_check(void);
-void	heredoc_error(char *nb_line, char *lim);
+void		heredoc_error(char *nb_line, char *lim);
 
 #endif

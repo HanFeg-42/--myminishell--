@@ -6,11 +6,50 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:42:02 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:42:16 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+static void	advance_to_next_quote(t_lexer *lexer, int *i, int quote)
+{
+	if (*get_parser_check() == false)
+		return ;
+	(*i)++;
+	if (lexer->line[lexer->i + (*i)] == '\0')
+	{
+		syntax_error("unclosed quote");
+		return ;
+	}
+	while (lexer->line[lexer->i + (*i)]
+		&& lexer->line[lexer->i + (*i)] != quote)
+	{
+		if (lexer->i + (*i) == lexer->line_size - 1)
+			syntax_error("unclosed quote");
+		(*i)++;
+	}
+}
+
+static int	get_word_size(t_lexer *lexer)
+{
+	int	i;
+
+	i = 0;
+	while (!is_special(lexer, i))
+	{
+		if (lexer->line[lexer->i + i] == '"')
+			advance_to_next_quote(lexer, &i, '"');
+		else if (lexer->line[lexer->i + i] == '\'')
+			advance_to_next_quote(lexer, &i, '\'');
+		if (lexer->line[lexer->i + i] == '\0')
+			break ;
+		i++;
+	}
+	if (*get_parser_check() == false)
+		return (0);
+	return (i);
+}
 
 t_token	*lexer_get_word(t_lexer *lexer)
 {
@@ -30,43 +69,4 @@ t_token	*lexer_get_word(t_lexer *lexer)
 	}
 	word[i] = '\0';
 	return (init_token(word, WORD));
-}
-
-int	get_word_size(t_lexer *lexer)
-{
-	int	i;
-
-	i = 0;
-	while (!is_special(lexer, i))
-	{
-		if (lexer->line[lexer->i + i] == '"')
-			advance_to_next_quote(lexer, &i, '"');
-		else if (lexer->line[lexer->i + i] == '\'')
-			advance_to_next_quote(lexer, &i, 39);
-		if (lexer->line[lexer->i + i] == '\0')
-			break ;
-		i++;
-	}
-	if (*get_parser_check() == false)
-		return (0);
-	return (i);
-}
-
-void	advance_to_next_quote(t_lexer *lexer, int *i, int quote)
-{
-	if (*get_parser_check() == false)
-		return ;
-	(*i)++;
-	if (lexer->line[lexer->i + (*i)] == '\0')
-	{
-		syntax_error("Unclosed quote");
-		return ;
-	}
-	while (lexer->line[lexer->i + (*i)]
-		&& lexer->line[lexer->i + (*i)] != quote)
-	{
-		if (lexer->i + (*i) == lexer->line_size - 1)
-			syntax_error("unclosed quote");
-		(*i)++;
-	}
 }

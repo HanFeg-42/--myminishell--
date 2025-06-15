@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_expander.c                                 :+:      :+:    :+:   */
+/*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:49:58 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:58:59 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:37:28 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/ast.h"
-#include "../../../include/exec.h"
+#include "../../include/ast.h"
+#include "../../include/exec.h"
 
-char	*heredoc_expander(char *s)
+static char	*replace_quotes(char *var)
 {
 	char	*ret;
-	char	*dollar_pos;
+	int		i;
 
-	if (!s)
+	if (!var)
 		return (NULL);
-	ret = ft_strdup("");
-	while (*s)
+	ret = gc_alloc(sizeof(char) * (ft_strlen(var) + 1));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (var[i])
 	{
-		dollar_pos = ft_strchr(s, '$');
-		if (!dollar_pos)
-		{
-			ret = ft_strjoin(ret, s);
-			break ;
-		}
-		ret = ft_strjoin(ret,
-				ft_substr(s, 0, dollar_pos - s));
-		ret = ft_strjoin(ret, get_env_name(dollar_pos));
-		s = skip_env_var(dollar_pos + 1);
+		if (var[i] == '\'')
+			ret[i] = SQ;
+		else if (var[i] == '"')
+			ret[i] = DQ;
+		else
+			ret[i] = var[i];
+		i++;
 	}
+	ret[i] = '\0';
 	return (ret);
 }
 
@@ -54,31 +55,6 @@ char	*get_env_name(char *s)
 	var = ft_getenv(var);
 	var = replace_quotes(var);
 	return (var);
-}
-
-char	*replace_quotes(char *var)
-{
-	char	*ret;
-	int		i;
-
-	if (!var)
-		return (NULL);
-	ret = gc_alloc(sizeof(char) * (ft_strlen(var) + 1));
-	if (!ret)
-		return (NULL);
-	i = 0;
-	while (var[i])
-	{
-		if (var[i] == 39)
-			ret[i] = -1;
-		else if (var[i] == 34)
-			ret[i] = -2;
-		else
-			ret[i] = var[i];
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
 }
 
 char	*skip_env_var(char *s)

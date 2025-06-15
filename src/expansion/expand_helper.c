@@ -6,13 +6,27 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:32:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:36:24 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/expander.h"
+#include "../../include/expander.h"
 
-//=============pathname expansion=================================
+static int	hidden_file_size(char **files)
+{
+	int	i;
+	int	size;
+
+	size = 0;
+	i = 0;
+	while (files[i])
+	{
+		if (files[i][0] != '.' && ft_strncmp(files[i], "/.", 2))
+			size++;
+		i++;
+	}
+	return (size);
+}
 
 char	**remove_hidden_files(char **files)
 {
@@ -35,47 +49,69 @@ char	**remove_hidden_files(char **files)
 	return (ret);
 }
 
-int	hidden_file_size(char **files)
+char	**copy_arr(char **arg)
 {
-	int	i;
-	int	size;
+	char	**ret;
+	int		i;
 
-	size = 0;
+	if (!arg)
+		return (NULL);
 	i = 0;
-	while (files[i])
+	while (arg[i])
+		i++;
+	ret = gc_alloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (arg[i])
 	{
-		if (files[i][0] != '.' && ft_strncmp(files[i], "/.", 2))
-			size++;
+		ret[i] = ft_strdup(arg[i]);
 		i++;
 	}
-	return (size);
+	ret[i] = NULL;
+	return (ret);
 }
 
 void	replace_unquoted_asterisk(t_expand *exp)
 {
 	int		i;
 	int		stat;
-	char	*tmp;
 	t_arg	*curr;
 
 	curr = exp->arg;
 	while (curr)
 	{
-		tmp = curr->value;
-		stat = 0;
+		stat = NORMAL;
 		i = 0;
-		while (tmp[i])
+		while (curr->value[i])
 		{
-			if (tmp[i] == 34 && stat == 0)
-				stat = 1;
-			else if ((tmp[i] == 34 && stat == 1) || (tmp[i] == 39 && stat == 2))
-				stat = 0;
-			else if (tmp[i] == 39 && stat == 0)
-				stat = 2;
-			else if (tmp[i] == '*' && stat == 0)
-				tmp[i] = -3;
+			if (curr->value[i] == '"' && stat == NORMAL)
+				stat = DOUBLE_QUOTED;
+			else if ((curr->value[i] == '"' && stat == DOUBLE_QUOTED)
+				|| (curr->value[i] == '\'' && stat == SINGLE_QUOTED))
+				stat = NORMAL;
+			else if (curr->value[i] == '\'' && stat == NORMAL)
+				stat = SINGLE_QUOTED;
+			else if (curr->value[i] == '*' && stat == NORMAL)
+				curr->value[i] = STAR;
 			i++;
 		}
 		curr = curr->next;
 	}
+}
+
+char	*first_quote_occ(char *str)
+{
+	char	*sq_pos;
+	char	*dq_pos;
+
+	sq_pos = ft_strchr(str, '\'');
+	dq_pos = ft_strchr(str, '"');
+	if (sq_pos && dq_pos)
+	{
+		if (sq_pos < dq_pos)
+			return (sq_pos);
+		return (dq_pos);
+	}
+	if (!sq_pos)
+		return (dq_pos);
+	return (sq_pos);
 }

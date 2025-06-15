@@ -6,26 +6,34 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 18:34:12 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/15 17:03:49 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/exec.h"
 #include "../include/minishell.h"
 
-const char	*prompt(void)
+static const char	*get_prompt(void)
 {
 	return ("\001\033[38;2;255;105;180m\002Minishell > \001\033[0m\002");
 }
 
-void handler_SIGINT(int sig)
+static void	init_shell(int ac, char **av, char **envp)
 {
-    (void)sig;
-	write(1, "\n", 1);
-    rl_replace_line("", 0);
-    rl_on_new_line();
-    rl_redisplay();
-	*get_status_code() = 130;
+	(void)ac;
+	(void)av;
+	signal(SIGINT, sigint_handler_in_main);
+	signal(SIGQUIT, SIG_IGN);
+	get_new_env(get_env_head(), envp);
+}
+
+static void	clean_cmd_resources(char *line)
+{
+	reset_checker_state();
+	add_history(line);
+	free(line);
+	free_all();
+	signal(SIGINT, sigint_handler_in_main);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -34,33 +42,17 @@ int	main(int ac, char **av, char **envp)
 	t_token	*token;
 	t_ast	*ast;
 
-	(void)ac;
-	(void)av;
-	signal(SIGINT, handler_SIGINT);
-	signal(SIGQUIT, SIG_IGN);
-	get_new_env(get_env_head(), envp);
+	init_shell(ac, av, envp);
 	while (1)
 	{
-		line = readline(prompt());
+		line = readline(get_prompt());
 		if (!line)
 			break ;
 		token = tokenizer(line);
 		ast = parser(&token);
-		*get_error_check() = true;
 		execute_compound(ast);
-		finish(line);
-		free_all();
-		signal(SIGINT, handler_SIGINT);
+		clean_cmd_resources(line);
 	}
 	ft_putendl_fd("exit", 1);
-	cleanup();
-	return (*get_status_code());
-}
-
-void	finish(char *line)
-{
-	*get_parser_check() = true;
-	*get_heredoc_check() = true;
-	add_history(line);
-	free(line);
+	clean_and_exit(NULL, *get_status_code());
 }

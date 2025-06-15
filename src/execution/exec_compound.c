@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:56 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/11 22:46:26 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/15 17:01:47 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_compound(t_ast *ast)
 {
 	t_ast	*current;
 
-	if (!ast || !(*get_parser_check()))
+	if (!ast)
 		return ;
 	current = ast->first_child;
 	while (current)
