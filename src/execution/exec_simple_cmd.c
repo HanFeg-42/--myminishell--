@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 22:17:04 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:56:45 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 void setup_only_redirect(t_file *redirect, t_cmd *cmd)
 {
 	dup_standards(cmd);
-	cmd->num_of_redirect = num_of_redirects(redirect);
-	cmd->fds = open_redirects(redirect);
+	open_redirects(redirect);
 	if (!(*get_error_check()))
 	{
 		restore_standards(cmd);
 		return;
 	}
-	close_redirect(cmd->fds, cmd->num_of_redirect - 1);
 	restore_standards(cmd);
 }
 
@@ -82,18 +80,15 @@ void restore_standards(t_cmd *cmd)
 
 int execute_single_built(t_cmd *cmd, t_ast *ast)
 {
-	*get_status_code() = 0;
 	dup_standards(cmd);
 	if (ast->redirect)
 	{
-		cmd->num_of_redirect = num_of_redirects(ast->redirect);
-		cmd->fds = open_redirects(ast->redirect);
+		open_redirects(ast->redirect);
 		if (!(*get_error_check()))
 		{
 			restore_standards(cmd);
 			return (*get_status_code());
 		}
-		close_redirect(cmd->fds, cmd->num_of_redirect - 1);
 	}
 	execute_builtins(cmd->type, ast->args);
 	restore_standards(cmd);

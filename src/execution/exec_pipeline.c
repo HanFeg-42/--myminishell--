@@ -6,19 +6,26 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 22:18:15 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:19:05 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
+int *num_cmds(void)
+{
+	static int nbr = 0;
 
+	return (&nbr);
+}
 
 void	close_pipe(int *pipefd)
 {
 	if (!pipefd)
 		return;
-	close(pipefd[0]);
-	close(pipefd[1]);
+	if(pipefd[0] != -1)
+		close(pipefd[0]);
+	if(pipefd[1] != -1)
+		close(pipefd[1]);
 }
 
 t_pipe *init_pipeline(t_ast *ast)
@@ -28,6 +35,7 @@ t_pipe *init_pipeline(t_ast *ast)
 	pipeline = gc_alloc(sizeof(t_pipe));
 	ft_memset(pipeline, 0, sizeof(t_pipe));
 	pipeline->num_of_cmds = ast_size(ast);
+	*num_cmds() = pipeline->num_of_cmds;
 	pipeline->counter = -1;
 	pipeline->saved_stdin = dup(STDIN_FILENO);
 	if (pipeline->saved_stdin < 0)

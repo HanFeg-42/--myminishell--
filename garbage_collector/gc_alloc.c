@@ -18,7 +18,10 @@ void	*gc_alloc(size_t size)
 
 	ret = malloc(size);
 	if (!ret)
-		clean_and_exit("malloc", 1);
+	{
+		perror("malloc");
+		clean_and_exit(1);
+	}
 	gc_addback(gc_new(ret));
 	return (ret);
 }

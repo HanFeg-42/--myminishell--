@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 22:08:07 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:45:18 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	main(int ac, char **av, char **envp)
 		signal(SIGINT, handler_SIGINT);
 	}
 	ft_putendl_fd("exit", 1);
-	cleanup();
-	return (*get_status_code());
+	clean_and_exit(*get_status_code());
+	return (0);
 }
 
 void	finish(char *line)

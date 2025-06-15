@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:06 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 17:09:25 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/15 16:46:38 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	check_directory(char *cmd)
 	{
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putstr_fd(" : Is a directory\n", STDERR_FILENO);
-		cleanup();
-		exit(126);
+		clean_and_exit(126);
 	}
 }
 

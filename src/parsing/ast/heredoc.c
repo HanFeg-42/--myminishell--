@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/11 20:22:14 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:46:18 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void	heredoc(t_heredoc *hd)
 		if (!line)
 			heredoc_error(ft_itoa(count), hd->eof);
 	}
-	clean_and_exit(NULL, EXIT_SUCCESS);
+	clean_and_exit(EXIT_SUCCESS);
 }
