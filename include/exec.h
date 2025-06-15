@@ -27,11 +27,11 @@ typedef enum s_builtin_type
 
 typedef struct s_pipe
 {
-	int				*curr_pipe;
-	int				*prev_pipe;
+	int				*pipefd;
 	pid_t			*pids;
 	int				num_of_cmds;
 	int				counter;
+	int				saved_stdin;
 }					t_pipe;
 
 typedef struct s_cmd
@@ -41,8 +41,6 @@ typedef struct s_cmd
 	t_pipe			*pipeline;
 	char			**envp;
 	char			*pathname;
-	int				*fds;
-	int				num_of_redirect;
 	int				saved_stdout;
 	int				saved_stdin;
 }					t_cmd;
@@ -63,7 +61,6 @@ int					*get_error_check(void);
 void				set_exec_error(const char *msg, int nb);
 int					ast_size(t_ast *ast);
 void				wait_children(t_pipe *pipeline);
-void				close_all_pipes(t_pipe *pipeline);
 void				free_all_env(t_envp **envp);
 int					envp_size(t_envp **old_envp);
 char				**convert_envp(void);
@@ -71,18 +68,18 @@ char				*concat_path(char *path, char *cmd);
 char				*find_path(char **paths, char *cmd);
 char				*get_path(char *cmd, char **envp);
 int					type_cmd(char *cmd);
-void				handle_cmd_error(char *command, t_ast *ast, t_cmd *cmd);
+void				handle_cmd_error(char *command);
 void				exec_cmd(t_ast *ast, t_cmd *cmd);
-void				open_file(t_file *file, int *fds, int i);
+int					open_file(t_file *file);
 int					num_of_redirects(t_file *lst);
-int					*open_redirects(t_file *redirect);
+void					open_redirects(t_file *redirect);
 void				execute_builtins(int type, char **args);
 void				redirect_io(int fd, t_file *file);
 void				ast_advance(t_ast **current);
 void				execute_subshell(t_ast *ast, t_pipe *pipeline);
-void				restor_standars(t_cmd *cmd);
+void				restore_standards(t_cmd *cmd);
+void dup_standards(t_cmd *cmd);
 void				setup_process_pipes(t_pipe *pipeline, int i);
-void				close_redirect(int *fds, int num_redirects);
 
 char				*ft_getenv(char *var);
 void				set_error(char *str);
@@ -105,15 +102,17 @@ void				sort_envp(t_envp **head);
 void				print_sorted_env(t_envp **envp);
 t_envp				**copy_env(t_envp **envp);
 void				handle_process(t_ast *ast, t_cmd *cmd);
-void				setup_redirects(t_ast *ast,t_cmd *cmd);
-void				cleanup();
+void				setup_redirects(t_ast *ast);
 void				and_or_handler(t_ast **current);
 char				**saved_pwd(void);
 void				set_error(char *str);
-void				clean_and_exit(char *str, int nb);
+void				clean_and_exit(int nb);
 void				change_dir(char *path);
 void				print_error1(char *args);
 void				print_error2(char *args);
 void				update_export(t_envp **envp, char *key, char *value);
 t_pipe	*init_pipeline(t_ast *ast);
+int *num_cmds(void);
+void	check_directory_(char *cmd);
+void	close_pipe(int *pipefd);
 #endif

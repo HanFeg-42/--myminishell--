@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 20:41:47 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:55:11 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	exec_cmd(t_ast *ast, t_cmd *cmd)
 		//TODO: setup signals -> signal(SIGINT, SIG_DEF), signal(SIGQUIT, SIG_DEF), signal(SIGTERM, SIG_DEF)
 		if (!(*get_parser_check()))
 		{
-			close_all_pipes(cmd->pipeline);
+			close_pipe(cmd->pipeline->curr_pipe);
 			exit(EXIT_FAILURE);
 		}
 		handle_process(ast, cmd);
@@ -102,23 +102,23 @@ void	handle_process(t_ast *ast, t_cmd *cmd)
 	setup_redirects(ast);
 	// if (!ast->args)
 	// {
-	// 	cleanup();
+	// 	clean_and_exit();
 	// 	exit(EXIT_SUCCESS);
 	// }
 	cmd->type = type_cmd(ast->args[0]);
 	if (cmd->type != -1)
 	{
 		execute_builtins(cmd->type, ast->args);
-		cleanup();
+		clean_and_exit();
 		exit(*get_status_code());
 	}
 	cmd->envp = convert_envp();
 	cmd->pathname = get_path(ast->args[0], cmd->envp);
 	if (!cmd->pathname)
-		handle_cmd_error(ast->args[0], ast, cmd);
+		handle_cmd_error(ast->args[0]);
 	signal(SIGQUIT, SIG_DFL);
 	execve(cmd->pathname, ast->args, cmd->envp);
-	cleanup();
+	clean_and_exit();
 	exit(126);
 }
 
@@ -143,7 +143,7 @@ void	setup_redirects(t_ast *ast)
 		open_redirects(ast->redirect);
 		if (!(*get_error_check()))
 		{
-			cleanup();
+			clean_and_exit();
 			exit(1);
 		}
 	}
@@ -166,7 +166,7 @@ void	setup_process_pipes(t_pipe *pipeline, int i)
 			dup2(pipeline->prev_pipe[0], STDIN_FILENO);
 			dup2(pipeline->curr_pipe[1], STDOUT_FILENO);
 		}
-		close_all_pipes(pipeline);
+		close_allpipes(pipeline);
 	}
 }
 

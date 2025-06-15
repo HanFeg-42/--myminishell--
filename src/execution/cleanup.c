@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   clean_and_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 20:29:59 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:40:00 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
-
-void	close_all_pipes(t_pipe *pipeline)
-{
-	
-	close(pipeline->prev_pipe[0]);
-	close(pipeline->prev_pipe[1]);
-	close(pipeline->curr_pipe[0]);
-	close(pipeline->curr_pipe[1]);
-}
-
-void	cleanup()
-{
-	if (*saved_pwd())
-		free(*saved_pwd());
-	free_all_env(get_env_head());
-	free_all();
-}
 
 void	wait_children(t_pipe *pipeline)
 {
@@ -73,10 +56,8 @@ void	free_all_env(t_envp **envp)
 	}
 }
 
-void	clean_and_exit(char *str, int nb)
+void	clean_and_exit(int nb)
 {
-	if (str)
-		perror(str);
 	if (*saved_pwd())
 		free(*saved_pwd());
 	free_all_env(get_env_head());

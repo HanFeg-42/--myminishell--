@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:40 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/02 16:01:41 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:53:08 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,8 @@ void	execute_echo(char **arg)
 	}
 	if (!option)
 		write(1, "\n", 1);
+	if(*get_error_check())
+		*get_status_code() = 0;
 }
+
+

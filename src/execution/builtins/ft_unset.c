@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:23 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/11 22:39:55 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:53:43 by ghita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	execute_unset(char **args)
 		free_env(args[i]);
 		i++;
 	}
+	if(*get_error_check())
+		*get_status_code() = 0;
 }
 
 void	free_env(void *key)
