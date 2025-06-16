@@ -83,12 +83,12 @@ void	append_to_array(char ***var, size_t *size, char *append)
 void update_size(t_arg *arg, size_t *size)
 {
 	int j;
+	
 	*size = 0;
 	while (arg)
 	{
 		if (arg->file)
 		{
-
 			j = 0;
 			while (arg->file[j])
 			{

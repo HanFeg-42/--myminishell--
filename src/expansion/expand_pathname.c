@@ -67,6 +67,8 @@ static void	arg_traversal(t_expand *exp, t_arg *arg)
 			size++;
 		i++;
 	}
+	if (!size)
+		return ;
 	arg->file = gc_alloc(sizeof(char *) * (size + 1));
 	i = 0;
 	size = 0;

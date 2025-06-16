@@ -123,7 +123,6 @@ static char	**get_root_dirs(void)
 		perror("opendir failed");
 		return (NULL);
 	}
-	arr = NULL;
 	size = 0;
 	entry = readdir(dir);
 	while (entry)

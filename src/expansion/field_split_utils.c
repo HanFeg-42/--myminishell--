@@ -37,6 +37,7 @@ t_arg	*arg_create(char *value)
 	if (!value)
 		return (NULL);
 	new = gc_alloc(sizeof(t_arg));
+	ft_memset(new, 0, sizeof(t_arg));
 	new->value = value;
 	new->file = NULL;
 	new->next = NULL;
