@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 16:50:21 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 22:43:50 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	num_of_redirects(t_file *lst)
 
 int	open_file(t_file *file)
 {
-	int fd;
-	
+	int	fd;
+
 	if (file->type == APPEND)
 		fd = open(file->filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else if (file->type == INPUT_RED || file->type == HERE_DOC)
@@ -52,7 +52,7 @@ void	redirect_io(int fd, t_file *file)
 		dup2(fd, STDIN_FILENO);
 }
 
-void open_redirects(t_file *redirect)
+void	open_redirects(t_file *redirect)
 {
 	t_file	*current;
 	int		fd;
@@ -60,7 +60,7 @@ void open_redirects(t_file *redirect)
 	current = redirect;
 	while (current)
 	{
-		fd= open_file(current);
+		fd = open_file(current);
 		if ((*get_error_check()))
 		{
 			redirect_io(fd, current);
@@ -69,6 +69,3 @@ void open_redirects(t_file *redirect)
 		current = current->next;
 	}
 }
-
-
-

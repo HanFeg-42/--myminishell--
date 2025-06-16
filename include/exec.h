@@ -4,8 +4,8 @@
 # include "ast.h"
 # include "lexer.h"
 # include <errno.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
-#include <sys/stat.h>
 
 typedef struct s_envp
 {
@@ -72,13 +72,14 @@ void				handle_cmd_error(char *command);
 void				exec_cmd(t_ast *ast, t_cmd *cmd);
 int					open_file(t_file *file);
 int					num_of_redirects(t_file *lst);
-void					open_redirects(t_file *redirect);
+void				open_redirects(t_file *redirect);
 void				execute_builtins(int type, char **args);
 void				redirect_io(int fd, t_file *file);
 void				ast_advance(t_ast **current);
 void				execute_subshell(t_ast *ast, t_pipe *pipeline);
 void				restore_standards(t_cmd *cmd);
-void dup_standards(t_cmd *cmd);
+void				dup_standards(t_cmd *cmd);
+void				restore_stdin(t_pipe *pipeline);
 void				setup_process_pipes(t_pipe *pipeline, int i);
 
 char				*ft_getenv(char *var);
@@ -111,8 +112,10 @@ void				change_dir(char *path);
 void				print_error1(char *args);
 void				print_error2(char *args);
 void				update_export(t_envp **envp, char *key, char *value);
-t_pipe	*init_pipeline(t_ast *ast);
-int *num_cmds(void);
-void	check_directory_(char *cmd);
-void	close_pipe(int *pipefd);
+t_pipe				*init_pipeline(t_ast *ast);
+int					*get_num_cmds(void);
+void				close_pipe(int *pipefd);
+void				handle_empty_args(t_ast *ast, t_cmd *cmd);
+void				setup_only_redirect(t_file *redirect, t_cmd *cmd);
+void				is__directory(char *cmd);
 #endif

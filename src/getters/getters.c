@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:41:56 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/12 17:10:49 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:48:34 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/exec.h"
 
 int	*get_parser_check(void)
 {
@@ -31,4 +32,18 @@ size_t *get_arg_size(void)
 	static size_t	size = 100;
 
 	return (&size);
+}
+
+int	*get_status_code(void)
+{
+	static int	status = 0;
+
+	return (&status);
+}
+
+int *get_num_cmds(void)
+{
+	static int nbr = 0;
+
+	return (&nbr);
 }

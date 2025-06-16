@@ -29,7 +29,7 @@ void	execute_export(char **args)
 		handle_single_export(args[i], envp);
 		i++;
 	}
-	if(*get_error_check())
+	if (*get_error_check())
 		*get_status_code() = 0;
 }
 
@@ -44,7 +44,7 @@ void	update_export(t_envp **envp, char *key, char *value)
 	{
 		if (node->value)
 			free(node->value);
-		if(value)
+		if (value)
 			node->value = ft_str_dup(value);
 		else
 			node->value = NULL;
@@ -64,7 +64,7 @@ void	handle_single_export(char *arg, t_envp **envp)
 		ft_putstr_fd(arg, 2);
 		ft_putchar_fd('\'', 2);
 		ft_putstr_fd(": not a valid identifier\n", 2);
-		set_exec_error (NULL, 1);
+		set_exec_error(NULL, 1);
 		return ;
 	}
 	if (pos)
