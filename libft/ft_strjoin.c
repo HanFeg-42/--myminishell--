@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:19:47 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/14 18:45:57 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:18:19 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,28 @@
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char			*join;
+	unsigned int 	i;
+	unsigned int 	j;
 
-	unsigned int (i), (j), (size_s1), (size_s2);
 	if (!s1 && s2)
 		return (ft_strdup(s2));
 	else if (!s2 && s1)
 		return (ft_strdup(s1));
 	else if (!s1 && !s2)
 		return (NULL);
-	size_s1 = ft_strlen(s1);
-	size_s2 = ft_strlen(s2);
-	join = (char *)gc_alloc(sizeof(char) * size_s1 + size_s2 + 1);
+	join = (char *)gc_alloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	i = 0;
-	while (i < size_s1)
+	while (s1[i])
 	{
 		join[i] = s1[i];
 		i++;
 	}
 	j = 0;
-	while (j < size_s2)
+	while (s2[j])
 	{
 		join[i + j] = s2[j];
 		j++;
 	}
-	join[size_s1 + size_s2] = '\0';
+	join[i + j] = '\0';
 	return (join);
 }
