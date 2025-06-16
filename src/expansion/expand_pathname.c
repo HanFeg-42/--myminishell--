@@ -65,7 +65,6 @@ static void	arg_traversal(t_expand *exp, t_arg *arg)
 	{
 		if (is_match(files[i], remove_quotes(arg->value)))
 			size++;
-			// append_to_array(&arg->file, &size, ft_strdup(files[i]));
 		i++;
 	}
 	arg->file = gc_alloc(sizeof(char *) * (size + 1));
