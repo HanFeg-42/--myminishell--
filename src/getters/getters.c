@@ -25,3 +25,10 @@ int	*get_heredoc_check(void)
 
 	return (&check);
 }
+
+size_t *get_arg_size(void)
+{
+	static size_t	size = 100;
+
+	return (&size);
+}

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
+#include "../../../include/minishell.h"
 
 static t_ast	*ast_subshell(t_token **token)
 {
@@ -91,12 +92,19 @@ static t_ast	*ast_pipeline(t_token **tokens)
 {
 	t_ast	*pipeline;
 	t_ast	*command;
+	t_token *tmp= *tokens;
 
 	pipeline = ast_create(AST_PIPELINE);
 	if (!pipeline)
 		return (NULL);
 	while (1)
 	{
+		*get_arg_size() = 0;
+		while (tmp && tmp->type != PIPE)
+		{
+			*get_arg_size()= *get_arg_size() + 1;
+			tmp = tmp->next;
+		}
 		command = ast_command(tokens);
 		if (!command)
 			return (NULL);

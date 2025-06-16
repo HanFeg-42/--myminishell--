@@ -39,25 +39,56 @@ static void	sort_strings(char **arr)
 	}
 }
 
+// char	**get_cwd_files(void)
+// {
+// 	struct dirent	*entry;
+// 	DIR				*dir;
+// 	char			**ret;
+// 	size_t			i;
+
+// 	dir = opendir(".");
+// 	if (!dir)
+// 	{
+// 		perror("opendir failed");
+// 		return (NULL);
+// 	}
+// 	ret = NULL;
+// 	i = 0;
+// 	entry = readdir(dir);
+// 	while (entry)
+// 	{
+// 		append_to_array(&ret, &i, ft_strdup(entry->d_name));
+// 		entry = readdir(dir);
+// 	}
+// 	closedir(dir);
+// 	sort_strings(ret);
+// 	return (ret);
+// }
+
 char	**get_cwd_files(void)
 {
 	struct dirent	*entry;
 	DIR				*dir;
 	char			**ret;
-	size_t			i;
+	size_t			size;
 
-	dir = opendir(".");
-	if (!dir)
-	{
-		perror("opendir failed");
-		return (NULL);
-	}
 	ret = NULL;
-	i = 0;
+	dir = opendir(".");
+	size = 0;
 	entry = readdir(dir);
 	while (entry)
 	{
-		append_to_array(&ret, &i, ft_strdup(entry->d_name));
+		size++;
+		entry = readdir(dir);
+	}
+	closedir(dir);
+	ret = gc_alloc(sizeof(char *) * (size + 1));
+	dir = opendir(".");
+	size = 0;
+	entry = readdir(dir);
+	while (entry)
+	{
+		append_to_array(&ret, &size, ft_strdup(entry->d_name));
 		entry = readdir(dir);
 	}
 	closedir(dir);
@@ -110,15 +141,29 @@ static char	**get_dirs(char	**files)
 	return (remove_hidden_files(ret));
 }
 
+// char	**get_files(t_expand *exp, t_arg *arg)
+// {
+// 	if (arg->value[0] == STAR && !ft_strchr(arg->value, '/'))
+// 		return (remove_hidden_files(exp->cwd_files));
+// 	else if (arg->value[0] == '/')
+// 		return (remove_hidden_files(get_root_dirs()));
+// 	else if (*(arg->value + ft_strlen(arg->value) - 1) == '/')
+// 		return (get_dirs(exp->cwd_files));
+// 	else
+// 		return (exp->cwd_files);
+// 	return (NULL);
+// }
+
 char	**get_files(t_expand *exp, t_arg *arg)
 {
+	(void)exp;
 	if (arg->value[0] == STAR && !ft_strchr(arg->value, '/'))
-		return (remove_hidden_files(exp->cwd_files));
+		return (remove_hidden_files(get_cwd_files()));
 	else if (arg->value[0] == '/')
 		return (remove_hidden_files(get_root_dirs()));
 	else if (*(arg->value + ft_strlen(arg->value) - 1) == '/')
-		return (get_dirs(exp->cwd_files));
+		return (get_dirs(get_cwd_files()));
 	else
-		return (exp->cwd_files);
+		return (get_cwd_files());
 	return (NULL);
 }

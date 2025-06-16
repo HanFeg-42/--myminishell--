@@ -50,7 +50,8 @@ int	main(int ac, char **av, char **envp)
 			break ;
 		token = tokenizer(line);
 		ast = parser(&token);
-		// execute_compound(ast);
+		// (void)ast;
+		execute_compound(ast);
 		clean_cmd_resources(line);
 	}
 	ft_putendl_fd("exit", 1);

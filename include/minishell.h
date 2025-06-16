@@ -33,5 +33,6 @@ void	reset_checker_state(void);
 void	setup_signals(void);
 void	ignore_signals(void);
 int		*get_heredoc_check(void);
+size_t  *get_arg_size(void);
 
 #endif

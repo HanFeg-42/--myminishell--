@@ -75,20 +75,38 @@ void	append_to_array(char ***var, size_t *size, char *append)
 
 	arr = NULL;
 	arr = *var;
-	arr = ft_realloc(arr, sizeof(char *) * (*size + 2));
+	// arr = ft_realloc(arr, sizeof(char *) * (*size + 2));
 	arr[(*size)++] = append;
 	arr[*size] = NULL;
 	*var = arr;
 }
-
+void update_sizes(t_arg *arg, size_t *size)
+{
+	int j;
+	*size = 0;
+	while (arg)
+	{
+		if (arg->file)
+		{
+			j = 0;
+			while (arg->file[j])
+				(*size)++;
+		}
+		else
+			(*size)++;
+		arg = arg->next;
+	}
+}
 char	**remove_quotes_from_all(t_expand *exp)
 {
 	char	**result;
-	size_t	i;
+	size_t	size;
 	size_t	j;
 
-	i = 0;
 	result = NULL;
+	update_sizes(exp->arg, &size);
+	result = gc_alloc(sizeof(char *) * (size + 1));
+	size = 0;
 	while (exp->arg)
 	{
 		if (exp->arg->file)
@@ -96,13 +114,13 @@ char	**remove_quotes_from_all(t_expand *exp)
 			j = 0;
 			while (exp->arg->file[j])
 			{
-				append_to_array(&result, &i,
+				append_to_array(&result, &size,
 					ft_strdup(exp->arg->file[j]));
 				j++;
 			}
 		}
 		else
-			append_to_array(&result, &i,
+			append_to_array(&result, &size,
 				undo_char_changes(remove_quotes(exp->arg->value)));
 		exp->arg = exp->arg->next;
 	}
