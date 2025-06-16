@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:47 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 17:09:42 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 23:35:34 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	handle_cmd_error(char *command)
 	else
 		ft_putstr_fd(" : command not found", 2);
 	ft_putstr_fd("\n", 2);
-	clean_and_exit(127); // TODO : remember
+	clean_and_exit(127);
 }
 
 void	print_error1(char *path)
@@ -57,3 +57,5 @@ getcwd: cannot access parent directories", 2);
 		perror (" ");
 	}
 }
+
+// TODO : remember

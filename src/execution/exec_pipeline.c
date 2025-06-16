@@ -6,36 +6,20 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 16:19:05 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 23:09:51 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
-int *num_cmds(void)
-{
-	static int nbr = 0;
 
-	return (&nbr);
-}
-
-void	close_pipe(int *pipefd)
+t_pipe	*init_pipeline(t_ast *ast)
 {
-	if (!pipefd)
-		return;
-	if(pipefd[0] != -1)
-		close(pipefd[0]);
-	if(pipefd[1] != -1)
-		close(pipefd[1]);
-}
-
-t_pipe *init_pipeline(t_ast *ast)
-{
-	t_pipe *pipeline;
+	t_pipe	*pipeline;
 
 	pipeline = gc_alloc(sizeof(t_pipe));
 	ft_memset(pipeline, 0, sizeof(t_pipe));
 	pipeline->num_of_cmds = ast_size(ast);
-	*num_cmds() = pipeline->num_of_cmds;
+	*get_num_cmds() = pipeline->num_of_cmds;
 	pipeline->counter = -1;
 	pipeline->saved_stdin = dup(STDIN_FILENO);
 	if (pipeline->saved_stdin < 0)
@@ -50,54 +34,74 @@ t_pipe *init_pipeline(t_ast *ast)
 	return (pipeline);
 }
 
-void execute_pipeline(t_ast *ast)
+static void	handle_pipe(t_pipe *pipeline)
 {
-	t_pipe *pipeline;
-	t_ast *current;
-	int i;
+	dup2(pipeline->pipefd[0], STDIN_FILENO);
+	close_pipe(pipeline->pipefd);
+	if (pipe(pipeline->pipefd) < 0)
+		set_exec_error("pipe", 1);
+}
+
+void	execute_pipeline(t_ast *ast)
+{
+	t_pipe	*pipeline;
+	t_ast	*current;
+	int		i;
 
 	pipeline = init_pipeline(ast);
 	if (!(*get_error_check()))
-		return;
+		return ;
 	current = ast->first_child;
 	i = 0;
 	while (current)
 	{
 		execute_command(current, pipeline, i);
-		if(i < pipeline->num_of_cmds -1 )
-		{
-			dup2(pipeline->pipefd[0],0);	
-			close_pipe(pipeline->pipefd);
-			if (pipe(pipeline->pipefd) < 0)
-			{
-				set_exec_error("pipe", 1);
-				break ;
-			}
-		}
+		if (i < pipeline->num_of_cmds - 1)
+			handle_pipe(pipeline);
+		if (!*get_error_check())
+			break ;
 		ast_advance(&current);
 		i++;
 	}
 	if (pipeline->num_of_cmds > 1)
 		close_pipe(pipeline->pipefd);
-	if (pipeline->saved_stdin >= 0)
-	{
-		dup2(pipeline->saved_stdin, STDIN_FILENO);
-		close(pipeline->saved_stdin);
-	}
+	restore_stdin(pipeline);
 	wait_children(pipeline);
 }
 
-int ast_size(t_ast *ast)
-{
-	int i;
-	t_ast *current;
+// void execute_pipeline(t_ast *ast)
+// {
+// 	t_pipe *pipeline;
+// 	t_ast *current;
+// 	int i;
 
-	current = ast->first_child;
-	i = 0;
-	while (current)
-	{
-		current = current->next_sibling;
-		i++;
-	}
-	return (i);
-}
+// 	pipeline = init_pipeline(ast);
+// 	if (!(*get_error_check()))
+// 		return ;
+// 	current = ast->first_child;
+// 	i = 0;
+// 	while (current)
+// 	{
+// 		execute_command(current, pipeline, i);
+// 		if(i < pipeline->num_of_cmds -1 )
+// 		{
+// 			dup2(pipeline->pipefd[0],0);
+// 			close_pipe(pipeline->pipefd);
+// 			if (pipe(pipeline->pipefd) < 0)
+// 			{
+// 				set_exec_error("pipe", 1);
+// 				break ;
+// 			}
+// 		}
+// 		ast_advance(&current);
+// 		i++;
+// 	}
+// 	if (pipeline->num_of_cmds > 1)
+// 		close_pipe(pipeline->pipefd);
+// 	if (pipeline->saved_stdin >= 0)
+// 	{
+// 		dup2(pipeline->saved_stdin, STDIN_FILENO);
+// 		close(pipeline->saved_stdin);
+// 	}
+// 	wait_children(pipeline);
+// }

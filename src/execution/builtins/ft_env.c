@@ -17,7 +17,7 @@ void	execute_env(char **args)
 	t_envp	**envp;
 	t_envp	*current;
 
-	if(*args)
+	if (*args)
 		return (set_error("env : too many agruments\n"));
 	envp = get_env_head();
 	current = *envp;
@@ -27,6 +27,6 @@ void	execute_env(char **args)
 			printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
-	if(*get_error_check())
+	if (*get_error_check())
 		*get_status_code() = 0;
 }

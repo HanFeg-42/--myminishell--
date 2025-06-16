@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:16 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 16:46:00 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 22:47:01 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	is_numeric(const char *a)
 
 void	execute_exit(char **av)
 {
-	if (*num_cmds() <= 1)
+	if (*get_num_cmds() <= 1)
 		ft_putendl_fd(av[0], 1);
 	if (!av[1])
 		clean_and_exit(*get_status_code());

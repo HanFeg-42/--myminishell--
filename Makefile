@@ -30,6 +30,8 @@ SRC = src/main.c \
 		src/execution/env.c \
 		src/execution/exec_compound.c \
 		src/execution/exec_command.c \
+		src/execution/manage_standards.c \
+		src/execution/size.c \
 		src/execution/exec_simple_cmd.c \
 		src/execution/exec_pipeline.c \
 		src/execution/simple_cmd_helpers.c \

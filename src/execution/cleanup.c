@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_and_exit.c                                          :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:00:36 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 16:40:00 by gstitou          ###   ########.fr       */
+/*   Created: 2025/06/16 23:30:37 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/16 23:30:50 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,14 @@ void	clean_and_exit(int nb)
 	free_all_env(get_env_head());
 	free_all();
 	exit(nb);
+}
+
+void	close_pipe(int *pipefd)
+{
+	if (!pipefd)
+		return ;
+	if (pipefd[0] != -1)
+		close(pipefd[0]);
+	if (pipefd[1] != -1)
+		close(pipefd[1]);
 }

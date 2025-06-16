@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:42 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/11 22:39:42 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 22:52:33 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,3 @@ int	envp_size(t_envp **old_envp)
 	}
 	return (size);
 }
-// void	print_env(t_envp **env)
-// {
-// 	t_envp *current;
-
-// 	current = *env;
-// 	while (current)
-// 	{
-// 		printf("%s=%s\n", current->key, current->value);
-// 		current = current->next;
-// 	}
-// }

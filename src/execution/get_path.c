@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:06 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/16 15:12:57 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:42:43 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	*find_path(char **paths, char *cmd)
 	}
 	return (NULL);
 }
-void	check_directory(char *cmd)
+
+void	is__directory(char *cmd)
 {
 	struct stat	path_stat;
 
@@ -46,11 +47,9 @@ char	*get_path(char *cmd, char **envp)
 
 	if (!cmd || !envp || !cmd[0] || (cmd[0] == '.' && !cmd[1]))
 		return (NULL);
-	
-
 	if (ft_strchr(cmd, '/'))
 	{
-		check_directory(cmd);
+		is__directory(cmd);
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);
@@ -60,11 +59,9 @@ char	*get_path(char *cmd, char **envp)
 		i++;
 	if (!envp[i])
 		return (NULL);
-
 	paths = ft_split(envp[i] + 5, ':');
 	if (!paths)
 		return (NULL);
-
 	return (find_path(paths, cmd));
 }
 
@@ -75,11 +72,9 @@ char	*concat_path(char *path, char *cmd)
 
 	if (!path || !cmd)
 		return (NULL);
-
 	tmp = ft_strjoin(path, "/");
 	if (!tmp)
 		return (NULL);
-
 	fullpath = ft_strjoin(tmp, cmd);
 	return (fullpath);
 }

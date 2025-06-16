@@ -84,6 +84,6 @@ void	update_env(char *old_pwd, char *new_pwd)
 	execute_export(elems);
 	free(old_pwd);
 	free(new_pwd);
-	if(*get_error_check())
+	if (*get_error_check())
 		*get_status_code() = 0;
 }

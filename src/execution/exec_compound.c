@@ -6,18 +6,11 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:56 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 17:01:47 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 22:45:31 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
-
-int	*get_status_code(void)
-{
-	static int	status = 0;
-
-	return (&status);
-}
 
 void	advance_twice(t_ast **current)
 {

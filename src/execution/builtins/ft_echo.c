@@ -50,8 +50,6 @@ void	execute_echo(char **arg)
 	}
 	if (!option)
 		write(1, "\n", 1);
-	if(*get_error_check())
+	if (*get_error_check())
 		*get_status_code() = 0;
 }
-
-

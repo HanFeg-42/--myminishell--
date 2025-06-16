@@ -3,83 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/16 15:24:18 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:44:12 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
 
-void setup_only_redirect(t_file *redirect, t_cmd *cmd)
+void	handle_empty_args(t_ast *ast, t_cmd *cmd)
 {
-	dup_standards(cmd);
-	open_redirects(redirect);
+	if (ast->redirect)
+		setup_only_redirect(ast->redirect, cmd);
 	if (!(*get_error_check()))
-	{
-		restore_standards(cmd);
-		return;
-	}
-	restore_standards(cmd);
+		return ;
+	*get_status_code() = 0;
 }
 
-void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
-{
-	t_cmd *cmd;
-
-	cmd = gc_alloc(sizeof(t_cmd));
-	ft_memset(cmd, 0, sizeof(t_cmd));
-	expand(ast);
-	cmd->pos = i;
-	cmd->pipeline = pipeline;
-	if (!(*get_parser_check()))
-	{
-		*get_status_code() = 1;
-		return;
-	}
-	if (ast->args == NULL)
-	{
-		if (ast->redirect)
-			setup_only_redirect(ast->redirect, cmd);
-		if (!(*get_error_check()))
-			return;
-		*get_status_code() = 0;
-		return;
-	}
-
-	cmd->type = type_cmd(ast->args[0]);
-	if (cmd->type != -1 && cmd->pipeline->num_of_cmds == 1)
-	{
-		*get_status_code() = execute_single_built(cmd, ast);
-		return;
-	}
-	exec_cmd(ast, cmd);
-}
-
-void dup_standards(t_cmd *cmd)
-{
-	cmd->saved_stdin = dup(STDIN_FILENO);
-	cmd->saved_stdout = dup(STDOUT_FILENO);
-	if (cmd->saved_stdin < 0 || cmd->saved_stdout < 0)
-		set_exec_error("dup", 1);
-}
-
-void restore_standards(t_cmd *cmd)
-{
-	if (cmd->saved_stdout >= 0)
-	{
-		dup2(cmd->saved_stdout, STDOUT_FILENO);
-		close(cmd->saved_stdout);
-	}
-	if (cmd->saved_stdin >= 0)
-	{
-		dup2(cmd->saved_stdin, STDIN_FILENO);
-		close(cmd->saved_stdin);
-	}
-}
-
-int execute_single_built(t_cmd *cmd, t_ast *ast)
+int	execute_single_built(t_cmd *cmd, t_ast *ast)
 {
 	dup_standards(cmd);
 	if (ast->redirect)
@@ -94,4 +36,44 @@ int execute_single_built(t_cmd *cmd, t_ast *ast)
 	execute_builtins(cmd->type, ast->args);
 	restore_standards(cmd);
 	return (*get_status_code());
+}
+
+void	setup_only_redirect(t_file *redirect, t_cmd *cmd)
+{
+	dup_standards(cmd);
+	open_redirects(redirect);
+	if (!(*get_error_check()))
+	{
+		restore_standards(cmd);
+		return ;
+	}
+	restore_standards(cmd);
+}
+
+void	execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
+{
+	t_cmd	*cmd;
+
+	cmd = gc_alloc(sizeof(t_cmd));
+	ft_memset(cmd, 0, sizeof(t_cmd));
+	expand(ast);
+	cmd->pos = i;
+	cmd->pipeline = pipeline;
+	if (!(*get_parser_check()))
+	{
+		*get_status_code() = 1;
+		return ;
+	}
+	if (ast->args == NULL)
+	{
+		handle_empty_args(ast, cmd);
+		return ;
+	}
+	cmd->type = type_cmd(ast->args[0]);
+	if (cmd->type != -1 && cmd->pipeline->num_of_cmds == 1)
+	{
+		*get_status_code() = execute_single_built(cmd, ast);
+		return ;
+	}
+	exec_cmd(ast, cmd);
 }

@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   size.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:00:21 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 15:53:34 by ghita            ###   ########.fr       */
+/*   Created: 2025/06/16 23:09:40 by gstitou           #+#    #+#             */
+/*   Updated: 2025/06/16 23:10:20 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/exec.h"
+#include "../../include/exec.h"
 
-void	execute_pwd(void)
+int	ast_size(t_ast *ast)
 {
-	char	*cwd;
+	int		i;
+	t_ast	*current;
 
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
+	current = ast->first_child;
+	i = 0;
+	while (current)
 	{
-		cwd = ft_str_dup(*saved_pwd());
+		current = current->next_sibling;
+		i++;
 	}
-	printf("%s\n", cwd);
-	free(cwd);
-	if (*get_error_check())
-		*get_status_code() = 0;
+	return (i);
 }
