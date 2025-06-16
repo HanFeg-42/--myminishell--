@@ -24,7 +24,7 @@ t_expand	*init_expand(char **args)
 	exp->i = 0;
 	exp->stat = 0;
 	exp->pos = 0;
-	exp->cwd_files = get_cwd_files();
+	// exp->cwd_files = get_cwd_files();
 	return (exp);
 }
 

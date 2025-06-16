@@ -80,7 +80,7 @@ void	append_to_array(char ***var, size_t *size, char *append)
 	arr[*size] = NULL;
 	*var = arr;
 }
-void update_sizes(t_arg *arg, size_t *size)
+void update_size(t_arg *arg, size_t *size)
 {
 	int j;
 	*size = 0;
@@ -88,9 +88,13 @@ void update_sizes(t_arg *arg, size_t *size)
 	{
 		if (arg->file)
 		{
+
 			j = 0;
 			while (arg->file[j])
+			{
 				(*size)++;
+				j++;
+			}
 		}
 		else
 			(*size)++;
@@ -103,12 +107,12 @@ char	**remove_quotes_from_all(t_expand *exp)
 	size_t	size;
 	size_t	j;
 
-	result = NULL;
-	update_sizes(exp->arg, &size);
+	update_size(exp->arg, &size);
 	result = gc_alloc(sizeof(char *) * (size + 1));
 	size = 0;
 	while (exp->arg)
 	{
+
 		if (exp->arg->file)
 		{
 			j = 0;

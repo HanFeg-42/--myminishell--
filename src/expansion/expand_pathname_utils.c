@@ -64,16 +64,13 @@ static void	sort_strings(char **arr)
 // 	sort_strings(ret);
 // 	return (ret);
 // }
-
-char	**get_cwd_files(void)
+size_t	get_dir_size(char *path)
 {
 	struct dirent	*entry;
 	DIR				*dir;
-	char			**ret;
 	size_t			size;
 
-	ret = NULL;
-	dir = opendir(".");
+	dir = opendir(path);
 	size = 0;
 	entry = readdir(dir);
 	while (entry)
@@ -82,8 +79,23 @@ char	**get_cwd_files(void)
 		entry = readdir(dir);
 	}
 	closedir(dir);
+	return (size);
+}
+char	**get_cwd_files(void)
+{
+	struct dirent	*entry;
+	DIR				*dir;
+	char			**ret;
+	size_t			size;
+
+	size = get_dir_size(".");
 	ret = gc_alloc(sizeof(char *) * (size + 1));
 	dir = opendir(".");
+	if (!dir)
+	{
+		perror("opendir failed");
+		return (NULL);
+	}
 	size = 0;
 	entry = readdir(dir);
 	while (entry)
@@ -99,46 +111,57 @@ char	**get_cwd_files(void)
 static char	**get_root_dirs(void)
 {
 	struct dirent	*entry;
-	char			**ret;
+	char			**arr;
 	DIR				*dir;
-	size_t			i;
+	size_t			size;
 
+	size = get_dir_size("/");
+	arr = gc_alloc(sizeof(char *) * (size + 1));
 	dir = opendir("/");
 	if (!dir)
 	{
 		perror("opendir failed");
 		return (NULL);
 	}
-	ret = NULL;
-	i = 0;
+	arr = NULL;
+	size = 0;
 	entry = readdir(dir);
 	while (entry)
 	{
-		append_to_array(&ret, &i, ft_strjoin("/", entry->d_name));
+		append_to_array(&arr, &size, ft_strjoin("/", entry->d_name));
 		entry = readdir(dir);
 	}
 	closedir(dir);
-	sort_strings(ret);
-	return (ret);
+	sort_strings(arr);
+	return (arr);
 }
 
 static char	**get_dirs(char	**files)
 {
-	char			**ret;
-	size_t			i;
+	char			**arr;
+	size_t			size;
 	int				j;
 
-	ret = NULL;
-	i = 0;
+	arr = NULL;
+	size = 0;
 	j = 0;
 	while (files[j])
 	{
 		if (is_directory(files[j]))
-			append_to_array(&ret, &i, ft_strjoin(files[j], "/"));
+			size++;
 		j++;
 	}
-	sort_strings(ret);
-	return (remove_hidden_files(ret));
+	arr = gc_alloc(sizeof(char *) * (size + 1));
+	size = 0;
+	j = 0;
+	while (files[j])
+	{
+		if (is_directory(files[j]))
+			append_to_array(&arr, &size, ft_strjoin(files[j], "/"));
+		j++;
+	}
+	sort_strings(arr);
+	return (remove_hidden_files(arr));
 }
 
 // char	**get_files(t_expand *exp, t_arg *arg)
