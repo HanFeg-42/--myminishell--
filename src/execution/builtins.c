@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:39 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 10:19:29 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/16 15:57:01 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	execute_builtins(int type, char **args)
 	if (type == UNSET)
 		return (execute_unset(args + 1));
 	if (type == ENV)
-		return (execute_env());
+		return (execute_env(args + 1));
 	if (type == EXIT)
 		return (execute_exit(args));
 }

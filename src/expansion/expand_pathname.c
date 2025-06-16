@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/14 18:29:56 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:25:13 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	arg_traversal(t_expand *exp, t_arg *arg)
 	while (files[i])
 	{
 		if (is_match(files[i], remove_quotes(arg->value)))
-			append_to_array(&arg->file, &size, ft_strdup(files[i]));
+			(&arg->file, &size, ft_strdup(files[i]));
 		i++;
 	}
 }

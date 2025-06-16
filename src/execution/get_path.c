@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:06 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 16:46:38 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 15:12:57 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ char	*get_path(char *cmd, char **envp)
 
 	if (!cmd || !envp || !cmd[0] || (cmd[0] == '.' && !cmd[1]))
 		return (NULL);
-
-	check_directory(cmd);
+	
 
 	if (ft_strchr(cmd, '/'))
 	{
+		check_directory(cmd);
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);

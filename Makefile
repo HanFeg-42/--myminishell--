@@ -4,7 +4,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror -g3 # -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -g3
 
 RLFLAG = -lreadline
 
@@ -79,7 +79,7 @@ all: $(NAME) $(HEADER)
 
 $(NAME): $(OBJ)
 	@$(MAKE) -s -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(RLFLAG) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(RLFLAG) -o $(NAME)
 	echo "compiled"
 
 bonus: all

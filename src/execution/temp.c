@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   temp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 16:55:11 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:50:29 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ void open_redirects(t_file *redirect)
 	{
 		fd = open_file(current);
 		if (!(*get_error_check()))
-			return 
+			return ;
 		redirect_io(fd, current);
-		//close(fd);
-		i++;
+		close(fd);
 		current = current->next;
 	}
 }

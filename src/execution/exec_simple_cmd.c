@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:01 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 16:56:45 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 15:24:18 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 	expand(ast);
 	cmd->pos = i;
 	cmd->pipeline = pipeline;
+	if (!(*get_parser_check()))
+	{
+		*get_status_code() = 1;
+		return;
+	}
 	if (ast->args == NULL)
 	{
 		if (ast->redirect)
@@ -42,11 +47,7 @@ void execute_simple_cmd(t_ast *ast, t_pipe *pipeline, int i)
 		*get_status_code() = 0;
 		return;
 	}
-	if (!(*get_parser_check()))
-	{
-		*get_status_code() = 1;
-		return;
-	}
+
 	cmd->type = type_cmd(ast->args[0]);
 	if (cmd->type != -1 && cmd->pipeline->num_of_cmds == 1)
 	{

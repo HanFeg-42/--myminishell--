@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/14 15:49:38 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:37:11 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	sort_strings(char **arr)
 	char	*tmp;
 	int		sorted;
 
+	if (!arr)
+		return ;
 	sorted = 0;
 	while (!sorted)
 	{

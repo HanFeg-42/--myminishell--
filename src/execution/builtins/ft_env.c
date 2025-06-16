@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:13 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 15:53:18 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/16 15:59:51 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/exec.h"
 
-void	execute_env(void)
+void	execute_env(char **args)
 {
 	t_envp	**envp;
 	t_envp	*current;
 
+	if(*args)
+		return (set_error("env : too many agruments\n"));
 	envp = get_env_head();
 	current = *envp;
 	while (current)

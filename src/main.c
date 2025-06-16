@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 17:12:29 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:55:42 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av, char **envp)
 			break ;
 		token = tokenizer(line);
 		ast = parser(&token);
-		execute_compound(ast);
+		// execute_compound(ast);
 		clean_cmd_resources(line);
 	}
 	ft_putendl_fd("exit", 1);

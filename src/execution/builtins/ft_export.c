@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ghita <ghita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:18 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 15:53:28 by ghita            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:30:28 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void	update_export(t_envp **envp, char *key, char *value)
 	{
 		if (node->value)
 			free(node->value);
-		node->value = ft_str_dup(value);
+		if(value)
+			node->value = ft_str_dup(value);
+		else
+			node->value = NULL;
 	}
 }
 

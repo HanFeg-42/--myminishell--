@@ -86,7 +86,7 @@ void				set_error(char *str);
 void				update_env(char *old_pwd, char *new_pwd);
 void				execute_cd(char **args);
 void				execute_pwd(void);
-void				execute_env(void);
+void				execute_env(char **args);
 void				handle_single_export(char *arg, t_envp **envp);
 void				execute_export(char **args);
 t_envp				*find_node(char *key);
