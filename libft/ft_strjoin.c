@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:19:47 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/15 17:18:19 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:42:11 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char			*join;
-	unsigned int 	i;
-	unsigned int 	j;
+	unsigned int	i;
+	unsigned int	j;
 
 	if (!s1 && s2)
 		return (ft_strdup(s2));

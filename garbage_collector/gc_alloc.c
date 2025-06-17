@@ -70,4 +70,3 @@ void	*gc_alloc(size_t size)
 	gc_addback(gc_new(ret));
 	return (ret);
 }
-

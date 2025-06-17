@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/14 18:38:43 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:37:11 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <dirent.h>
 # include "ast.h"
-# include "minishell.h"
 
 # define NORMAL			0
 # define DOUBLE_QUOTED	1
@@ -41,7 +40,6 @@ typedef struct s_expand
 	int				i;
 	int				stat;
 	int				pos;
-	char			**cwd_files;
 }					t_expand;
 
 char				**expander(char **args);
@@ -58,7 +56,8 @@ t_arg				*arg_create(char *value);
 char				**copy_arr(char **arg);
 char				**remove_hidden_files(char **files);
 void				replace_unquoted_asterisk(t_expand *exp);
-char				**get_cwd_files(void);
+size_t				get_dir_size(char *path);
+void				update_size(t_arg *arg, size_t *size);
 char				*remove_quotes(char *str);
 char				**remove_quotes_from_all(t_expand *exp);
 char				*undo_char_changes(char *str);

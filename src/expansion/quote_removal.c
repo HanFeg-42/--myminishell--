@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:12:37 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/16 18:07:15 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:37:58 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,32 +75,11 @@ void	append_to_array(char ***var, size_t *size, char *append)
 
 	arr = NULL;
 	arr = *var;
-	// arr = ft_realloc(arr, sizeof(char *) * (*size + 2));
 	arr[(*size)++] = append;
 	arr[*size] = NULL;
 	*var = arr;
 }
-void update_size(t_arg *arg, size_t *size)
-{
-	int j;
-	
-	*size = 0;
-	while (arg)
-	{
-		if (arg->file)
-		{
-			j = 0;
-			while (arg->file[j])
-			{
-				(*size)++;
-				j++;
-			}
-		}
-		else
-			(*size)++;
-		arg = arg->next;
-	}
-}
+
 char	**remove_quotes_from_all(t_expand *exp)
 {
 	char	**result;
@@ -112,7 +91,6 @@ char	**remove_quotes_from_all(t_expand *exp)
 	size = 0;
 	while (exp->arg)
 	{
-
 		if (exp->arg->file)
 		{
 			j = 0;

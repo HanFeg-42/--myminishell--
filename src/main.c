@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/16 17:55:42 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:45:27 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	main(int ac, char **av, char **envp)
 			break ;
 		token = tokenizer(line);
 		ast = parser(&token);
-		// (void)ast;
 		execute_compound(ast);
 		clean_cmd_resources(line);
 	}

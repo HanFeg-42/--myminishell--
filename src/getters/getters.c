@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:41:56 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/16 22:48:34 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/17 12:51:22 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	*get_heredoc_check(void)
 	return (&check);
 }
 
-size_t *get_arg_size(void)
+size_t	*get_arg_size(void)
 {
-	static size_t	size = 100;
+	static size_t	size = 0;
 
 	return (&size);
 }
@@ -41,9 +41,9 @@ int	*get_status_code(void)
 	return (&status);
 }
 
-int *get_num_cmds(void)
+int	*get_num_cmds(void)
 {
-	static int nbr = 0;
+	static int	nbr = 0;
 
 	return (&nbr);
 }

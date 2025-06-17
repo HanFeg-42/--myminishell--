@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:52:23 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/16 18:25:13 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:03:28 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,28 @@ static int	is_match(char *filename, char *pattern)
 
 static void	arg_traversal(t_expand *exp, t_arg *arg)
 {
-	int			i;
-	size_t		size;
 	char		**files;
+	size_t		index[2];
 
 	files = get_files(exp, arg);
 	if (!files)
 		return ;
-	i = 0;
-	size = 0;
-	while (files[i])
+	ft_memset(index, 0, sizeof(index));
+	while (files[index[0]])
 	{
-		if (is_match(files[i], remove_quotes(arg->value)))
-			size++;
-		i++;
+		if (is_match(files[index[0]], remove_quotes(arg->value)))
+			index[1]++;
+		index[0]++;
 	}
-	if (!size)
+	if (!index[1])
 		return ;
-	arg->file = gc_alloc(sizeof(char *) * (size + 1));
-	i = 0;
-	size = 0;
-	while (files[i])
+	arg->file = gc_alloc(sizeof(char *) * (index[1] + 1));
+	ft_memset(index, 0, sizeof(index));
+	while (files[index[0]])
 	{
-		if (is_match(files[i], remove_quotes(arg->value)))
-			append_to_array(&arg->file, &size, ft_strdup(files[i]));
-		i++;
+		if (is_match(files[index[0]], remove_quotes(arg->value)))
+			append_to_array(&arg->file, &index[1], ft_strdup(files[index[0]]));
+		index[0]++;
 	}
 }
 

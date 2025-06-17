@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/17 14:43:31 by hfegrach          #+#    #+#             */
+/*   Updated: 2025/06/17 14:44:03 by hfegrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXEC_H
 # define EXEC_H
 
@@ -23,7 +35,7 @@ typedef enum s_builtin_type
 	UNSET,
 	ENV,
 	EXIT
-}					builtin_type;
+}					t_builtin_type;
 
 typedef struct s_pipe
 {

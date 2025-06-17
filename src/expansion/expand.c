@@ -6,13 +6,11 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:00:42 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/16 18:28:47 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:50:30 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expander.h"
-
-// TODO : change the logic of append_to_array so that it doesn't  realloc simultanuously
 
 t_expand	*init_expand(char **args)
 {
@@ -24,7 +22,6 @@ t_expand	*init_expand(char **args)
 	exp->i = 0;
 	exp->stat = 0;
 	exp->pos = 0;
-	// exp->cwd_files = get_cwd_files();
 	return (exp);
 }
 

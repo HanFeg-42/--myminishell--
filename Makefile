@@ -4,7 +4,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 
 RLFLAG = -lreadline
 
@@ -59,6 +59,7 @@ SRC = src/main.c \
 		src/execution/error_seters.c \
 		src/execution/env_helpers.c \
 		src/execution/cleanup.c \
+		src/expansion/size_getter.c \
 		src/signal.c \
 		src/errors.c \
 		src/expansion/expand_pathname_utils.c

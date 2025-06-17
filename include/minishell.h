@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:18 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/14 18:40:31 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:45:00 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	reset_checker_state(void);
 void	setup_signals(void);
 void	ignore_signals(void);
 int		*get_heredoc_check(void);
-size_t  *get_arg_size(void);
+size_t	*get_arg_size(void);
 
 #endif
