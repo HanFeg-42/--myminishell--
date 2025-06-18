@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 23:30:37 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/16 23:30:50 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:39:52 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	wait_children(t_pipe *pipeline)
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
-			write(2, "\n", 1);
+			write(1, "\n", 1);
 		else if (WTERMSIG(status) == SIGQUIT)
-			write(2, "Quit (core dumped)\n", 20);
+			write(1, "Quit (core dumped)\n", 20);
 		*get_status_code() = 128 + WTERMSIG(status);
 	}
 }

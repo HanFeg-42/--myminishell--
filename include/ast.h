@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:03 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/14 18:22:14 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:41:47 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int				is_token_redirect(t_token *token);
 void			add_args(t_token **token, t_ast *simple_cmd);
 void			*syntax_error(char *err);
 int				is_empty_cmd(t_ast *simple_cmd);
-void			*ft_realloc(void *ptr, size_t size);
 void			heredoc_handler(char *eof, t_file **redirect);
 void			expand(t_ast *ast);
 void			expand_file(t_file *red);
+void			arg_size(t_token *token);
 
 #endif

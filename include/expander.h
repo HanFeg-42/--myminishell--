@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:11 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/17 14:37:11 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:56:54 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ char				*ft_getenv(char *var);
 int					is_ifs(int c);
 int					is_quoted(char *eof);
 int					is_directory(char *pathname);
+t_arg				*arg_last(t_arg *head);
 
 #endif

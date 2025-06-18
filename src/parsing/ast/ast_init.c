@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:48:12 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/14 17:52:02 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:58:11 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,10 @@ void	token_advance(t_token **token)
 	*token = (*token)->next;
 }
 
-// void	add_args(t_token **token, t_ast *simple_cmd)
-// {
-// 	simple_cmd->args = ft_realloc(simple_cmd->args,
-// 			sizeof(char *) * (simple_cmd->i + 2));
-// 	if (!simple_cmd->args)
-// 		return ;
-// 	simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
-// 	simple_cmd->args[simple_cmd->i] = NULL;
-// 	token_advance(token);
-// }
-
 void	add_args(t_token **token, t_ast *simple_cmd)
 {
 	if (!simple_cmd->args)
-		simple_cmd->args = gc_alloc(sizeof(char *) * (*get_arg_size() + 2));
+		simple_cmd->args = gc_alloc(sizeof(char *) * (*get_arg_size() + 1));
 	simple_cmd->args[simple_cmd->i++] = ft_strdup((*token)->value);
 	simple_cmd->args[simple_cmd->i] = NULL;
 	token_advance(token);

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:08:51 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/17 14:38:40 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:17:31 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ size_t	get_dir_size(char *path)
 	size_t			size;
 
 	dir = opendir(path);
+	if (!dir)
+	{
+		perror("opendir");
+		return (0);
+	}
 	size = 0;
 	entry = readdir(dir);
 	while (entry)

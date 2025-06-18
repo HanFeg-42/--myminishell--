@@ -4,7 +4,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 RLFLAG = -lreadline
 
@@ -76,14 +76,15 @@ CLEAN = clean
 
 FCLEAN = fclean
 
-HEADER	=	include/minishell.h
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(NAME) $(HEADER)
+all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(MAKE) -s -C $(LIBFT_DIR)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(RLFLAG) -o $(NAME)
-	echo "compiled"
+	@echo "\033[1;32m✅ Compiled successfully\033[0m"
 
 bonus: all
 
@@ -98,3 +99,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus clean fclean re
+.SECONDARY:

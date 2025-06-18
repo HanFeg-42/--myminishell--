@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:03:38 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/14 17:59:08 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:41:29 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,18 @@ int	check_and_or_token(t_token *token)
 	return (-1);
 }
 
-static void	copy_ptr(char **ptr, char **new_ptr, int size)
+void	arg_size(t_token *token)
 {
-	int	i;
-
-	i = 0;
-	while (ptr[i] && i < size - 1)
+	*get_arg_size() = 0;
+	while (token)
 	{
-		new_ptr[i] = ft_strdup(ptr[i]);
-		i++;
+		if (token->type == PIPE
+			|| token->type == AND
+			|| token->type == OR
+			|| token->type == OPAREN
+			|| token->type == CPAREN)
+			break ;
+		*get_arg_size() = *get_arg_size() + 1;
+		token = token->next;
 	}
-	new_ptr[i] = NULL;
-}
-
-static void	free_old_ptr(char **ptr)
-{
-	int	i;
-
-	i = 0;
-	while (ptr[i])
-	{
-		free_one(ptr[i]);
-		i++;
-	}
-	free_one(ptr);
-}
-
-void	*ft_realloc(void *ptr, size_t size)
-{
-	char	**new_ptr;
-
-	if (!ptr)
-		return (gc_alloc(size));
-	new_ptr = gc_alloc(size);
-	copy_ptr(ptr, new_ptr, size);
-	free_old_ptr(ptr);
-	return (new_ptr);
 }

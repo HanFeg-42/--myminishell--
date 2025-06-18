@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/15 17:13:39 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:31:21 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	setup_signals(void)
 void	sigint_handler_in_heredoc(int sig)
 {
 	(void)sig;
-	write(2, "\n", 1);
+	write(1, "\n", 1);
 	clean_and_exit(130);
 }

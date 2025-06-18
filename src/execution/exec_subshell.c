@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_subshell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:03 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/13 16:07:10 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/18 18:54:02 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	execute_subshell(t_ast *ast, t_pipe *pipeline)
 			open_redirects(ast->redirect);
 		}
 		execute_compound(ast->first_child);
-		exit(*get_status_code());
+		clean_and_exit(*get_status_code());
 	}
 }

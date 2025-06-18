@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/17 12:45:27 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:01:10 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ static const char	*get_prompt(void)
 
 static void	init_shell(int ac, char **av, char **envp)
 {
-	(void)ac;
 	(void)av;
+	if (ac > 1)
+	{
+		ft_putstr_fd("Too many arguments\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	signal(SIGINT, sigint_handler_in_main);
 	signal(SIGQUIT, SIG_IGN);
 	get_new_env(get_env_head(), envp);
@@ -43,7 +47,7 @@ int	main(int ac, char **av, char **envp)
 	t_ast	*ast;
 
 	init_shell(ac, av, envp);
-	while (1)
+	while (true)
 	{
 		line = readline(get_prompt());
 		if (!line)

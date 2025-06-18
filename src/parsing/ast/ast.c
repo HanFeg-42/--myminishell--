@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:28:27 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/17 12:47:39 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:53:16 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,13 @@ static t_ast	*ast_pipeline(t_token **tokens)
 {
 	t_ast	*pipeline;
 	t_ast	*command;
-	t_token	*tmp;
 
 	pipeline = ast_create(AST_PIPELINE);
 	if (!pipeline)
 		return (NULL);
-	tmp = *tokens;
 	while (1)
 	{
-		*get_arg_size() = 0;
-		while (tmp && tmp->type != PIPE)
-		{
-			*get_arg_size() = *get_arg_size() + 1;
-			tmp = tmp->next;
-		}
+		arg_size(*tokens);
 		command = ast_command(tokens);
 		if (!command)
 			return (NULL);

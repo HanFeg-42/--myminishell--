@@ -6,14 +6,12 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:33:55 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/16 18:29:46 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:39:24 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/ast.h"
 #include "../../../include/heredoc.h"
-
-// TODO : update ft_realloc bcz of TIMEOUT
 
 t_ast	*parser(t_token **token)
 {

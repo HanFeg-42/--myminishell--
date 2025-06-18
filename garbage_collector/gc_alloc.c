@@ -21,8 +21,7 @@ static t_gc	*gc_new(void *content)
 	if (!new)
 	{
 		perror("malloc");
-		free_all();
-		exit(EXIT_FAILURE);
+		clean_and_exit(1);
 	}
 	new->addr = content;
 	new->next = NULL;

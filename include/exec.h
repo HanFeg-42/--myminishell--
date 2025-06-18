@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:43:31 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/17 14:44:03 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:36:13 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void				restore_standards(t_cmd *cmd);
 void				dup_standards(t_cmd *cmd);
 void				restore_stdin(t_pipe *pipeline);
 void				setup_process_pipes(t_pipe *pipeline, int i);
-
 char				*ft_getenv(char *var);
 void				set_error(char *str);
 void				update_env(char *old_pwd, char *new_pwd);

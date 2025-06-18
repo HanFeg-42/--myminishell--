@@ -6,11 +6,20 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:51:20 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 22:07:56 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:56:14 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expander.h"
+
+t_arg	*arg_last(t_arg *head)
+{
+	if (!head)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
+}
 
 void	arg_add(t_arg **head, t_arg *new)
 {
