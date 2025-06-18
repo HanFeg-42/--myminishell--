@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 17:49:38 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/14 18:26:02 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 23:58:24 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define HEREDOC_H
 
 # include "ast.h"
+
+// TODO : add a delimiter variable to the here_doc struct
 
 typedef struct s_heredoc
 {
