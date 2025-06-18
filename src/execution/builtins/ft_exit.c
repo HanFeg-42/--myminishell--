@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:16 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/16 22:47:01 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/18 22:52:41 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/exec.h"
+
+// void isvalit(char *c)
+// {
+// 	int longmax;
+	
+// 	if (*c == '-')
+// 	{
+// 		longmax = ft_strlen("-9223372036854775808");
+// 		if (longmax < ft_strlen(*c))
+// 			return 0;
+// 		if (longmax == ft_strlen(*c))
+// 			return (ft_strcmp("-9223372036854775808", ft_strlen(*c)) > 0);
+// 	}
+// 	else if (*c == '+')
+// 	{
+// 		if (ft_strlen("+9223372036854775807") < ft_strlen(*c))
+// 			return 0;
+// 		if (ft_strlen("+9223372036854775807") == ft_strlen(*c))
+// 			return (ft_strcmp("+9223372036854775807", ft_strlen(*c)) > 0);
+// 	}
+// 	else
+// 	{
+// 		if (ft_strlen("9223372036854775807") < ft_strlen(*c))
+// 			return 0;
+// 		if (ft_strlen("9223372036854775807") == ft_strlen(*c))
+// 			return (ft_strcmp("9223372036854775807", ft_strlen(*c)) > 0);
+// 	}
+// }
 
 int	is_numeric(const char *a)
 {

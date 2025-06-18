@@ -20,6 +20,7 @@
 - [ ] Create a unified cleanup function for heredoc and child processes
 - [ ] Learn bit shifting
 - [ ] Add `curr` & `start` variables in `lexer` struct to help calculate sizes easily
+- [ ] expand here_doc file content regarding variables exported within the same line : export a=dada && << eof cat
 
 
 		//TODO: setup signals -> signal(SIGINT, SIG_DEF), signal(SIGQUIT, SIG_DEF), signal(SIGTERM, SIG_DEF)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/15 17:12:34 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/18 23:47:57 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ static t_heredoc	*heredoc_init(char *eof)
 	hd = gc_alloc(sizeof(t_heredoc));
 	if (!hd)
 		return (NULL);
+	hd->to_expand = !(is_quoted(eof));
+	// *to_expand() = !(is_quoted(eof));
 	hd->eof = remove_quotes(eof);
 	hd->filename = generate_name();
-	hd->to_expand = !(is_quoted(eof));
 	hd->fd = open(hd->filename, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (!hd->fd)
 		perror("failed to open");

@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:22 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/14 16:19:02 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/18 23:41:13 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,10 @@ void	reset_checker_state(void)
 	*get_error_check() = true;
 	*get_parser_check() = true;
 	*get_heredoc_check() = true;
+}
+int *to_expand(void)
+{
+	int static to_exp = false;
+
+	return(&to_exp);
 }
