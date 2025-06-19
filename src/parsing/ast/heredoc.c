@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/19 15:48:51 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/20 00:26:11 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include "../../../include/exec.h"
 #include "../../../include/heredoc.h"
 
-static char	*generate_name(void)
+char	*generate_name(void)
 {
 	char	*name;
 	char	*tmp;
 	int		i;
 
-	tmp = ft_strdup("/tmp/tmp_heredoc_");
+	tmp = ft_strdup(HDOC_FILE_NAME);
 	i = 0;
 	name = ft_strjoin(tmp, ft_itoa(i));
 	while (!access(name, F_OK))

@@ -27,11 +27,22 @@ SRC = src/main.c \
 		src/parsing/ast/parser.c \
 		src/parsing/ast/heredoc.c \
 		src/expansion/expansion_utils.c \
+		src/expansion/expand.c \
+		src/expansion/expand_parameter.c \
+		src/expansion/field_split.c \
+		src/expansion/expand_helper.c \
+		src/expansion/field_split_utils.c \
+		src/expansion/expand_pathname_utils.c \
+		src/expansion/expand_filename.c \
+		src/expansion/quote_removal.c \
+		src/expansion/expand_pathname.c \
+		src/expansion/checkers.c \
+		src/expansion/size_getter.c \
 		src/execution/env.c \
 		src/execution/exec_compound.c \
 		src/execution/exec_command.c \
 		src/execution/manage_standards.c \
-		src/execution/size.c \
+		src/execution/execution_utils.c \
 		src/execution/exec_simple_cmd.c \
 		src/execution/exec_pipeline.c \
 		src/execution/simple_cmd_helpers.c \
@@ -45,25 +56,14 @@ SRC = src/main.c \
 		src/execution/builtins/ft_exit.c \
 		src/execution/builtins/ft_unset.c \
 		src/execution/exec_subshell.c \
-		src/expansion/expand.c \
-		src/expansion/expand_parameter.c \
-		src/expansion/field_split.c \
-		src/expansion/expand_helper.c \
-		src/expansion/field_split_utils.c \
-		src/expansion/expand_filename.c \
-		src/expansion/quote_removal.c \
-		src/expansion/expand_pathname.c \
-		src/expansion/checkers.c \
 		src/execution/redirect.c \
 		src/execution/get_next_line.c \
 		src/execution/get_path.c \
 		src/execution/error_seters.c \
 		src/execution/env_helpers.c \
 		src/execution/cleanup.c \
-		src/expansion/size_getter.c \
 		src/signal.c \
-		src/errors.c \
-		src/expansion/expand_pathname_utils.c
+		src/errors.c
 
 OBJ = ${SRC:.c=.o}
 

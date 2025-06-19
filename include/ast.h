@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:03 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/19 19:37:53 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/19 23:05:59 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_file
 {
 	char				*filename;
 	char				*delimiter;
+	char				*expanded;
 	t_token_type		type;
 	struct s_file		*next;
 }						t_file;
