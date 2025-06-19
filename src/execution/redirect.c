@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/19 17:58:14 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:34:22 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int expand_heredoc_file(int fd, t_file *file)
 		if (to_expand)
 			line = heredoc_expander(line);
 		write(heredoc_fd, line, ft_strlen(line));
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
