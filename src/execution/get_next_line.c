@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:39:28 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/19 19:39:12 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/19 21:55:14 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,11 @@ static void	store_line(char **temp, char **line, char *newline_pos)
 		*line = ft_substr(*temp, 0, newline_pos - *temp + 1);
 		*temp = ft_strdup(newline_pos + 1);
 		if (!**temp)
-		{
-			free_one(*temp);
 			*temp = NULL;
-		}
 	}
 	else
 	{
 		*line = ft_strdup(*temp);
-		free_one(*temp);
 		*temp = NULL;
 	}
 }
