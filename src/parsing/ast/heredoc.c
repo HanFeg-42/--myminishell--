@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:38:21 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/18 23:47:57 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:48:51 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,15 @@ static t_heredoc	*heredoc_init(char *eof)
 	hd = gc_alloc(sizeof(t_heredoc));
 	if (!hd)
 		return (NULL);
-	hd->to_expand = !(is_quoted(eof));
-	// *to_expand() = !(is_quoted(eof));
-	hd->eof = remove_quotes(eof);
+	hd->eof = remove_quotes(ft_strdup(eof));
 	hd->filename = generate_name();
-	hd->fd = open(hd->filename, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	hd->fd = open(hd->filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (!hd->fd)
 		perror("failed to open");
 	return (hd);
 }
 
-static char	*heredoc_expander(char *s)
+char	*heredoc_expander(char *s)
 {
 	char	*ret;
 	char	*dollar_pos;
@@ -85,8 +83,6 @@ void	heredoc(t_heredoc *hd)
 	{
 		saved_line = line;
 		count++;
-		if (hd->to_expand)
-			line = heredoc_expander(line);
 		write(hd->fd, ft_strjoin(line, "\n"), ft_strlen(line) + 1);
 		free(saved_line);
 		line = readline("> ");
@@ -119,5 +115,5 @@ void	heredoc_handler(char *eof, t_file **redirect)
 		return ;
 	}
 	redirect_add(redirect,
-		redirect_create(HERE_DOC, hd->filename));
+		redirect_create(HERE_DOC, hd->filename, eof));
 }

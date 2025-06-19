@@ -6,11 +6,12 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:09 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/18 23:47:23 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:58:14 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
+#include "../../include/heredoc.h"
 
 int	num_of_redirects(t_file *lst)
 {
@@ -29,20 +30,30 @@ int	num_of_redirects(t_file *lst)
 	return (len);
 }
 
-// static expand_heredoc_file(int fd)
-// {
-// 	int heredoc_fd;
-// 	char *line;
+static int expand_heredoc_file(int fd, t_file *file)
+{
+	int heredoc_fd;
+	char *line;
+	char *eof;
+	int to_expand;
 
-// 	heredoc_fd = open("heredoc_exp_file", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-// 	if (heredoc_fd < 0)
-// 		set_exec_error("heredoc_exp_file", 1);
-// 	line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		if ()
-// 	}
-// }
+	to_expand = !(is_quoted(file->delimiter));
+	eof = ft_strjoin(remove_quotes(file->delimiter), "\n");
+	// TODO: generate file name
+	heredoc_fd = open(HEREDOC_PATH, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (heredoc_fd < 0)
+		set_exec_error(HEREDOC_PATH, 1);
+	line = get_next_line(fd);
+	while (line && ft_strcmp(line, eof))
+	{
+		if (to_expand)
+			line = heredoc_expander(line);
+		write(heredoc_fd, line, ft_strlen(line));
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return (restore_heredoc_offset(heredoc_fd));
+}
 
 int	open_file(t_file *file)
 {
@@ -56,8 +67,8 @@ int	open_file(t_file *file)
 		fd = open(file->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		set_exec_error(file->filename, 1);
-	// if (file->type == HERE_DOC)
-	// 	fd = expand_heredoc_file(fd);
+	if (file->type == HERE_DOC)
+		fd = expand_heredoc_file(fd, file);
 	return (fd);
 }
 
@@ -78,7 +89,7 @@ void	open_redirects(t_file *redirect)
 	while (current)
 	{
 		fd = open_file(current);
-		if ((*get_error_check()))
+		if (*get_error_check() == true)
 		{
 			redirect_io(fd, current);
 			close(fd);

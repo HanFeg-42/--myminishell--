@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:28:27 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/13 01:16:20 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:17:13 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	io_redirect(t_token **token, t_ast *simple_cmd)
 		if ((*token)->type != HERE_DOC)
 		{
 			redirect_add(&simple_cmd->redirect,
-				redirect_create((*token)->type, (*token)->next->value));
+				redirect_create((*token)->type, (*token)->next->value, NULL));
 		}
 		else
 			heredoc_handler((*token)->next->value, &simple_cmd->redirect);
@@ -41,7 +41,7 @@ void	redirect_list(t_token **token, t_ast *subshell)
 		io_redirect(token, subshell);
 }
 
-t_file	*redirect_create(int type, char *filename)
+t_file	*redirect_create(int type, char *filename, char *delim)
 
 {
 	t_file	*redirect_file;
@@ -50,6 +50,8 @@ t_file	*redirect_create(int type, char *filename)
 	if (!redirect_file)
 		return (NULL);
 	redirect_file->filename = ft_strdup(filename);
+	if (delim != NULL)
+		redirect_file->delimiter = ft_strdup(delim);
 	redirect_file->type = type;
 	redirect_file->next = NULL;
 	return (redirect_file);

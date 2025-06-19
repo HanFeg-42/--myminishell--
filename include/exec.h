@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:43:31 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/18 17:36:13 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:58:56 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
 
 typedef struct s_envp
 {
@@ -129,4 +133,6 @@ void				close_pipe(int *pipefd);
 void				handle_empty_args(t_ast *ast, t_cmd *cmd);
 void				setup_only_redirect(t_file *redirect, t_cmd *cmd);
 void				is__directory(char *cmd);
+char				*get_next_line(int fd);
+
 #endif

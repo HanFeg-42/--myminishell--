@@ -55,6 +55,7 @@ SRC = src/main.c \
 		src/expansion/expand_pathname.c \
 		src/expansion/checkers.c \
 		src/execution/redirect.c \
+		src/execution/get_next_line.c \
 		src/execution/get_path.c \
 		src/execution/error_seters.c \
 		src/execution/env_helpers.c \
