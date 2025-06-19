@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_subshell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:03 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/18 23:16:17 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:42:21 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	execute_subshell(t_ast *ast, t_pipe *pipeline)
 	}
 	if (pipeline->pids[pipeline->counter] == 0)
 	{
-		if(pipeline->num_of_cmds > 1)
-			dup2(pipeline->pipefd[1],STDOUT_FILENO);
+		if (pipeline->num_of_cmds > 1)
+			dup2(pipeline->pipefd[1], STDOUT_FILENO);
 		*get_status_code() = 0;
 		if (ast->redirect)
 		{

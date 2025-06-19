@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:03 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/19 08:13:57 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:37:53 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void			token_advance(t_token **token);
 int				check_and_or_token(t_token *token);
 void			redirect_list(t_token **token, t_ast *subshell);
 void			io_redirect(t_token **token, t_ast *simple_cmd);
-// t_file			*redirect_create(int type, char *filename);
-t_file	*redirect_create(int type, char *filename, char *delim);
+t_file			*redirect_create(int type, char *filename, char *delim);
 void			redirect_add(t_file **redirect, t_file *new);
 int				is_token_redirect(t_token *token);
 void			add_args(t_token **token, t_ast *simple_cmd);

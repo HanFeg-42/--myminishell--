@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:01:12 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/19 14:40:55 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:41:25 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	handle_process(t_ast *ast, t_cmd *cmd)
 	if (!cmd->pathname)
 		handle_cmd_error(ast->args[0]);
 	execve(cmd->pathname, ast->args, cmd->envp);
-	// just testing
-	// unlink("/tmp/heredoc_exp_file");
 	clean_and_exit(126);
 }
 

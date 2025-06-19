@@ -63,11 +63,8 @@ SRC = src/main.c \
 		src/expansion/size_getter.c \
 		src/signal.c \
 		src/errors.c \
-		src/expansion/expand_pathname_utils.c \
-		src/execution/get_next_line_utils.c
+		src/expansion/expand_pathname_utils.c
 
-
-# src = $(wildcard folder/f2/*.c) $(wildcard folder/*.c)
 OBJ = ${SRC:.c=.o}
 
 LIBFT_DIR = ./libft

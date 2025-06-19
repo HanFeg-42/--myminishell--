@@ -6,7 +6,7 @@
 /*   By: gstitou <gstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:43:31 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/19 18:31:30 by gstitou          ###   ########.fr       */
+/*   Updated: 2025/06/19 19:35:21 by gstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,6 @@ void				handle_empty_args(t_ast *ast, t_cmd *cmd);
 void				setup_only_redirect(t_file *redirect, t_cmd *cmd);
 void				is__directory(char *cmd);
 char				*get_next_line(int fd);
-char				*ft_strdup_(const char *str);
-char				*ft_substr_(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin_(char *s1, char *s2);
 
 #endif
