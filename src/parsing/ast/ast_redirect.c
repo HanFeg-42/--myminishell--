@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:28:27 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/19 12:17:13 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:06:27 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ t_file	*redirect_create(int type, char *filename, char *delim)
 	redirect_file->filename = ft_strdup(filename);
 	if (delim != NULL)
 		redirect_file->delimiter = ft_strdup(delim);
+	else
+		redirect_file->delimiter = NULL;
+	redirect_file->expanded = NULL;
 	redirect_file->type = type;
 	redirect_file->next = NULL;
 	return (redirect_file);

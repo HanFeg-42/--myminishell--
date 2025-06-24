@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:54:15 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/19 15:16:57 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:05:37 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	is_ifs(int c)
 {
-	return (c == ' ' || c == '\t');
+	return (c == ' ' || c == '\t' || c == '\n');
 }
 
 int	is_quoted(char *eof)

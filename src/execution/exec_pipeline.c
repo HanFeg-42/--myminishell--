@@ -6,11 +6,12 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:00:58 by gstitou           #+#    #+#             */
-/*   Updated: 2025/06/18 17:38:46 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:23:59 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exec.h"
+#include "../../include/heredoc.h"
 
 t_pipe	*init_pipeline(t_ast *ast)
 {
@@ -67,4 +68,5 @@ void	execute_pipeline(t_ast *ast)
 		close_pipe(pipeline->pipefd);
 	restore_stdin(pipeline);
 	wait_children(pipeline);
+	unlink_heredoc_files(ast);
 }

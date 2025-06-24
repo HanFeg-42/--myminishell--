@@ -6,7 +6,7 @@
 /*   By: hfegrach <hfegrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:03:38 by hfegrach          #+#    #+#             */
-/*   Updated: 2025/06/19 15:50:27 by hfegrach         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:34:20 by hfegrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	arg_size(t_token *token)
 	}
 }
 
-int	restore_heredoc_offset(int heredoc_fd)
+int	restore_heredoc_offset(int heredoc_fd, char *path)
 {
 	close(heredoc_fd);
-	heredoc_fd = open(HEREDOC_PATH, O_RDONLY);
+	heredoc_fd = open(path, O_RDONLY);
 	if (heredoc_fd < 0)
-		set_exec_error(HEREDOC_PATH, 1);
+		set_exec_error(path, 1);
 	return (heredoc_fd);
 }
