@@ -88,11 +88,10 @@ void	open_redirects(t_file *redirect)
 	while (current)
 	{
 		fd = open_file(current);
-		if (*get_error_check() == true)
-		{
-			redirect_io(fd, current);
-			close(fd);
-		}
+		if (*get_error_check() == false)
+			return ;
+		redirect_io(fd, current);
+		close(fd);
 		current = current->next;
 	}
 }

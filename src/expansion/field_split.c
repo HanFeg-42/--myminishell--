@@ -49,7 +49,6 @@ static char	*get_field(t_expand *exp)
 	ifs_pos = first_ifs_occ(exp->word);
 	if (!ifs_pos
 		|| (exp->arg && !ft_strcmp("export", exp->arg->value)
-			// && exp->arg == arg_last(exp->arg)
 			&& ifs_pos > ft_strchr(exp->word, '=')))
 	{
 		ret = ft_strdup(exp->word);

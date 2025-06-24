@@ -76,7 +76,7 @@ static void	arg_traversal(t_expand *exp, t_arg *arg)
 		index[0]++;
 	}
 }
-
+// TODO : change ythe codition so that it checks exp->arg->value instead of dak tkhrbiq
 void	expand_pathname(t_expand *exp)
 {
 	t_arg	*arg;
