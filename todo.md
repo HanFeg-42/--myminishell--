@@ -22,7 +22,5 @@
 - [ ] Add `curr` & `start` variables in `lexer` struct to help calculate sizes easily
 - [ ] expand here_doc file content regarding variables exported within the same line : export a=dada && << eof cat
 - [ ] TODO: add a delimiter variable to the here_doc struct
-	// TODO: generate file name for heredoc in execution
-
-
-		//TODO: setup signals -> signal(SIGINT, SIG_DEF), signal(SIGQUIT, SIG_DEF), signal(SIGTERM, SIG_DEF)
+- [ ] TODO: generate file name for heredoc in execution
+- [ ]
