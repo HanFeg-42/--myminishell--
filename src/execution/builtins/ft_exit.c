@@ -58,5 +58,5 @@ void	execute_exit(char **av)
 		*get_status_code() = 1;
 	}
 	else
-		clean_and_exit((unsigned char)ft_atoi(av[1]));
+		clean_and_exit(ft_atoi(av[1]));
 }

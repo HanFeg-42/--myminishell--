@@ -23,4 +23,4 @@
 - [ ] expand here_doc file content regarding variables exported within the same line : export a=dada && << eof cat
 - [ ] TODO: add a delimiter variable to the here_doc struct
 - [ ] TODO: generate file name for heredoc in execution
-- [ ]
+- [ ] fix exit status overflow
